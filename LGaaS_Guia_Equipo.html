@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LGaaS — Guía del Equipo · TopSpin</title>
+<link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:      #E45925;
+    --orange-dark: #C24A1F;
+    --orange-deep: #9C3A18;
+    --cream:       #F9EBD0;
+    --cream-soft:  #FDF5EE;
+    --warm-accent: #F0A97A;
+    --text:        #3D1A0A;
+    --text-muted:  #7A5040;
+    --near-black:  #1E0D05;
+    --white:       #FFFFFF;
+
+    --claude-bg:     #EEF2FF;
+    --claude-border: #A5B4FC;
+    --claude-text:   #3730A3;
+    --team-bg:       #FFF7ED;
+    --team-border:   #FDBA74;
+    --team-text:     #9C3A18;
+    --how-bg:        #F0FDF4;
+    --how-border:    #86EFAC;
+    --how-text:      #14532D;
+    --stop-bg:       #FFFBEB;
+    --stop-border:   #FCD34D;
+    --stop-text:     #92400E;
+
+    --step-w: 272px;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Afacad', Calibri, Arial, sans-serif;
+    background: var(--cream-soft);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    background: var(--near-black);
+    padding: 0 32px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 18px rgba(0,0,0,.4);
+  }
+  .logo img {
+    height: 30px;
+    width: auto;
+    display: block;
+  }
+  .header-pill {
+    background: rgba(249,235,208,.08);
+    border: 1px solid rgba(249,235,208,.18);
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: .3px;
+    opacity: .85;
+  }
+
+  /* ── PHASE TABS ─────────────────────────── */
+  .phase-tabs {
+    background: #2A0F04;
+    border-bottom: 1px solid rgba(249,235,208,.1);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+  }
+  .phase-tab {
+    padding: 15px 26px;
+    cursor: pointer;
+    color: var(--warm-accent);
+    font-family: 'Afacad', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    user-select: none;
+    opacity: .6;
+  }
+  .phase-tab:hover { opacity: .9; color: var(--cream); }
+  .phase-tab.active {
+    color: var(--cream);
+    border-bottom-color: var(--orange);
+    opacity: 1;
+  }
+  .phase-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(228,89,37,.18);
+    color: var(--warm-accent);
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .phase-tab.active .phase-num {
+    background: var(--orange);
+    color: white;
+  }
+  .tab-separator {
+    width: 1px;
+    height: 24px;
+    background: rgba(249,235,208,.12);
+    margin: 0 4px;
+  }
+  .total-time {
+    margin-left: auto;
+    color: var(--warm-accent);
+    font-size: 11px;
+    opacity: .5;
+    letter-spacing: .3px;
+  }
+
+  /* ── PROGRESS BAR ────────────────────────── */
+  .progress-wrap {
+    position: fixed;
+    top: 105px;
+    left: 0; right: 0;
+    height: 2px;
+    background: rgba(228,89,37,.1);
+    z-index: 90;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--orange);
+    transition: width .35s ease;
+  }
+
+  /* ── LAYOUT ─────────────────────────────── */
+  .layout {
+    display: flex;
+    flex: 1;
+  }
+
+  /* ── SIDEBAR ─────────────────────────────── */
+  .sidebar {
+    width: var(--step-w);
+    min-width: var(--step-w);
+    background: var(--white);
+    border-right: 1px solid #F3E4D0;
+    overflow-y: auto;
+    padding: 18px 0 40px;
+    position: sticky;
+    top: 105px;
+    height: calc(100vh - 105px);
+  }
+
+  .sidebar-label {
+    padding: 10px 20px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .sidebar-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #F3E4D0;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 14px 9px 18px;
+    cursor: pointer;
+    transition: background .15s;
+    border-left: 3px solid transparent;
+  }
+  .step-item:hover { background: var(--cream-soft); }
+  .step-item.active {
+    background: #FFF3EB;
+    border-left-color: var(--orange);
+  }
+  .step-item.done .step-bubble { background: #D1FAE5; border-color: #6EE7B7; color: #065F46; }
+  .step-item.done .step-bubble::after { content: "✓"; }
+
+  .step-bubble {
+    width: 26px; height: 26px; min-width: 26px;
+    border-radius: 50%;
+    border: 1.5px solid #E8D4C0;
+    background: var(--cream-soft);
+    color: var(--text-muted);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .step-item.active .step-bubble {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    box-shadow: 0 2px 8px rgba(228,89,37,.3);
+  }
+
+  .step-meta { flex: 1; min-width: 0; }
+  .step-name {
+    font-size: 12px; font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .step-item.active .step-name { color: var(--orange-dark); }
+  .step-item.done .step-name   { color: var(--text-muted); }
+
+  .actor-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    display: inline-block; margin-right: 4px;
+    vertical-align: middle;
+  }
+  .dot-auto  { background: #818CF8; }
+  .dot-human { background: var(--orange); }
+  .dot-both  { background: #34D399; }
+  .dot-stop  { background: #F59E0B; }
+
+  .step-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── MAIN ───────────────────────────────── */
+  .main {
+    flex: 1;
+    padding: 36px 40px 60px;
+    overflow-y: auto;
+    max-width: 860px;
+  }
+
+  /* Step header */
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .step-big-num {
+    width: 54px; height: 54px; min-width: 54px;
+    border-radius: 14px;
+    background: var(--orange);
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 18px rgba(228,89,37,.35);
+    letter-spacing: -1px;
+  }
+  .step-header-meta h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -.3px;
+  }
+  .badges-row {
+    display: flex; flex-wrap: wrap;
+    align-items: center; gap: 7px;
+  }
+  .badge {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 11px; border-radius: 20px;
+    display: inline-flex; align-items: center; gap: 5px;
+    letter-spacing: .2px;
+  }
+  .badge-phase  { background: rgba(228,89,37,.1); color: var(--orange-dark); }
+  .badge-auto   { background: #EEF2FF; color: #4338CA; }
+  .badge-human  { background: var(--team-bg); color: var(--orange-deep); }
+  .badge-both   { background: #ECFDF5; color: #065F46; }
+  .badge-stop   { background: #FFFBEB; color: #92400E; border: 1px solid #FCD34D; }
+  .time-badge   { background: var(--cream); color: var(--text-muted); }
+
+  .step-description {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 26px;
+    max-width: 680px;
+  }
+
+  /* Cards */
+  .cards-grid { display: flex; flex-direction: column; gap: 14px; }
+
+  .card { border-radius: var(--radius); border: 1.5px solid; overflow: hidden; }
+  .card-header {
+    padding: 13px 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: .2px;
+  }
+  .card-icon { font-size: 17px; width: 26px; text-align: center; }
+  .card-body {
+    padding: 16px 20px 18px;
+    font-size: 14px; line-height: 1.75;
+  }
+  .card-body ul { padding-left: 18px; display: flex; flex-direction: column; gap: 7px; }
+  .card-body li { padding-left: 3px; }
+  .card-body strong { font-weight: 700; }
+
+  .card-claude { border-color: var(--claude-border); }
+  .card-claude .card-header { background: var(--claude-bg); color: var(--claude-text); }
+  .card-claude .card-body   { background: #F8F9FF; }
+
+  .card-team { border-color: var(--team-border); }
+  .card-team .card-header { background: #FEECD8; color: var(--orange-deep); }
+  .card-team .card-body   { background: var(--team-bg); }
+
+  .card-how { border-color: var(--how-border); }
+  .card-how .card-header { background: #DCFCE7; color: var(--how-text); }
+  .card-how .card-body   { background: var(--how-bg); }
+
+  .card-stop { border-color: var(--stop-border); }
+  .card-stop .card-header { background: #FEF9C3; color: var(--stop-text); }
+  .card-stop .card-body   { background: var(--stop-bg); }
+
+  /* Command box */
+  .cmd-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; color: var(--how-text);
+    text-transform: uppercase; margin-bottom: 8px; opacity: .75;
+  }
+  .cmd-box {
+    background: var(--near-black);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    color: var(--cream);
+    line-height: 1.65;
+    border-left: 3px solid var(--orange);
+    margin-bottom: 4px;
+  }
+  .cmd-box .ph { color: var(--warm-accent); font-style: italic; }
+  .how-notes {
+    margin-top: 12px;
+    display: flex; flex-direction: column; gap: 6px;
+    padding-left: 16px;
+  }
+  .how-notes li { font-size: 13px; color: var(--how-text); }
+
+  /* Output tags */
+  .outputs-section { margin-top: 8px; }
+  .outputs-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .8px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+  .output-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: white; border: 1.5px solid #BBF7D0;
+    color: #15803D; font-size: 11px; font-weight: 600;
+    padding: 4px 11px; border-radius: 20px;
+    margin: 3px 4px 3px 0;
+  }
+
+  /* Navigation */
+  .nav-bar {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid var(--cream);
+  }
+  .nav-btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 22px; border-radius: 8px;
+    border: 1.5px solid #E8D4C0;
+    background: white; color: var(--text);
+    font-family: 'Afacad', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .15s;
+    text-decoration: none;
+  }
+  .nav-btn:hover { border-color: var(--orange); color: var(--orange); background: #FFF7F3; }
+  .nav-btn.primary {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    box-shadow: 0 3px 12px rgba(228,89,37,.3);
+  }
+  .nav-btn.primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
+  .nav-btn.disabled { opacity: .3; cursor: not-allowed; pointer-events: none; }
+  .nav-counter { font-size: 12px; color: var(--text-muted); }
+
+  .hidden  { display: none !important; }
+  .fade-in { animation: fadeIn .22s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: .87em;
+    background: rgba(228,89,37,.08);
+    color: var(--orange-deep);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-wrap">
+  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+</div>
+
+<header>
+  <div class="logo">
+    <img src="data:image/png;base64,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q92CromIiEh2y90WLMUrnxSvREREUiVXA5bilU8G0E/xSkREJBVys4vwZU7iL8Ur7wygPxPYKeiaiIiI5IJcbMF6juGKV3648Wqi4pWIiEhq5F4L1nOcwnTFK+9i8eofQddEREQkV+RaC5bilU8GsJ7ilYiISCrlVsCapHjljwFsqHglIiKSWrnURTiJUxWv/DCAjZjItkHXREREJLfkTgvWE5ykeOWHG6/uVrwSERFJtVxpwXqC05ileOVdLF5tE3RNREREck9utGApXvlkABsrXomIiKRHLgQsxSufDGAA9yheiYiIpEe2dxEaj3OG4pUfbry6m82DromIiEiuyu4WLONhRihe+aF4JSIikn7ZHLCMhzmTuYpX3hnA5opXIiIi6ZW9XYRuvFK48s6NVxMVr0RERNIrW1uwYq1X4pUBbMO9ilciIiLplp0tWNU8xNnMU+uVd268msjGQddEREQk92VjC1Y193Em84KuRjZRvBIREcmk7GvBquY+zmWBWq+8U7wSERHJrGxrwXLjVdDVyCYGsK3ilYiISOZkVwuWWq98M4AdmcD6QddERESk+cimFqwqJnKO4pUfbryaqHglIiKSSdkTsKoYz3ksVLzyLhav1gu6JiIiIs1LtgSsKsZzAYsVr7wzgH8oXomIiGRedgQsxSvfDGAgExSvREREMi8bBrkrXvlmALsynnWCromIiEhzFP4WrEruYJTilR9uvJqgeCUiIhKMsLdgVXIHl7BM8cq7WLxaO+iaiIiINFfhbsFSvPLNAHZTvBIREQlSmAOW4pVvBrAX4xWvREREghTeLsIK7uBSxSs/DGBvxtE76JqIiIg0b2ENWCu5masoVbzyzgD2YazilYiISNDCGbBWcjNXslzxyjvFKxERkfAI4xgsxSvfFK9ERETCJHwBS/HKNwM4UGOvREREwiJsXYTljOZqxSs/DOAgxtAj6JqIiIhIVLgCVjnXcT0rFK+8U7wSEREJnzAFrDKu43rKFK+8U7wSEREJo/CMwVK88s3A4WDFKxERkbAJS8AqV7zyy8DhUO5SvBIREQmbcHQRruBablS88sONV3fQNeiaiIiISH1hCFgruIJbKFe88s7A4f+4XfFKREQkjIIPWMu5UvHKH8UrERGRcAt6DNYKxSu/DCIcpnglIiISXsEGrOXqHPTLIMK/NPZKREQkzILsIlzG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S8KhH+PZURFLRERygwKWhMW6TGAHRSwREckFClgSHuszURFLRERygQKWhIkiloiI5AQFLAkXRSwREckBClgSNusznm0UsUREJJspYEn4bMhEtlbEEhGR7KWAJWG0MXcrYomISPZSwJJwUsQSEZEspoAlYaWIJSIiWUsBS8JrYyawuSKWiIhkHwUsCbNNuVsRS0REso8CloTbAEUsERHJPgpYEnaKWCIiknUUsCT8BnA3AxSxREQkeyhgSTYYwHg2UcQSEZFsoYAl2WErJipiiYhItlDAkmyxtSKWiIhkCwUsyR6KWCIikiUUsCSbbM1ENlbEEhGRsFPAkuyyNeNYXxFLRETCTQFLss32TGQDRSwREQkzBSzJPjsoYomISLgpYEk2UiuWiIiEmgKWZKftmch6ilgiIhJOCliSrbZnHOsqYomISBgpYEn2GsgERSwREQkjBSzJZopYIiISSgpYkt0UsUREJIQUsCTbDWQC6yhiiYhImChgSfYbyFjWUsQSEZHwUMCSXLA74xWxREQkPBSwJDcoYomISIgoYEmuUMQSEZHQUMCS3LE74+ijiCUiIsFTwJJcsgd30VsRS0REgqaAJbllH8YqYomISNAUsCTX7MNY+gZdCRERad4UsCT37MONdAy6EiIi0pz9P8qJycUDt2olAAAAAElFTkSuQmCC" alt="TopSpin" />
+  </div>
+  <div class="header-pill">LGaaS · Guía del Equipo</div>
+</header>
+
+<div class="phase-tabs">
+  <div class="phase-tab active" onclick="switchPhase(1)" id="tab1">
+    <div class="phase-num">1</div>
+    Discovery — Preparar el Template
+  </div>
+  <div class="tab-separator"></div>
+  <div class="phase-tab" onclick="switchPhase(2)" id="tab2">
+    <div class="phase-num">2</div>
+    Pipeline — Generar la Base de Contactos
+  </div>
+  <div class="total-time">Tiempo total estimado: 3–6 horas</div>
+</div>
+
+<div class="layout">
+  <div class="sidebar" id="sidebar">
+    <div id="sidebar-phase1">
+      <div class="sidebar-label">Fase 1 · Discovery</div>
+      <div class="step-item active" onclick="goTo(0)" id="si-0">
+        <div class="step-bubble">1</div>
+        <div class="step-meta">
+          <div class="step-name">Activar el Discovery</div>
+          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 2 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(1)" id="si-1">
+        <div class="step-bubble">2</div>
+        <div class="step-meta">
+          <div class="step-name">Research Autónomo</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 5–10 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(2)" id="si-2">
+        <div class="step-bubble">3</div>
+        <div class="step-meta">
+          <div class="step-name">Responder Cuestionario</div>
+          <div class="step-sub"><span class="actor-dot dot-both"></span>Colaboración · 15–20 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(3)" id="si-3">
+        <div class="step-bubble">4</div>
+        <div class="step-meta">
+          <div class="step-name">Validación ICP Apollo</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 2–3 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(4)" id="si-4">
+        <div class="step-bubble">5</div>
+        <div class="step-meta">
+          <div class="step-name">Revisar Draft Excel</div>
+          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 15–30 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(5)" id="si-5">
+        <div class="step-bubble">6</div>
+        <div class="step-meta">
+          <div class="step-name">Iterar y Aprobar</div>
+          <div class="step-sub"><span class="actor-dot dot-both"></span>Colaboración · variable</div>
+        </div>
+      </div>
+    </div>
+    <div id="sidebar-phase2" class="hidden">
+      <div class="sidebar-label">Fase 2 · Pipeline</div>
+      <div class="step-item" onclick="goTo(6)" id="si-6">
+        <div class="step-bubble">1</div>
+        <div class="step-meta">
+          <div class="step-name">Arrancar el Pipeline</div>
+          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 2 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(7)" id="si-7">
+        <div class="step-bubble">2</div>
+        <div class="step-meta">
+          <div class="step-name">Hipersegmentos + TAM</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 10–15 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(8)" id="si-8">
+        <div class="step-bubble">3</div>
+        <div class="step-meta">
+          <div class="step-name">Checkpoint Estrategia</div>
+          <div class="step-sub"><span class="actor-dot dot-stop"></span>Parada clave · 30–60 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(9)" id="si-9">
+        <div class="step-bubble">4</div>
+        <div class="step-meta">
+          <div class="step-name">Búsqueda de Empresas</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 10–20 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(10)" id="si-10">
+        <div class="step-bubble">5</div>
+        <div class="step-meta">
+          <div class="step-name">Búsqueda de Contactos</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 15–25 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(11)" id="si-11">
+        <div class="step-bubble">6</div>
+        <div class="step-meta">
+          <div class="step-name">Checkpoint Créditos</div>
+          <div class="step-sub"><span class="actor-dot dot-stop"></span>Parada clave · 2 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(12)" id="si-12">
+        <div class="step-bubble">7</div>
+        <div class="step-meta">
+          <div class="step-name">Enriquecimiento Clay</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 20–40 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(13)" id="si-13">
+        <div class="step-bubble">8</div>
+        <div class="step-meta">
+          <div class="step-name">Scoring + Tiering</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 3–5 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(14)" id="si-14">
+        <div class="step-bubble">9</div>
+        <div class="step-meta">
+          <div class="step-name">Copywriting</div>
+          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 20–40 min</div>
+        </div>
+      </div>
+      <div class="step-item" onclick="goTo(15)" id="si-15">
+        <div class="step-bubble">10</div>
+        <div class="step-meta">
+          <div class="step-name">Exportar y Lanzar</div>
+          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 10 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main" id="mainContent"></div>
+</div>
+
+<script>
+const STEPS = [
+{phase:1,num:1,title:"Activar el Discovery",actor:"human",actorLabel:"Tu acción",time:"~2 min",
+desc:"Arrancas la skill con el nombre del cliente y su URL. Si tienes documentación, la subes en este mismo momento. Con eso es suficiente para empezar.",
+claude:null,
+team:["Abre Claude Cowork y empieza una nueva sesión.","Escribe el mensaje de activación con el nombre del cliente y su URL.","Si tienes documentos (pitch deck, lista de clientes, notas de reunión), adjúntalos al mismo mensaje.","No hace falta que tengas todo — con la URL puedo empezar igualmente."],
+how:{label:"Escribe exactamente esto en el chat:",cmd:`Tengo un nuevo cliente de LGaaS.\nSu empresa es <span class=\"ph\">[Nombre del cliente]</span> y su web es <span class=\"ph\">[URL]</span>.\n<span class=\"ph\">[Adjunta aquí los documentos si los tienes]</span>`,notes:["Puedes escribirlo en español o inglés, como prefieras.","Si el cliente tiene varios productos, puedes mencionarlo brevemente."]},
+outputs:[]},
+
+{phase:1,num:2,title:"Research Autónomo",actor:"auto",actorLabel:"Claude automático",time:"5–10 min",
+desc:"Claude investiga todo lo que puede antes de hacerte ninguna pregunta. El objetivo es pre-rellenar el máximo de campos del template sin que tengas que teclear nada.",
+claude:["<strong>Scrapea la web en profundidad:</strong> homepage, about, productos, pricing, casos de éxito, blog, integraciones, jobs y contacto.","<strong>Parsea todos los documentos</strong> subidos: pitch decks, listas de clientes, notas de reunión, propuestas.","<strong>Búsquedas web complementarias:</strong> competidores, tamaño del equipo en LinkedIn, clientes no publicados en la web.","<strong>Construye un knowledge graph interno</strong> del cliente: empresa, productos, ICP, señales de compra, tono y exclusiones.","Clasifica cada dato con confianza: Alta (fuente directa) · Media (inferido) · Baja (suposición)."],
+team:["Solo tienes que esperar. No hace falta que hagas nada durante este paso.","Si Claude te pide alguna aclaración urgente (por ejemplo, la web no carga), respóndela."],
+how:null,outputs:[]},
+
+{phase:1,num:3,title:"Responder el Cuestionario",actor:"both",actorLabel:"Colaboración",time:"15–20 min",
+desc:"Claude presenta todas las preguntas en un solo mensaje, agrupadas en 5 módulos, con sus respuestas ya pre-rellenadas. Tu trabajo es confirmar, corregir o completar — no escribir de cero.",
+claude:["Presenta el cuestionario completo en un solo bloque: 5 módulos, todas las preguntas de golpe.","Cada pregunta lleva: la fuente de la sugerencia, la respuesta propuesta y espacio para tu corrección.","Las preguntas con opciones cerradas aparecen como checkboxes (CRM, nivel jerárquico, modelo de precio...).","Solo pregunta sobre los gaps reales — no sobre lo que ya tiene confianza alta o media."],
+team:["<strong>Lee módulo a módulo</strong> y responde solo lo que esté mal o incompleto.","Para confirmar una sugerencia: simplemente escribe «correcto» o déjala sin comentar.","Para corregir: «En el módulo B, el rango de empleados debería ser 100–500, no 50–200».","Si no sabes algo: escribe «no sé» — lo marco como pendiente para que lo complete el cliente."],
+how:{label:"Formato de respuesta recomendado:",cmd:`Módulo A: correcto todo.\nMódulo B: los sectores son Retail y Ecommerce. El rango de empleados es 50–300.\nMódulo C: el DM es el CFO, no el CEO. Champion es el Finance Manager.\nMódulo D: no tenemos métricas concretas todavía.\nMódulo E: añade también a <span class=\"ph\">[empresa X]</span> como cliente actual.`,notes:["Puedes responder de forma conversacional, no tienes que respetar el formato exacto.","Si el cliente ya te ha dado contexto en una reunión previa, es el momento de volcarlo todo aquí."]},
+outputs:[]},
+
+{phase:1,num:4,title:"Validación ICP en Apollo",actor:"auto",actorLabel:"Claude automático",time:"2–3 min",
+desc:"Antes de generar el Excel, Claude comprueba con datos reales que el ICP propuesto tiene empresas suficientes en Apollo. Esta búsqueda es completamente gratuita.",
+claude:["Lanza una búsqueda gratuita en Apollo para cada segmento de empresa definido.","Lee el campo <code>total</code> de la primera respuesta — sin paginar, sin coste.","Evalúa: &gt;1.000 = ICP demasiado amplio · 100–1.000 = saludable · 20–100 = estrecho · &lt;20 = revisar.","Si algún segmento da menos de 20 empresas, para y presenta alternativas concretas con volúmenes antes de continuar."],
+team:["Si algún segmento tiene poco volumen, decides si ampliar los filtros o mantenerlo como nicho intencional.","Si todo está en rango, no tienes que hacer nada — Claude continúa automáticamente."],
+how:{label:"Si Claude te pide decisión sobre un ICP estrecho, responde así:",cmd:`Opción A: "Amplía el rango de empleados a 20–500"\nOpción B: "Añade también el sector <span class=\"ph\">[sector]</span>"\nOpción C: "Mantén los filtros, es intencional — es un mercado nicho"`,notes:["No hay respuesta incorrecta. Un ICP estrecho puede ser perfecto si el cliente quiere ir muy focalizado."]},
+outputs:[]},
+
+{phase:1,num:5,title:"Revisar el Draft Excel",actor:"human",actorLabel:"Tu acción",time:"15–30 min",
+desc:"Claude genera el Targeting Framework completo con todos los datos investigados. Cada celda lleva un comentario de confianza para que sepas exactamente dónde enfocar tu revisión.",
+claude:["Abre el template base <code>LGaaS_Targeting_Framework_Template.xlsx</code> y lo rellena con todos los datos del research.","Añade comentarios de confianza en cada celda: Alta (fuente directa) · Media (inferido) · Baja (suposición).","Genera una pestaña extra <strong>«Revisar»</strong> con la tabla completa de campos que necesitan atención, ordenada por importancia.","Nombra el archivo: <code>[NombreCliente]_Targeting_Framework_Draft_[fecha].xlsx</code>"],
+team:["<strong>Descarga el Excel</strong> y ábrelo.","<strong>Ve directamente a la pestaña «Revisar»</strong> — ahí están todos los campos que necesitan tu atención, ordenados por importancia.","Para los campos de baja confianza en las otras pestañas, corrígelos directamente en el Excel o dile a Claude los cambios en el chat.","No tienes que revisar los campos de alta confianza — son datos directos de fuentes fiables."],
+how:{label:"Para dar feedback, puedes elegir:",cmd:`Opción A (en el chat):\n"En Sheet 03, el rango de empleados del segmento H1 debería ser 50–500. Y añade Portugal a los países."\n\nOpción B:\nEdita directamente el Excel y súbemelo de vuelta con tus cambios marcados.`,notes:["La pestaña «Revisar» es tu hoja de ruta — empieza por ahí.","Los campos vacíos son los que el cliente tendrá que rellenar — márcalos como pendientes."]},
+outputs:["[Cliente]_Targeting_Framework_Draft_[fecha].xlsx"]},
+
+{phase:1,num:6,title:"Iterar y Aprobar",actor:"both",actorLabel:"Colaboración",time:"variable",
+desc:"Claude aplica el feedback sección por sección — sin regenerar el Excel completo — hasta que el template esté listo para el pipeline. Cada ronda suele ser 5–10 minutos.",
+claude:["Aplica cambios módulo a módulo: solo modifica las celdas afectadas, no regenera todo.","Si cambian los filtros del ICP de empresas, re-valida automáticamente en Apollo.","Actualiza la pestaña «Revisar» con el estado actual después de cada ronda.","Guarda la nueva versión con sufijo _v2, _v3, etc."],
+team:["Da feedback específico por sección, no «está todo mal».","Cuando estés satisfecho con el resultado, confirma con «aprobado» o «está listo».","Puedes iterar tantas veces como necesites — no hay límite de rondas."],
+how:{label:"Para cerrar la iteración y pasar a Fase 2:",cmd:`"El template está aprobado. Arrancamos el pipeline."`,notes:["Con esto, Claude genera la versión final limpia y prepara el handoff.","Puedes pedirle «genera la versión final sin los comentarios en las celdas» si quieres el Excel limpio para compartir con el cliente."]},
+outputs:["[Cliente]_Targeting_Framework_[fecha].xlsx (versión final aprobada)"]},
+
+{phase:2,num:1,title:"Arrancar el Pipeline",actor:"human",actorLabel:"Tu acción",time:"~2 min",
+desc:"Activas la skill lgaas-database-generator con el Excel aprobado. Claude parsea el template completo, crea la carpeta del proyecto y genera los documentos de contexto que usará durante todo el pipeline.",
+claude:["Parsea todas las hojas del Excel: empresa, productos, segmentos, personas, señales, exclusiones.","Crea la carpeta de proyecto: <code>/Downloads/[NombreCliente]_LGaaS_[fecha]/</code> con subcarpetas contexto/, checkpoint/, campañas/ y outputs/.","Genera 6 documentos de contexto: perfil cliente, ICP empresas, ICP personas, señales de compra, por qué compran, y tono y exclusiones.","Muestra un resumen: N productos · N segmentos · N perfiles de persona · N señales · N clientes actuales excluidos."],
+team:["Sube el Excel aprobado de Fase 1 y escribe el mensaje de activación.","Confirma que el resumen de datos es correcto antes de continuar."],
+how:{label:"Escribe exactamente esto (adjuntando el Excel aprobado):",cmd:`"Arranca el pipeline para <span class=\"ph\">[NombreCliente]</span>."\n\n<span class=\"ph\">[Adjunta: NombreCliente_Targeting_Framework_[fecha].xlsx]</span>`,notes:["Si ya estás en la misma sesión que Fase 1, Claude ya tiene el Excel — puedes simplemente escribir «arranca el pipeline».","Si es una sesión nueva, necesitas subir el Excel."]},
+outputs:["Carpeta de proyecto creada","6 documentos de contexto generados"]},
+
+{phase:2,num:2,title:"Hipersegmentos + TAM",actor:"auto",actorLabel:"Claude automático",time:"10–15 min",
+desc:"Claude divide el ICP en mini-campañas ordenadas de mejor a peor potencial real de lead, calcula cuántas empresas hay en cada una, y extrae 10 ejemplos reales de Apollo.",
+claude:["Genera entre 3 y 8 hipersegmentos combinando: producto, sector, señal de compra, tamaño de empresa y perfil de persona.","Calcula el TAM de cada segmento con una búsqueda gratuita en Apollo (campo <code>total</code> — sin coste).","Extrae las 10 primeras empresas de muestra por segmento — las guarda en memoria para el checkpoint.","Ordena los segmentos por potencial de lead calificado: señal de compra (30 pts) + claridad del ICP (25 pts) + accesibilidad de la persona (25 pts) + volumen TAM (20 pts)."],
+team:["Solo tienes que esperar. No hay acción requerida en este paso."],
+how:null,outputs:[]},
+
+{phase:2,num:3,title:"Checkpoint: Validar Estrategia",actor:"stop",actorLabel:"Parada obligatoria",time:"30–60 min",
+desc:"El único punto de parada obligatoria antes del pipeline completo. El consultor y el cliente aprueban los segmentos antes de que Claude empiece la búsqueda masiva.",
+claude:["<strong>Excel visual de hipersegmentos</strong> con 4 pestañas: Resumen de estrategia, Top 10 empresas de muestra reales, TAM y métricas con gráfico, e Input del consultor con dropdown de decisión.","<strong>Documento ejecutivo</strong> sin tecnicismos: escrito para que el cliente lo entienda en 5 minutos, con los grupos de empresas explicados en lenguaje natural."],
+team:["<strong>Descarga ambos archivos</strong> (Excel + Word).","Comparte el <strong>documento Word</strong> con el cliente para que entienda la estrategia.","Rellena la pestaña <strong>«Input del consultor»</strong> del Excel: marca cada segmento como Aprobado, Modificar o Rechazado.","Si marcas Modificar, escribe en la columna de comentarios qué cambiar exactamente.","Devuelve el Excel a Claude o dile los cambios en el chat."],
+how:{label:"Para transmitir las decisiones, sube el Excel relleno o escribe:",cmd:`"H1 Aprobado. H2 Modificar: ampliar empleados a 100–500. H3 Rechazado — no es nuestro mercado. H4 Aprobado."`,notes:["Los segmentos Rechazados no se eliminan — aparecerán en los outputs finales marcados como «no incluido».","Puedes aprobar parcialmente: por ejemplo, aprobar 3 de 5 segmentos e ignorar los demás por ahora."]},
+outputs:["[Cliente]_Estrategia_Hipersegmentos_[fecha].xlsx","[Cliente]_Estrategia_Hipersegmentos_[fecha].docx"]},
+
+{phase:2,num:4,title:"Búsqueda de Empresas",actor:"auto",actorLabel:"Claude automático",time:"10–20 min",
+desc:"Claude busca todas las empresas de los segmentos aprobados en Apollo, aplicando exclusiones y deduplicación. La paginación se detiene automáticamente cuando la calidad empieza a bajar.",
+claude:["Reutiliza los datos del Checkpoint — no relanza las búsquedas que ya tiene en memoria.","Pagina desde la página 2, aplicando un stop inteligente: si el ratio de empresas que pasan el pre-score baja del 40% en dos páginas consecutivas, para.","Aplica exclusiones obligatorias: clientes actuales, prohibidas, competidores y sectores excluidos.","Deduplica entre segmentos: cada empresa aparece solo en el segmento donde mejor encaja."],
+team:["Solo tienes que esperar. No hay acción requerida en este paso."],
+how:null,outputs:[]},
+
+{phase:2,num:5,title:"Búsqueda de Contactos",actor:"auto",actorLabel:"Claude automático",time:"15–25 min",
+desc:"Claude encuentra el decisor correcto en cada empresa, buscando en lotes de 10 para maximizar la eficiencia. Solo gasta créditos en los contactos que merecen enriquecimiento.",
+claude:["<strong>Fase gratuita:</strong> búsqueda en lotes de 10 empresas simultáneas con <code>apollo_mixed_people_api_search</code>. Extrae: nombre, cargo, seniority, departamento y LinkedIn URL.","<strong>Pre-score combinado</strong> empresa + persona con los datos gratuitos. Los contactos con pre-score menor de 40 se descartan sin gastar un crédito.","<strong>Fase de créditos:</strong> solo para los contactos que superan el umbral — bulk_match en lotes de 10 para obtener email y teléfono.","Lógica DM-First: busca primero decisores, luego champions si quedan slots libres."],
+team:["Solo tienes que esperar. No hay acción requerida en este paso."],
+how:null,outputs:[]},
+
+{phase:2,num:6,title:"Checkpoint: Créditos",actor:"stop",actorLabel:"Parada obligatoria",time:"~2 min",
+desc:"Antes del enriquecimiento masivo, Claude te muestra exactamente cuántos contactos va a enriquecer por tier y el coste estimado. Tú decides si continuar o ajustar.",
+claude:["Calcula: Tier 1 (N contactos · waterfall completo: Apollo → Hunter → Dropcontact → Lusha) + Tier 2 (N contactos · solo Apollo + Hunter) + Tier 3 (N contactos · sin enriquecimiento).","Muestra la estimación de créditos y espera confirmación antes de continuar.","Si el volumen supera los 500 contactos Tier 1+2, la confirmación es obligatoria."],
+team:["Revisa los números y confirma si el volumen te parece razonable.","Si es demasiado alto, puedes pedirle que limite el enriquecimiento a Tier 1 únicamente."],
+how:{label:"Para confirmar y continuar:",cmd:`Opción A: "Adelante con el enriquecimiento."\nOpción B: "Enriquece solo Tier 1, sáltate Tier 2."\nOpción C: "Empieza solo con el segmento H1 y el resto lo hacemos después."`,notes:["Puedes hacer el enriquecimiento por fases: primero Tier 1, revisar resultados, y luego decidir si continuar con Tier 2."]},
+outputs:[]},
+
+{phase:2,num:7,title:"Enriquecimiento Clay",actor:"auto",actorLabel:"Claude automático",time:"20–40 min",
+desc:"Claude obtiene el email verificado para cada contacto según su tier, usando un waterfall de proveedores con stop-on-first-result para no gastar más de lo necesario.",
+claude:["<strong>Wishlist y Tier 1:</strong> waterfall completo — Apollo → Hunter.io → Dropcontact → Lusha/Kaspr. Para en cuanto hay email verificado.","<strong>Tier 2:</strong> waterfall reducido — Apollo + Hunter.io únicamente.","<strong>Tier 3:</strong> sin enriquecimiento activo, a menos que el email ya llegó gratis en la búsqueda.","<strong>Registro de deduplicación global:</strong> si el mismo contacto aparece en varios segmentos, copia los datos y no lo enriquece dos veces.","Señal extra: si el contacto lleva menos de 6 meses en su cargo, marca la señal «Nuevo ejecutivo»."],
+team:["Solo tienes que esperar. Es el paso más largo del pipeline."],
+how:null,outputs:[]},
+
+{phase:2,num:8,title:"Scoring + Tiering",actor:"auto",actorLabel:"Claude automático",time:"3–5 min",
+desc:"Cada contacto recibe dos puntuaciones y se clasifica en Tier 1 (prioridad máxima), Tier 2 (alta prioridad) o Tier 3 (segunda oleada).",
+claude:["<strong>ICP Score (0–100):</strong> ajuste entre el contacto/empresa y el perfil ideal. Componente empresa (60 pts): sector + empleados + país + señales. Componente persona (40 pts): cargo + nivel + departamento.","<strong>Accesibilidad Score (0–100):</strong> facilidad práctica de llegar. Tamaño empresa + email verificado + LinkedIn + accesibilidad del cargo.","<strong>Tier 1:</strong> wishlist con ICP &ge; 60 · o ICP &ge; 75 + Accesibilidad &ge; 50 · o Señal activa + ICP &ge; 65.","<strong>Tier 2:</strong> ICP &ge; 55 + Accesibilidad &ge; 35. <strong>Tier 3:</strong> ICP &ge; 35. Por debajo de 35, descartado."],
+team:["Solo tienes que esperar — este paso es rápido."],
+how:null,outputs:[]},
+
+{phase:2,num:9,title:"Copywriting",actor:"auto",actorLabel:"Claude automático",time:"20–40 min",
+desc:"Claude genera 5 assets de outreach personalizados por cada contacto, usando las señales de compra detectadas, los datos de la empresa y el tono definido en el template.",
+claude:["<strong>Icebreaker:</strong> 1 frase (máx. 25 palabras) hiper-personal — referencia algo específico del contacto o su empresa.","<strong>Email Paso 1:</strong> subject (máx. 8 palabras) + body. Estructura: icebreaker → problema → solución → resultado de cliente similar → CTA. Con variables LemList.","<strong>Email Follow-up:</strong> ángulo nuevo, más corto, asume silencio tras el primer email.","<strong>LinkedIn Connection Request:</strong> máx. 300 caracteres. Sin genéricos. No vende — solo conecta.","<strong>LinkedIn Mensaje:</strong> post-conexión, más directo y conversacional que el email."],
+team:["Cuando Claude termine, <strong>revisa una muestra</strong> de copies (3–5 contactos de diferentes segmentos) para validar que el tono es el correcto.","Si algo no encaja, díselo y Claude ajusta el segmento completo — no tienes que corregir contacto por contacto."],
+how:{label:"Para pedir ajustes de tono en un segmento:",cmd:`"En el segmento H1, los emails son demasiado formales — hazlos más directos y usa tuteo."\n\n"El icebreaker de los contactos de fintech es demasiado genérico — necesita referenciar algo concreto de la empresa."`,notes:["Si el tono del template estaba bien definido en Fase 1, los copies suelen salir bien a la primera."]},
+outputs:[]},
+
+{phase:2,num:10,title:"Exportar y Lanzar",actor:"human",actorLabel:"Tu acción",time:"~10 min",
+desc:"Claude genera los archivos finales listos para importar directamente en LemList. Tu trabajo es descargarlos, importarlos y compartir el informe con el cliente.",
+claude:["<strong>Excel LemList</strong> con 8 pestañas: Dashboard de métricas · Tier 1 · Tier 2 · Tier 3 · Wishlist · Base Completa · Descartadas · Sin Contacto.","<strong>Documento ejecutivo</strong> para el cliente: resumen de campaña, métricas del pipeline, distribución por segmento, top 10 empresas y análisis de señales.","Presenta un resumen: N empresas · N contactos · distribución Tier 1/2/3 · % email verificado · % LinkedIn · N señales activas."],
+team:["<strong>Descarga el Excel LemList</strong> y el documento ejecutivo.","En LemList: <strong>Leads → Import → sube el Excel</strong>. Usa la pestaña Tier 1 para la primera oleada.","<strong>Comparte el documento ejecutivo</strong> con el cliente como resumen de lo que va a recibir.","Guarda el Excel completo — lo necesitarás como referencia durante la campaña."],
+how:{label:"Proceso de importación en LemList:",cmd:`1. LemList → Leads → Import from CSV/Excel\n2. Sube la pestaña "Tier 1" del Excel\n3. Mapea campos: firstName, lastName, email, companyName, linkedinUrl\n4. Variables de copy: icebreaker, emailSubject, emailBody, liRequest, liMessage\n5. Asigna a la campaña correspondiente`,notes:["Las variables LemList ya están nombradas con los nombres exactos que LemList espera.","Empieza solo con Tier 1. Una vez validados los resultados en las primeras 2 semanas, lanza Tier 2."]},
+outputs:["[Cliente]_LemList_[fecha].xlsx (8 pestañas, listo para importar)","[Cliente]_Informe_Ejecutivo_[fecha].docx"]}
+];
+
+const P1 = STEPS.filter(s => s.phase === 1);
+let current = 0;
+let currentPhase = 1;
+
+function actorClass(a) {
+  return a==='auto'?'badge-auto':a==='both'?'badge-both':a==='stop'?'badge-stop':'badge-human';
+}
+
+function render(idx) {
+  const s = STEPS[idx];
+  const total = STEPS.length;
+  document.getElementById('progressBar').style.width = Math.round(((idx+1)/total)*100)+'%';
+
+  for (let i=0; i<total; i++) {
+    const el = document.getElementById('si-'+i);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (i===idx) el.classList.add('active');
+    else if (i<idx) el.classList.add('done');
+    const b = el.querySelector('.step-bubble');
+    if (i<idx) b.textContent='✓';
+    else b.textContent = STEPS[i].phase===2 ? i-P1.length+1 : i+1;
+  }
+
+  const claudeHtml = s.claude ? `
+    <div class="card card-claude">
+      <div class="card-header"><div class="card-icon">&#129302;</div>Claude hace esto automáticamente</div>
+      <div class="card-body"><ul>${s.claude.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+    </div>` : '';
+
+  const teamHtml = s.team && s.team.length ? `
+    <div class="card card-team">
+      <div class="card-header"><div class="card-icon">&#128100;</div>Tu acción</div>
+      <div class="card-body"><ul>${s.team.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+    </div>` : '';
+
+  const howHtml = s.how ? `
+    <div class="card card-how">
+      <div class="card-header"><div class="card-icon">&#128172;</div>Cómo hacerlo exactamente</div>
+      <div class="card-body">
+        <div class="cmd-label">${s.how.label}</div>
+        <div class="cmd-box">${s.how.cmd}</div>
+        ${s.how.notes ? `<ul class="how-notes">${s.how.notes.map(n=>`<li>${n}</li>`).join('')}</ul>` : ''}
+      </div>
+    </div>` : '';
+
+  const outputsHtml = s.outputs && s.outputs.length ? `
+    <div class="outputs-section">
+      <div class="outputs-label">Output de este paso</div>
+      ${s.outputs.map(o=>`<span class="output-tag">&#128206; ${o}</span>`).join('')}
+    </div>` : '';
+
+  const phaseName = s.phase===1 ? '1 · Discovery' : '2 · Pipeline';
+  const phaseBadge = `<span class="badge badge-phase">Fase ${phaseName} — Paso ${s.num}</span>`;
+  const actBadge = `<span class="badge ${actorClass(s.actor)}">${s.actorLabel}</span>`;
+  const timeBadge = `<span class="badge time-badge">${s.time}</span>`;
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="fade-in">
+      <div class="step-header">
+        <div class="step-big-num">${s.num}</div>
+        <div class="step-header-meta">
+          <h1>${s.title}</h1>
+          <div class="badges-row">${phaseBadge}${actBadge}${timeBadge}</div>
+        </div>
+      </div>
+      <p class="step-description">${s.desc}</p>
+      <div class="cards-grid">${claudeHtml}${teamHtml}${howHtml}</div>
+      ${outputsHtml}
+      <div class="nav-bar">
+        <button class="nav-btn ${idx===0?'disabled':''}" onclick="goTo(${idx-1})">&#8592; Anterior</button>
+        <span class="nav-counter">${idx+1} de ${total}</span>
+        <button class="nav-btn primary ${idx===total-1?'disabled':''}" onclick="goTo(${idx+1})">Siguiente &#8594;</button>
+      </div>
+    </div>`;
+  document.getElementById('mainContent').scrollTop = 0;
+}
+
+function goTo(idx) {
+  if (idx<0||idx>=STEPS.length) return;
+  current=idx;
+  const tp=STEPS[idx].phase;
+  if (tp!==currentPhase) switchPhase(tp);
+  render(current);
+}
+
+function switchPhase(phase) {
+  currentPhase=phase;
+  document.getElementById('tab1').classList.toggle('active', phase===1);
+  document.getElementById('tab2').classList.toggle('active', phase===2);
+  document.getElementById('sidebar-phase1').classList.toggle('hidden', phase===2);
+  document.getElementById('sidebar-phase2').classList.toggle('hidden', phase===1);
+  if (phase===1 && STEPS[current].phase!==1) current=0;
+  else if (phase===2 && STEPS[current].phase!==2) current=P1.length;
+  render(current);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
+  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   goTo(current-1);
+});
+
+render(0);
+</script>
+</body>
+</html>
