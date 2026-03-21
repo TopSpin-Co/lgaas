@@ -3,817 +3,591 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGaaS — Guía del Equipo · TopSpin</title>
+<title>LGaaS Activation — Step By Step Claude Cowork Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ── BRAND TOKENS ─────────────────────────────────────── */
-  :root {
-    --accent:        #E65926;
-    --accent-hover:  #CC4F22;
-    --bg:            #FDFBF7;
-    --bg-card:       #FFFFFF;
-    --bg-alt:        #F4F2EC;
-    --text:          #1A1A1A;
-    --text-muted:    #5C5C5C;
-    --border:        #E5E5E5;
-    --header-bg:     #1A1A1A;
+:root {
+  --bg-primary: #fdfbf7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f4f2ec;
+  --text-primary: #1a1a1a;
+  --text-secondary: #5c5c5c;
+  --accent: #e65926;
+  --accent-hover: #cc4f22;
+  --border: #e5e5e5;
+  --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --green: #2e7d32;
+  --blue: #1565c0;
+  --purple: #6a1b9a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height:1.6; }
 
-    /* Semantic card tokens — warm neutrals */
-    --claude-bg:     #F4F2EC;
-    --claude-border: #D0CCC3;
-    --claude-text:   #5C5C5C;
-    --team-bg:       #FDF8F4;
-    --team-border:   rgba(230,89,38,.25);
-    --team-text:     #CC4F22;
-    --how-bg:        #F2FAF4;
-    --how-border:    #A7D9B4;
-    --how-text:      #276140;
-    --stop-bg:       #FFFBF0;
-    --stop-border:   #F5D57A;
-    --stop-text:     #7A4D00;
+/* ── COVER ── */
+.cover {
+  min-height: 44vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  padding: 5rem 2rem 3.5rem;
+}
+.cover-logo { font-family: var(--font-body); font-weight:600; font-size:.82rem; letter-spacing:.15em; text-transform:uppercase; color: var(--accent); margin-bottom:1.5rem; }
+.cover h1 { font-family: var(--font-heading); font-size: clamp(2.25rem,5vw,3.5rem); font-weight:600; margin-bottom:.35rem; }
+.cover .sub { font-family: var(--font-heading); font-style:italic; color: var(--accent); font-size:1.2rem; margin-bottom:1.25rem; }
+.cover .meta { color: var(--text-secondary); font-size:.82rem; }
+.cover-stats { display:flex; gap:2.5rem; margin-top:1.75rem; flex-wrap:wrap; justify-content:center; }
+.cover-stat { text-align:center; }
+.cover-stat-num { font-family: var(--font-heading); font-size:2rem; font-weight:600; color: var(--accent); }
+.cover-stat-label { font-size:.7rem; font-weight:500; text-transform:uppercase; letter-spacing:.1em; color: var(--text-secondary); }
 
-    --step-w:        272px;
-    --r-btn:         4px;
-    --r-card:        8px;
-    --r-menu:        12px;
-    --shadow-card:   0 10px 30px rgba(0,0,0,.05);
-    --shadow-hover:  0 16px 40px rgba(0,0,0,.08);
-  }
+/* ── HOW BANNER ── */
+.how-banner { background: var(--bg-secondary); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1.25rem 2rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
+.how-step { display:flex; align-items:center; gap:.6rem; font-size:.85rem; }
+.how-num { width:24px; height:24px; border-radius:999px; background: var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; flex-shrink:0; }
+.how-arrow { color: var(--border); font-size:1.1rem; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── LAYOUT ── */
+.container { max-width:1400px; margin:0 auto; display:flex; min-height:calc(100vh - 340px); }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+/* ── SIDEBAR ── */
+.sidebar { width:260px; min-width:260px; background: var(--bg-secondary); border-right:1px solid var(--border); padding:1.5rem 0; position:sticky; top:0; height:100vh; overflow-y:auto; }
+.sidebar-label { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.12em; color: var(--text-secondary); padding:0 1.25rem .75rem; }
+.phase-div { padding:.85rem 1.25rem .35rem; font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.12em; color: var(--accent); border-top:1px solid var(--border); margin-top:.5rem; }
+.phase-div:first-of-type { border-top:none; margin-top:0; }
+.snav { list-style:none; }
+.snav-item { position:relative; }
+.snav-item::before { content:''; position:absolute; left:27px; top:0; bottom:0; width:1px; background: var(--border); }
+.snav-item:last-child::before { display:none; }
+.snav-link { display:flex; align-items:center; gap:.6rem; padding:.55rem 1.25rem; text-decoration:none; color: var(--text-primary); transition:all .15s; border-left:3px solid transparent; cursor:pointer; }
+.snav-link:hover,.snav-link.active { background: var(--bg-tertiary); border-left-color: var(--accent); }
+.snav-num { width:22px; height:22px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:600; flex-shrink:0; position:relative; z-index:1; border:2px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); transition:all .15s; }
+.snav-link.active .snav-num,.snav-link:hover .snav-num { background: var(--accent); color:#fff; border-color: var(--accent); }
+.snav-label { font-size:.78rem; line-height:1.25; }
+.snav-label small { display:block; font-size:.65rem; color: var(--text-secondary); font-weight:400; }
 
-  /* ── HEADER ─────────────────────────────── */
-  header {
-    background: var(--header-bg);
-    padding: 0 32px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,.3);
-  }
-  .logo img {
-    height: 30px;
-    width: auto;
-    display: block;
-  }
-  .header-pill {
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.15);
-    color: rgba(255,255,255,.75);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 14px;
-    border-radius: 20px;
-    letter-spacing: .3px;
-  }
+/* ── MAIN ── */
+.main { flex:1; padding:2rem 2.5rem; overflow-y:auto; }
+.step-section { display:none; animation:fadeIn .25s; }
+.step-section.visible { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
-  /* ── PHASE TABS ─────────────────────────── */
-  .phase-tabs {
-    background: #111111;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    display: flex;
-    align-items: center;
-    padding: 0 32px;
-  }
-  .phase-tab {
-    padding: 15px 26px;
-    cursor: pointer;
-    color: rgba(255,255,255,.5);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: .2px;
-    border-bottom: 2px solid transparent;
-    transition: all .2s;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    user-select: none;
-  }
-  .phase-tab:hover { color: rgba(255,255,255,.85); }
-  .phase-tab.active {
-    color: #FFFFFF;
-    border-bottom-color: var(--accent);
-  }
-  .phase-num {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: rgba(230,89,38,.2);
-    color: var(--accent);
-    font-size: 10px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    transition: all .2s;
-  }
-  .phase-tab.active .phase-num {
-    background: var(--accent);
-    color: white;
-  }
-  .tab-separator {
-    width: 1px;
-    height: 24px;
-    background: rgba(255,255,255,.1);
-    margin: 0 4px;
-  }
-  .total-time {
-    margin-left: auto;
-    color: rgba(255,255,255,.35);
-    font-size: 11px;
-    letter-spacing: .3px;
-  }
+/* ── STEP HEADER ── */
+.step-head { display:flex; align-items:flex-start; gap:1.25rem; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+.step-head-num { font-family: var(--font-heading); font-size:2.5rem; font-weight:600; color: var(--border); line-height:1; flex-shrink:0; }
+.step-head h3 { font-family: var(--font-heading); font-size:1.65rem; font-weight:600; margin-bottom:.15rem; }
+.step-head p { font-size:.88rem; color: var(--text-secondary); max-width:550px; }
 
-  /* ── PROGRESS BAR ────────────────────────── */
-  .progress-wrap {
-    position: fixed;
-    top: 105px;
-    left: 0; right: 0;
-    height: 2px;
-    background: rgba(230,89,38,.1);
-    z-index: 90;
-  }
-  .progress-bar {
-    height: 100%;
-    background: var(--accent);
-    transition: width .35s ease;
-  }
+/* ── TWO-COL LAYOUT: content left, meta right ── */
+.step-body { display:grid; grid-template-columns:1fr 280px; gap:2rem; }
+.step-content { min-width:0; }
+.step-meta { display:flex; flex-direction:column; gap:1rem; }
 
-  /* ── LAYOUT ─────────────────────────────── */
-  .layout {
-    display: flex;
-    flex: 1;
-  }
+/* ── META CARDS (right side) ── */
+.meta-card { background: var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:1.25rem; box-shadow: var(--card-shadow); }
+.meta-card-label { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.6rem; }
+.meta-card-label.time-l { color: var(--text-secondary); }
+.meta-card-label.skill-l { color: var(--accent); }
+.meta-card-label.conn-l { color: var(--purple); }
+.meta-card-label.docs-l { color: var(--green); }
+.meta-card-label.model-l { color: var(--blue); }
+.meta-time { font-family: var(--font-heading); font-size:1.5rem; font-weight:600; color: var(--accent); }
+.meta-time-sub { font-size:.72rem; color: var(--text-secondary); margin-top:.15rem; }
+.badge { display:inline-block; font-size:.65rem; font-weight:500; text-transform:uppercase; letter-spacing:.05em; padding:4px 10px; border-radius:20px; margin:2px; }
+.badge-skill { background:rgba(230,89,38,.08); color: var(--accent); border:1px solid rgba(230,89,38,.15); }
+.badge-conn { background:rgba(106,27,154,.08); color: var(--purple); border:1px solid rgba(106,27,154,.15); }
+.badge-doc { background:rgba(46,125,50,.08); color: var(--green); border:1px solid rgba(46,125,50,.15); }
+.badge-model { background:rgba(21,101,192,.08); color: var(--blue); border:1px solid rgba(21,101,192,.15); }
 
-  /* ── SIDEBAR ─────────────────────────────── */
-  .sidebar {
-    width: var(--step-w);
-    min-width: var(--step-w);
-    background: var(--bg-card);
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-    padding: 18px 0 40px;
-    position: sticky;
-    top: 105px;
-    height: calc(100vh - 105px);
-  }
+/* ── TRIGGER BOX ── */
+.trigger { background: var(--text-primary); border-radius:12px; padding:1.5rem 1.75rem; margin-bottom:1.5rem; }
+.trigger-label { font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.15em; color: var(--accent); margin-bottom:.5rem; }
+.trigger-cmd { font-family: var(--font-heading); font-size:1.4rem; font-weight:600; color:#fff; }
+.trigger-alt { margin-top:.6rem; font-size:.7rem; color:rgba(244,242,236,.45); }
+.trigger-alt span { background:rgba(230,89,38,.2); padding:2px 7px; border-radius:4px; color:rgba(230,89,38,.85); font-weight:500; margin-right:3px; }
 
-  .sidebar-label {
-    padding: 10px 20px 5px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    color: var(--accent);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-  .sidebar-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+/* ── CLAUDE FLOW ── */
+.flow { background: var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:1.5rem 1.75rem; margin-bottom:1.5rem; }
+.flow-title { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.12em; color: var(--blue); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+.flow-title::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--blue); }
+.fstep { display:flex; gap:.85rem; margin-bottom:1.1rem; position:relative; padding-left:2px; }
+.fstep:last-child { margin-bottom:0; }
+.fstep::before { content:''; position:absolute; left:12px; top:24px; bottom:-12px; width:1px; background: var(--border); }
+.fstep:last-child::before { display:none; }
+.fstep-num { width:24px; height:24px; border-radius:999px; background: var(--bg-tertiary); border:2px solid var(--blue); color: var(--blue); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:600; flex-shrink:0; z-index:1; }
+.fstep-body { flex:1; }
+.fstep-body strong { font-size:.82rem; display:block; margin-bottom:.25rem; }
+.bubble { background: var(--bg-tertiary); border-radius:8px; padding:.85rem 1.1rem; font-size:.8rem; line-height:1.65; margin-top:.35rem; border-left:3px solid var(--blue); }
+.bubble .opt { display:block; padding:2px 0; }
+.opt-l { font-weight:600; color: var(--blue); margin-right:3px; }
+.rec { font-size:.6rem; font-weight:600; color: var(--green); background:rgba(46,125,50,.1); padding:1px 5px; border-radius:3px; margin-left:3px; }
+.bubble em { color: var(--text-secondary); font-style:normal; font-size:.75rem; }
 
-  .step-item {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 9px 14px 9px 18px;
-    cursor: pointer;
-    transition: background .15s;
-    border-left: 3px solid transparent;
-  }
-  .step-item:hover { background: var(--bg); }
-  .step-item.active {
-    background: rgba(230,89,38,.04);
-    border-left-color: var(--accent);
-  }
-  .step-item.done { opacity: .7; }
+/* ── INPUT / OUTPUT ── */
+.io-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+.io-card { background: var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:1.25rem 1.5rem; }
+.io-label { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.6rem; }
+.io-label.in-l { color: var(--blue); }
+.io-label.out-l { color: var(--green); }
+.io-card ul { list-style:none; padding:0; }
+.io-card li { padding:3px 0; font-size:.82rem; padding-left:14px; position:relative; }
+.io-card li::before { content:''; position:absolute; left:0; top:10px; width:5px; height:5px; border-radius:50%; opacity:.35; }
+.io-card.in-c li::before { background: var(--blue); }
+.io-card.out-c li::before { background: var(--green); }
+.file-row { display:flex; align-items:center; gap:.65rem; background: var(--bg-tertiary); border-radius:6px; padding:.6rem .85rem; margin-top:.65rem; }
+.file-icon { width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:700; color:#fff; flex-shrink:0; }
+.f-xlsx { background: var(--green); }
+.f-docx { background: var(--blue); }
+.f-html { background: var(--accent); }
+.f-lem { background: var(--purple); }
+.file-row .fn { font-size:.75rem; font-weight:600; }
+.file-row .fm { font-size:.65rem; color: var(--text-secondary); }
 
-  .step-bubble {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border);
-    background: var(--bg-card);
-    font-size: 11px; font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    color: var(--text-muted);
-    transition: all .2s;
-    position: relative;
-  }
-  .step-item.active .step-bubble {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-  .step-item.done .step-bubble {
-    background: #EBF7EE;
-    border-color: #A7D9B4;
-    color: var(--how-text);
-  }
-  .step-item.done .step-bubble::after {
-    content: "✓";
-    position: absolute;
-    font-size: 12px;
-  }
+/* ── GATES ── */
+.gate { background: var(--bg-tertiary); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:.85rem 1.1rem; margin-bottom:.85rem; font-size:.82rem; }
+.gate strong { color: var(--accent); }
+.gate.credit { border-left-color: var(--purple); }
+.gate.credit strong { color: var(--purple); }
+.gate.sabi { border-left-color: var(--green); }
+.gate.sabi strong { color: var(--green); }
 
-  .step-text { flex: 1; min-width: 0; }
-  .step-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.3;
-  }
-  .step-item.active .step-name { color: var(--accent); font-weight: 600; }
-  .step-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+/* ── CYCLE ── */
+.cycle { background: var(--text-primary); color: var(--bg-tertiary); border-radius:12px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; text-align:center; }
+.cycle h4 { color: var(--accent); font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.15em; margin-bottom:.65rem; }
+.cycle-flow { display:flex; align-items:center; justify-content:center; gap:.4rem; flex-wrap:wrap; font-size:.72rem; font-weight:500; }
+.cycle-node { background:rgba(230,89,38,.12); border:1px solid rgba(230,89,38,.4); padding:4px 10px; border-radius:6px; color:#fff; }
+.cycle-arr { color: var(--accent); font-size:.9rem; }
 
-  /* Actor dots */
-  .actor-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dot-human { background: var(--accent); }
-  .dot-auto  { background: #5C5C5C; }
-  .dot-both  { background: #8B6B4A; }
-  .dot-stop  { background: var(--stop-text); }
+/* ── OVERVIEW EXTRAS ── */
+.conn-list { display:flex; flex-direction:column; gap:.65rem; }
+.conn-item { display:flex; align-items:center; gap:.65rem; }
+.conn-item .badge { min-width:80px; text-align:center; }
+.conn-desc { font-size:.78rem; color: var(--text-secondary); }
+.tip-grid { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; margin-top:1rem; }
+.tip { background: var(--bg-tertiary); border-radius:8px; padding:1rem 1.1rem; }
+.tip-title { font-size:.72rem; font-weight:600; color: var(--accent); margin-bottom:.25rem; }
+.tip p { font-size:.78rem; line-height:1.5; }
+.principle-item { padding:.4rem 0; font-size:.82rem; }
+.principle-item strong { color: var(--accent); }
 
-  /* ── MAIN ───────────────────────────────── */
-  .main {
-    flex: 1;
-    padding: 36px 40px 60px;
-    max-width: 860px;
-    min-width: 0;
-  }
+/* ── FOOTER ── */
+.guide-footer { text-align:center; padding:2.5rem 2rem; color: var(--text-secondary); font-size:.78rem; border-top:1px solid var(--border); }
 
-  /* Step header */
-  .step-header { margin-bottom: 28px; }
-  .step-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .step-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 10px;
-    line-height: 1.25;
-  }
-  .step-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  /* Badges */
-  .badge {
-    display: inline-block;
-    font-size: .7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    padding: 4px 12px;
-    border-radius: 20px;
-    background: rgba(230,89,38,.08);
-    color: var(--accent);
-    border: 1px solid rgba(230,89,38,.18);
-  }
-  .badge-claude { background: rgba(92,92,92,.07); color: var(--text-muted); border-color: rgba(92,92,92,.15); }
-  .badge-human  { background: rgba(230,89,38,.08); color: var(--accent);     border-color: rgba(230,89,38,.18); }
-  .badge-both   { background: rgba(139,107,74,.08); color: #6B4F2A;          border-color: rgba(139,107,74,.2); }
-  .badge-stop   { background: rgba(122,77,0,.07);  color: var(--stop-text);  border: 1px solid var(--stop-border); }
-  .time-badge   { background: var(--bg-alt); color: var(--text-muted); }
-
-  .step-description {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-muted);
-    margin-bottom: 26px;
-    max-width: 680px;
-  }
-
-  /* Cards */
-  .cards-grid { display: flex; flex-direction: column; gap: 14px; }
-
-  .card { border-radius: var(--r-card); border: 1px solid; overflow: hidden; box-shadow: var(--shadow-card); }
-  .card-header {
-    padding: 13px 20px;
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 600; font-size: 12px;
-    letter-spacing: .3px;
-    text-transform: uppercase;
-  }
-  .card-icon { font-size: 17px; width: 26px; text-align: center; }
-  .card-body {
-    padding: 16px 20px 18px;
-    font-size: 14px; line-height: 1.75;
-  }
-  .card-body ul { padding-left: 18px; display: flex; flex-direction: column; gap: 7px; }
-  .card-body li { padding-left: 3px; }
-  .card-body strong { font-weight: 600; }
-
-  .card-claude { border-color: var(--claude-border); }
-  .card-claude .card-header { background: var(--claude-bg); color: var(--claude-text); }
-  .card-claude .card-body   { background: var(--bg-card); }
-
-  .card-team { border-color: var(--team-border); }
-  .card-team .card-header { background: rgba(230,89,38,.06); color: var(--team-text); }
-  .card-team .card-body   { background: var(--team-bg); }
-
-  .card-how { border-color: var(--how-border); }
-  .card-how .card-header { background: var(--how-bg); color: var(--how-text); }
-  .card-how .card-body   { background: var(--bg-card); }
-
-  .card-stop { border-color: var(--stop-border); }
-  .card-stop .card-header { background: var(--stop-bg); color: var(--stop-text); }
-  .card-stop .card-body   { background: var(--bg-card); }
-
-  /* Card icon labels */
-  .card-icon-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    text-transform: uppercase;
-  }
-  .card-claude .card-icon-label { background: #D0CCC3; color: #5C5C5C; }
-  .card-team .card-icon-label   { background: rgba(230,89,38,.2); color: var(--accent-hover); }
-  .card-how .card-icon-label    { background: #A7D9B4; color: var(--how-text); font-size: 13px; font-weight: 700; }
-
-  /* Command box */
-  .cmd-label {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 1px; color: var(--how-text);
-    text-transform: uppercase; margin-bottom: 8px; opacity: .75;
-  }
-  .cmd-box {
-    background: #1A1A1A;
-    border-radius: var(--r-menu);
-    padding: 14px 18px;
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 13px;
-    color: #FDFBF7;
-    line-height: 1.65;
-    border-left: 3px solid var(--accent);
-    margin-bottom: 4px;
-  }
-  .cmd-box .ph { color: rgba(230,89,38,.8); font-style: italic; }
-  .how-notes {
-    margin-top: 12px;
-    display: flex; flex-direction: column; gap: 6px;
-    padding-left: 16px;
-  }
-  .how-notes li { font-size: 13px; color: var(--how-text); }
-
-  /* Output tags */
-  .outputs-section { margin-top: 8px; }
-  .outputs-label {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: .8px; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 8px;
-  }
-  .output-tag {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: white; border: 1px solid var(--how-border);
-    color: var(--how-text); font-size: 11px; font-weight: 600;
-    padding: 4px 11px; border-radius: 20px;
-    margin: 3px 4px 3px 0;
-  }
-
-  /* Navigation */
-  .nav-bar {
-    display: flex; align-items: center;
-    justify-content: space-between;
-    margin-top: 36px;
-    padding-top: 22px;
-    border-top: 1px solid var(--border);
-  }
-  .nav-btn {
-    display: flex; align-items: center; gap: 7px;
-    padding: 10px 22px; border-radius: var(--r-btn);
-    border: 2px solid var(--border);
-    background: white; color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; transition: all .2s;
-    text-decoration: none;
-  }
-  .nav-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-  .nav-btn.primary {
-    background: var(--accent); color: white;
-    border-color: var(--accent);
-  }
-  .nav-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: white; }
-  .nav-btn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
-  .nav-counter {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
+/* ── RESPONSIVE ── */
+@media (max-width:1100px) {
+  .container { flex-direction:column; }
+  .sidebar { width:100%; min-width:100%; height:auto; position:relative; border-right:none; border-bottom:1px solid var(--border); padding:.75rem 0; }
+  .snav { display:flex; flex-wrap:wrap; padding:0 .6rem; }
+  .snav-item::before { display:none; }
+  .snav-link { padding:.4rem .6rem; }
+  .snav-label small { display:none; }
+  .phase-div { display:none; }
+  .step-body { grid-template-columns:1fr; }
+  .step-meta { flex-direction:row; flex-wrap:wrap; }
+  .step-meta .meta-card { flex:1; min-width:140px; }
+  .io-grid { grid-template-columns:1fr; }
+  .tip-grid { grid-template-columns:1fr; }
+  .how-banner { display:none; }
+}
 </style>
 </head>
 <body>
 
-<div class="progress-wrap">
-  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <div class="cover-logo">TopSpin</div>
+  <h1>LGaaS Activation</h1>
+  <div class="sub">Step By Step Claude Cowork Guide</div>
+  <div class="meta">Plugin v1.2.0 &middot; Marzo 2026</div>
+  <div class="cover-stats">
+    <div class="cover-stat"><div class="cover-stat-num">11</div><div class="cover-stat-label">Skills</div></div>
+    <div class="cover-stat"><div class="cover-stat-num">6</div><div class="cover-stat-label">Conectores</div></div>
+    <div class="cover-stat"><div class="cover-stat-num">4</div><div class="cover-stat-label">Fases</div></div>
+    <div class="cover-stat"><div class="cover-stat-num">&infin;</div><div class="cover-stat-label">Ciclo cerrado</div></div>
+  </div>
 </div>
 
-<header>
-  <div class="logo">
-    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIwMDAgODAwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMjguNy4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMS4yLjAgQnVpbGQgMTQyKSAgLS0+CiAgPGc+CiAgICA8ZyBpZD0iTGF5ZXJfMSI+CiAgICAgIDxnPgogICAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzNjYuOSA1MC4zIDYyLjMgMzUyLjQgNjIuMyA1MC4zIDM2Ni45IDUwLjMiLz4KICAgICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMjcxLjEgMzg2LjEgNjMxLjQgNzQ5LjIgNjIuMyA3NDkuMiA2Mi4zIDU5My4zIDYzLjUgNTkyLjEgMjcxLjEgMzg2LjEiLz4KICAgICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNzYxLjMgNTAuMyA3NjEuMyA2MjIuNSA0MDAgMjU4LjMgNjA3LjYgNTIuMyA2MDkuOCA1MC4zIDc2MS4zIDUwLjMiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDA2LjYsNTYyLjJ2LTMzLjNoOS4zYzIuMiwwLDQuMi41LDUuOCwxLjQsMS42LjksMi45LDIuMSwzLjcsMy42LjksMS41LDEuMywzLjEsMS4zLDQuOXMtLjQsMy40LTEuMyw0LjhjLS45LDEuNC0yLjEsMi41LTMuNywzLjNsMTAsMTUuM2gtNi4xbC05LTE0aC00LjZ2MTRoLTUuM1pNMTAxMiw1NDMuN2gzLjljMS4zLDAsMi40LS4yLDMuMi0uNy44LS41LDEuNC0xLjEsMS45LTEuOS40LS44LjYtMS41LjYtMi4zLDAtMS40LS41LTIuNi0xLjYtMy41LTEtLjktMi40LTEuNC00LjEtMS40aC0zLjl2OS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwNDUuNiw1NjIuOGMtMi40LDAtNC41LS41LTYuNC0xLjYtMS45LTEtMy4zLTIuNS00LjQtNC4zLTEtMS44LTEuNi0zLjgtMS42LTYuMXMuNS00LjEsMS41LTUuOGMxLTEuNywyLjQtMy4xLDQuMS00LjEsMS43LTEsMy43LTEuNSw1LjgtMS41czQsLjUsNS44LDEuNSwzLjEsMi4zLDQuMSw0YzEsMS43LDEuNSwzLjYsMS41LDUuOHYyaC0xNGMtLjYsMC0xLjIsMC0xLjksMC0uNiwwLTEuMi0uMS0xLjgtLjIuMywxLjcsMS4xLDMuMSwyLjUsNC4zLDEuMywxLjEsMywxLjcsNC45LDEuN3MyLjctLjMsMy44LS45YzEuMi0uNiwyLjEtMS40LDIuOC0yLjNsMS4zLDUuMmMtMS4xLjktMi4zLDEuNS0zLjcsMi0xLjQuNC0yLjguNy00LjQuN1pNMTAzOC4zLDU0OWMxLjMtLjIsMi42LS40LDMuOC0uNGg1LjZjLjYsMCwxLjIsMCwxLjgsMCwuNiwwLDEuMS4xLDEuNy4yLS40LTEuNS0xLjEtMi43LTIuMy0zLjctMS4yLTEtMi42LTEuNC00LjItMS40cy0yLjkuNS00LjEsMS41LTIsMi4yLTIuMywzLjdaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTA2OS41LDU2My4zbC0xMS43LTIzLjNoNS44bDQsOC40Yy40LjcuNywxLjUsMSwyLjIuMy43LjYsMS42LDEsMi42LjMtMSwuNi0xLjgsMS0yLjYuMy0uNy43LTEuNSwxLTIuMmw0LTguNGg1LjZsLTExLjcsMjMuM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDk1LjYsNTYyLjhjLTIuNCwwLTQuNS0uNS02LjQtMS42LTEuOS0xLTMuMy0yLjUtNC40LTQuMy0xLTEuOC0xLjYtMy44LTEuNi02LjFzLjUtNC4xLDEuNS01LjhjMS0xLjcsMi40LTMuMSw0LjEtNC4xLDEuNy0xLDMuNy0xLjUsNS44LTEuNXM0LC41LDUuOCwxLjUsMy4xLDIuMyw0LjEsNGMxLDEuNywxLjUsMy42LDEuNSw1Ljh2MmgtMTRjLS42LDAtMS4yLDAtMS45LDAtLjYsMC0xLjItLjEtMS44LS4yLjMsMS43LDEuMSwzLjEsMi41LDQuMywxLjMsMS4xLDMsMS43LDQuOSwxLjdzMi43LS4zLDMuOC0uOWMxLjItLjYsMi4xLTEuNCwyLjgtMi4zbDEuMyw1LjJjLTEuMS45LTIuMywxLjUtMy43LDItMS40LjQtMi44LjctNC40LjdaTTEwODguMiw1NDljMS4zLS4yLDIuNS0uNCwzLjgtLjRoNS42Yy42LDAsMS4yLDAsMS44LDAsLjYsMCwxLjEuMSwxLjcuMi0uNC0xLjUtMS4xLTIuNy0yLjMtMy43cy0yLjYtMS40LTQuMi0xLjQtMi45LjUtNC4xLDEuNWMtMS4yLDEtMiwyLjItMi4zLDMuN1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTEwLjQsNTYyLjJ2LTIyLjJoNC43djNjLjgtMS4yLDEuOC0yLDMuMS0yLjcsMS4yLS42LDIuNS0uOSw0LS45czMsLjQsNC40LDEuMSwyLjUsMS45LDMuMywzLjNjLjgsMS41LDEuMywzLjIsMS4zLDUuM3YxM2gtNS4ydi0xMi4zYzAtMS41LS41LTIuOC0xLjQtNHMtMi4yLTEuNy0zLjgtMS43LTIuNS41LTMuNiwxLjQtMS42LDIuMy0xLjYsNC4ydjEyLjRoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTQ1LjIsNTYyLjhjLTEuNiwwLTMtLjQtNC40LTEuMXMtMi41LTEuOS0zLjMtMy4zYy0uOC0xLjUtMS4zLTMuMi0xLjMtNS4zdi0xM2g1LjJ2MTIuM2MwLDEuNS40LDIuOCwxLjMsNCwuOSwxLjEsMi4yLDEuNywzLjgsMS43czIuNS0uNSwzLjYtMS40YzEtMSwxLjYtMi4zLDEuNi00LjF2LTEyLjRoNS4ydjIyLjJoLTQuOHYtM2MtLjgsMS4yLTEuOCwyLTMuMSwyLjYtMS4yLjYtMi41LjktMy45LjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE3NCw1NjIuOGMtMi40LDAtNC41LS41LTYuNC0xLjYtMS45LTEtMy4zLTIuNS00LjQtNC4zcy0xLjYtMy44LTEuNi02LjEuNS00LjEsMS41LTUuOGMxLTEuNywyLjQtMy4xLDQuMS00LjEsMS43LTEsMy43LTEuNSw1LjgtMS41czQsLjUsNS44LDEuNSwzLjEsMi4zLDQuMSw0LDEuNSwzLjYsMS41LDUuOHYyaC0xNGMtLjYsMC0xLjIsMC0xLjksMC0uNiwwLTEuMi0uMS0xLjktLjIuMywxLjcsMS4xLDMuMSwyLjUsNC4zczMsMS43LDQuOSwxLjcsMi43LS4zLDMuOC0uOWMxLjItLjYsMi4xLTEuNCwyLjgtMi4zbDEuMyw1LjJjLTEuMS45LTIuMywxLjUtMy43LDJzLTIuOC43LTQuNC43Wk0xMTY2LjYsNTQ5YzEuMy0uMiwyLjYtLjQsMy44LS40aDUuNmMuNiwwLDEuMiwwLDEuOCwwLC42LDAsMS4xLjEsMS43LjItLjQtMS41LTEuMS0yLjctMi4zLTMuNy0xLjItMS0yLjYtMS40LTQuMi0xLjRzLTIuOS41LTQuMSwxLjVjLTEuMiwxLTIsMi4yLTIuMywzLjdaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTIxNi41LDU2Mi45Yy0yLjQsMC00LjctLjQtNi44LTEuMy0yLjEtLjktNC0yLjEtNS42LTMuNy0xLjYtMS42LTIuOS0zLjQtMy44LTUuNS0uOS0yLjEtMS4zLTQuMy0xLjMtNi43cy40LTQuNiwxLjMtNi43Yy45LTIuMSwyLjItMy45LDMuOC01LjUsMS42LTEuNiwzLjUtMi44LDUuNi0zLjcsMi4xLS45LDQuNC0xLjMsNi44LTEuM3M0LjcuNCw2LjgsMS4zYzIuMS45LDQsMi4xLDUuNiwzLjcsMS42LDEuNiwyLjksMy40LDMuOCw1LjUuOSwyLjEsMS40LDQuMywxLjQsNi43cy0uNSw0LjYtMS40LDYuN2MtLjksMi4xLTIuMiwzLjktMy44LDUuNXMtMy41LDIuOC01LjYsMy43Yy0yLjEuOS00LjQsMS4zLTYuOCwxLjNaTTEyMTYuNSw1NTcuN2MyLjIsMCw0LjItLjUsNi0xLjYsMS44LTEuMSwzLjItMi41LDQuMy00LjQsMS0xLjgsMS42LTMuOSwxLjYtNi4xcy0uNS00LjMtMS42LTYuMWMtMS0xLjgtMi41LTMuMy00LjMtNC40LTEuOC0xLjEtMy44LTEuNi02LTEuNnMtNC4yLjUtNiwxLjZjLTEuOCwxLjEtMy4yLDIuNS00LjMsNC40LTEsMS44LTEuNiwzLjktMS42LDYuMXMuNSw0LjIsMS42LDYuMWMxLDEuOCwyLjUsMy4zLDQuMyw0LjQsMS44LDEuMSwzLjgsMS42LDYsMS42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEyMzkuMSw1NzMuM3YtMzMuM2g0LjZ2Mi41Yy45LS45LDItMS43LDMuMy0yLjIsMS4zLS41LDIuNi0uOCw0LjEtLjhzMy45LjUsNS42LDEuNmMxLjcsMSwzLDIuNCw0LDQuMiwxLDEuOCwxLjUsMy43LDEuNSw1LjhzLS41LDQuMS0xLjUsNS44Yy0xLDEuOC0yLjMsMy4xLTQsNC4yLTEuNywxLTMuNSwxLjYtNS42LDEuNnMtMi41LS4yLTMuNy0uNi0yLjItMS0zLjEtMS44djEzLjFoLTUuMlpNMTI1MC41LDU1OGMxLjIsMCwyLjQtLjMsMy40LS45LDEtLjYsMS44LTEuNCwyLjQtMi41LjYtMSwuOS0yLjIuOS0zLjVzLS4zLTIuNC0uOS0zLjRjLS42LTEtMS40LTEuOS0yLjQtMi41LTEtLjYtMi4xLS45LTMuNC0uOXMtMi40LjMtMy40LjljLTEsLjYtMS44LDEuNC0yLjQsMi41LS42LDEtLjksMi4yLS45LDMuNXMuMywyLjQuOSwzLjRjLjYsMSwxLjQsMS45LDIuNCwyLjUsMSwuNiwyLjEuOSwzLjQuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMjc3LjksNTYyLjhjLTIuNCwwLTQuNS0uNS02LjQtMS42LTEuOS0xLTMuMy0yLjUtNC40LTQuMy0xLTEuOC0xLjYtMy44LTEuNi02LjFzLjUtNC4xLDEuNS01LjhjMS0xLjcsMi40LTMuMSw0LjEtNC4xLDEuNy0xLDMuNy0xLjUsNS44LTEuNXM0LC41LDUuOCwxLjUsMy4xLDIuMyw0LjEsNGMxLDEuNywxLjUsMy42LDEuNSw1Ljh2MmgtMTRjLS42LDAtMS4yLDAtMS45LDAtLjYsMC0xLjItLjEtMS45LS4yLjMsMS43LDEuMSwzLjEsMi41LDQuM3MzLDEuNyw0LjksMS43LDIuNy0uMywzLjgtLjljMS4yLS42LDIuMS0xLjQsMi44LTIuM2wxLjMsNS4yYy0xLjEuOS0yLjMsMS41LTMuNywycy0yLjguNy00LjQuN1pNMTI3MC41LDU0OWMxLjMtLjIsMi42LS40LDMuOC0uNGg1LjZjLjYsMCwxLjIsMCwxLjgsMCwuNiwwLDEuMS4xLDEuNy4yLS40LTEuNS0xLjEtMi43LTIuMy0zLjctMS4yLTEtMi42LTEuNC00LjItMS40cy0yLjkuNS00LjEsMS41Yy0xLjIsMS0yLDIuMi0yLjMsMy43WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEyOTIuOCw1NjIuMnYtMjIuMmg0Ljd2My45Yy44LTEuMywxLjgtMi4zLDMtMywxLjItLjcsMi43LTEuMSw0LjQtMS4xbDEuMiw0LjhjLS41LS4xLTEtLjItMS42LS4yLTIsMC0zLjYuNi00LjgsMS45LTEuMiwxLjMtMS44LDMuMS0xLjgsNS40djEwLjVoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMzE5LjMsNTYyLjdjLTIsMC0zLjktLjUtNS41LTEuNnMtMy0yLjQtNC00LjJjLTEtMS43LTEuNS0zLjctMS41LTUuOHMuNS00LjEsMS41LTUuOGMxLTEuNywyLjMtMy4xLDQtNC4yczMuNS0xLjYsNS41LTEuNiwyLjkuMyw0LjEuOGMxLjMuNSwyLjQsMS4zLDMuMywyLjJ2LTIuNmg0LjZ2MjIuMmgtNC42di0yLjZjLS45LjktMiwxLjctMy4zLDIuMnMtMi42LjgtNC4xLjhaTTEzMjAsNTU4YzEuMiwwLDIuNC0uMywzLjQtLjksMS0uNiwxLjgtMS40LDIuNC0yLjVzLjktMi4yLjktMy41LS4zLTIuNC0uOS0zLjRjLS42LTEtMS40LTEuOS0yLjQtMi41LTEtLjYtMi4xLS45LTMuNC0uOXMtMi40LjMtMy40LjljLTEsLjYtMS44LDEuNC0yLjQsMi41cy0uOSwyLjItLjksMy41LjMsMi40LjksMy40LDEuNCwxLjksMi40LDIuNWMxLC42LDIuMS45LDMuNC45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzMzkuOSw1NjIuMnYtMThoLTQuNnYtNC4yaDQuN3YtNy40aDV2Ny40aDV2NC4yaC00Ljh2MThoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMzU2LjYsNTM2LjRjLS45LDAtMS42LS4zLTIuMi0uOS0uNi0uNi0uOS0xLjMtLjktMi4ycy4zLTEuNi45LTIuMmMuNi0uNiwxLjMtLjksMi4yLS45czEuNi4zLDIuMi45Yy42LjYuOSwxLjMuOSwyLjJzLS4zLDEuNi0uOSwyLjJjLS42LjYtMS4zLjktMi4yLjlaTTEzNTQsNTYyLjJ2LTIyLjJoNS4ydjIyLjJoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMzc1LjgsNTYyLjhjLTIuMiwwLTQuMi0uNS02LTEuNi0xLjgtMS0zLjItMi41LTQuMy00LjItMS4xLTEuOC0xLjYtMy43LTEuNi01LjlzLjUtNC4xLDEuNi01LjljMS4xLTEuOCwyLjUtMy4yLDQuMy00LjIsMS44LTEsMy44LTEuNiw2LTEuNnM0LjIuNSw2LDEuNmMxLjgsMSwzLjIsMi41LDQuMyw0LjIsMS4xLDEuOCwxLjYsMy43LDEuNiw1LjlzLS41LDQuMS0xLjYsNS45Yy0xLjEsMS44LTIuNSwzLjItNC4zLDQuMi0xLjgsMS0zLjgsMS42LTYsMS42Wk0xMzc1LjgsNTU4YzEuMywwLDIuNC0uMywzLjQtLjksMS0uNiwxLjktMS41LDIuNS0yLjUuNi0xLC45LTIuMi45LTMuNXMtLjMtMi40LS45LTMuNWMtLjYtMS0xLjQtMS45LTIuNS0yLjUtMS0uNi0yLjItLjktMy40LS45cy0yLjQuMy0zLjQuOWMtMSwuNi0xLjgsMS41LTIuNSwyLjUtLjYsMS0uOSwyLjItLjksMy41cy4zLDIuNC45LDMuNWMuNiwxLDEuNCwxLjksMi40LDIuNSwxLC42LDIuMi45LDMuNS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOTIuMyw1NjIuMnYtMjIuMmg0Ljd2M2MuOC0xLjIsMS44LTIsMy4xLTIuNywxLjItLjYsMi41LS45LDQtLjlzMywuNCw0LjQsMS4xLDIuNSwxLjksMy4zLDMuM2MuOCwxLjUsMS4zLDMuMiwxLjMsNS4zdjEzaC01LjJ2LTEyLjNjMC0xLjUtLjUtMi44LTEuNC00cy0yLjItMS43LTMuOC0xLjctMi41LjUtMy42LDEuNGMtMSwuOS0xLjYsMi4zLTEuNiw0LjJ2MTIuNGgtNS4yWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0MjUsNTYyLjhjLTEuMywwLTIuNy0uMi00LjEtLjctMS40LS41LTIuNi0xLjItMy41LTIuMWwxLjMtNS4yYy43LDEuMSwxLjcsMS45LDIuOCwyLjcsMS4yLjcsMi40LDEuMSwzLjcsMS4xczEuOC0uMiwyLjMtLjdjLjUtLjUuNy0xLC43LTEuN3MtLjMtMS4zLS44LTEuNmMtLjUtLjQtMS0uNi0xLjUtLjhsLTMuMS0xLjFjLS42LS4yLTEuMy0uNi0yLjItMS4xLS44LS41LTEuNS0xLjEtMi4yLTEuOS0uNi0uOC0uOS0xLjktLjktMy4zcy4zLTIuNC45LTMuNGMuNi0xLDEuNS0xLjksMi42LTIuNSwxLjEtLjYsMi41LS45LDQuMS0uOXMyLjcuMiw0LC43LDIuMywxLjEsMy4xLDEuOWwtMS4zLDUuMWMtLjctMS4xLTEuNi0xLjktMi43LTIuNi0xLjEtLjYtMi4xLS45LTMuMi0uOXMtMS42LjItMi4xLjctLjcsMS0uNywxLjYuMi45LjUsMS4yYy4zLjQuOC43LDEuNiwxbDIuOSwxLjFjLjcuMiwxLjUuNiwyLjMsMS4xLjkuNSwxLjYsMS4xLDIuMywyczEsMiwxLDMuNS0uNywzLjgtMi4yLDVjLTEuNSwxLjMtMy40LDEuOS01LjgsMS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0NjUuNCw1NjIuOWMtMi40LDAtNC43LS40LTYuOC0xLjMtMi4xLS45LTQtMi4xLTUuNi0zLjctMS42LTEuNi0yLjktMy40LTMuOC01LjUtLjktMi4xLTEuMy00LjMtMS4zLTYuN3MuNC00LjYsMS4zLTYuN2MuOS0yLjEsMi4yLTMuOSwzLjgtNS41LDEuNi0xLjYsMy41LTIuOCw1LjYtMy43LDIuMS0uOSw0LjQtMS4zLDYuOC0xLjNzNC40LjQsNi40LDEuMmMyLC44LDMuOCwxLjksNS4zLDMuM2wtMS42LDYuNGMtMS0xLjctMi40LTMuMS00LjItNC4xLTEuOC0xLjEtMy43LTEuNi01LjktMS42cy00LjIuNS02LDEuNmMtMS44LDEuMS0zLjIsMi41LTQuMyw0LjQtMSwxLjgtMS42LDMuOS0xLjYsNi4xcy41LDQuMiwxLjYsNi4xYzEsMS44LDIuNSwzLjMsNC4zLDQuNCwxLjgsMS4xLDMuOCwxLjYsNiwxLjZzNC4yLS41LDUuOS0xLjZjMS44LTEuMSwzLjItMi41LDQuMi00LjFsMS42LDYuNGMtMS42LDEuNC0zLjMsMi41LTUuMywzLjMtMiwuOC00LjEsMS4yLTYuNCwxLjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ5Mi4xLDU2Mi44Yy0yLjIsMC00LjItLjUtNi0xLjYtMS44LTEtMy4yLTIuNS00LjMtNC4yLTEuMS0xLjgtMS42LTMuNy0xLjYtNS45cy41LTQuMSwxLjYtNS45YzEuMS0xLjgsMi41LTMuMiw0LjMtNC4yLDEuOC0xLDMuOC0xLjYsNi0xLjZzNC4yLjUsNiwxLjZjMS44LDEsMy4yLDIuNSw0LjMsNC4yLDEuMSwxLjgsMS42LDMuNywxLjYsNS45cy0uNSw0LjEtMS42LDUuOWMtMS4xLDEuOC0yLjUsMy4yLTQuMyw0LjItMS44LDEtMy44LDEuNi02LDEuNlpNMTQ5Mi4xLDU1OGMxLjMsMCwyLjQtLjMsMy40LS45LDEtLjYsMS45LTEuNSwyLjUtMi41LjYtMSwuOS0yLjIuOS0zLjVzLS4zLTIuNC0uOS0zLjVjLS42LTEtMS40LTEuOS0yLjUtMi41LTEtLjYtMi4yLS45LTMuNC0uOXMtMi40LjMtMy40LjljLTEsLjYtMS44LDEuNS0yLjUsMi41LS42LDEtLjksMi4yLS45LDMuNXMuMywyLjQuOSwzLjVjLjYsMSwxLjQsMS45LDIuNCwyLjUsMSwuNiwyLjIuOSwzLjUuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNTA4LjYsNTYyLjJ2LTIyLjJoNC43djNjLjgtMS4yLDEuOC0yLDMuMS0yLjcsMS4yLS42LDIuNS0uOSw0LS45czMsLjQsNC40LDEuMSwyLjUsMS45LDMuMywzLjNjLjgsMS41LDEuMywzLjIsMS4zLDUuM3YxM2gtNS4ydi0xMi4zYzAtMS41LS41LTIuOC0xLjQtNHMtMi4yLTEuNy0zLjgtMS43LTIuNS41LTMuNiwxLjRjLTEsLjktMS42LDIuMy0xLjYsNC4ydjEyLjRoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNTQxLjMsNTYyLjhjLTEuMywwLTIuNy0uMi00LjEtLjctMS40LS41LTIuNi0xLjItMy41LTIuMWwxLjMtNS4yYy43LDEuMSwxLjcsMS45LDIuOCwyLjcsMS4yLjcsMi40LDEuMSwzLjcsMS4xczEuOC0uMiwyLjMtLjdjLjUtLjUuNy0xLC43LTEuN3MtLjMtMS4zLS44LTEuNmMtLjUtLjQtMS0uNi0xLjUtLjhsLTMuMS0xLjFjLS42LS4yLTEuMy0uNi0yLjItMS4xLS44LS41LTEuNS0xLjEtMi4yLTEuOS0uNi0uOC0uOS0xLjktLjktMy4zcy4zLTIuNC45LTMuNGMuNi0xLDEuNS0xLjksMi42LTIuNSwxLjEtLjYsMi41LS45LDQuMS0uOXMyLjcuMiw0LC43LDIuMywxLjEsMy4xLDEuOWwtMS4zLDUuMWMtLjctMS4xLTEuNi0xLjktMi43LTIuNi0xLjEtLjYtMi4xLS45LTMuMi0uOXMtMS42LjItMi4xLjctLjcsMS0uNywxLjYuMi45LjUsMS4yYy4zLjQuOC43LDEuNiwxbDIuOSwxLjFjLjcuMiwxLjUuNiwyLjMsMS4xLjkuNSwxLjYsMS4xLDIuMywyczEsMiwxLDMuNS0uNywzLjgtMi4yLDVjLTEuNSwxLjMtMy40LDEuOS01LjgsMS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE1NjIuNiw1NjIuOGMtMS42LDAtMy0uNC00LjQtMS4xcy0yLjUtMS45LTMuMy0zLjNjLS44LTEuNS0xLjMtMy4yLTEuMy01LjN2LTEzaDUuMnYxMi4zYzAsMS41LjQsMi44LDEuNCw0LC45LDEuMSwyLjIsMS43LDMuOCwxLjdzMi41LS41LDMuNi0xLjRjMS0xLDEuNi0yLjMsMS42LTQuMXYtMTIuNGg1LjJ2MjIuMmgtNC44di0zYy0uOCwxLjItMS44LDItMy4xLDIuNi0xLjIuNi0yLjUuOS0zLjkuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNTgwLjMsNTYyLjJ2LTM1LjVoNS4ydjM1LjVoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNTk0LjIsNTYyLjJ2LTE4aC00LjZ2LTQuMmg0Ljd2LTcuNGg1djcuNGg1djQuMmgtNC44djE4aC01LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxMC45LDUzNi40Yy0uOSwwLTEuNi0uMy0yLjItLjktLjYtLjYtLjktMS4zLS45LTIuMnMuMy0xLjYuOS0yLjJjLjYtLjYsMS4zLS45LDIuMi0uOXMxLjYuMywyLjIuOWMuNi42LjksMS4zLjksMi4ycy0uMywxLjYtLjksMi4yYy0uNi42LTEuMy45LTIuMi45Wk0xNjA4LjMsNTYyLjJ2LTIyLjJoNS4ydjIyLjJoLTUuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjE5LjUsNTYyLjJ2LTIyLjJoNC43djNjLjgtMS4yLDEuOC0yLDMuMS0yLjcsMS4yLS42LDIuNS0uOSw0LS45czMsLjQsNC40LDEuMSwyLjUsMS45LDMuMywzLjNjLjgsMS41LDEuMywzLjIsMS4zLDUuM3YxM2gtNS4ydi0xMi4zYzAtMS41LS41LTIuOC0xLjQtNC0uOS0xLjItMi4yLTEuNy0zLjgtMS43cy0yLjUuNS0zLjYsMS40Yy0xLC45LTEuNiwyLjMtMS42LDQuMnYxMi40aC01LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTY1NS4xLDU3My45Yy0xLjcsMC0zLjMtLjItNC44LS43cy0yLjgtMS4yLTMuOS0ybDEuMy01LjVjLjgsMS4xLDEuOCwxLjksMywyLjZzMi43LDEsNC4zLDFjMi40LDAsNC4zLS43LDUuNy0yLjFzMi4xLTMuMiwyLjEtNS40di0yLjFjLS45LjktMiwxLjctMy4zLDIuMi0xLjMuNS0yLjYuOC00LjEuOHMtMy45LS41LTUuNS0xLjZjLTEuNy0xLTMtMi40LTQtNC4yLTEtMS43LTEuNS0zLjctMS41LTUuOHMuNS00LjEsMS41LTUuOGMxLTEuNywyLjMtMy4xLDQtNC4yLDEuNy0xLDMuNS0xLjYsNS41LTEuNnMyLjkuMyw0LjEuOGMxLjMuNSwyLjQsMS4zLDMuMywyLjJ2LTIuNmg0LjZ2MjIuM2MwLDIuNC0uNiw0LjUtMS43LDYuMi0xLjEsMS43LTIuNywzLTQuNiw0cy0zLjksMS40LTYuMSwxLjRaTTE2NTYuMiw1NThjMS4yLDAsMi40LS4zLDMuNC0uOSwxLS42LDEuOC0xLjQsMi40LTIuNXMuOS0yLjIuOS0zLjUtLjMtMi40LS45LTMuNGMtLjYtMS0xLjQtMS45LTIuNC0yLjUtMS0uNi0yLjEtLjktMy40LS45cy0yLjQuMy0zLjQuOWMtMSwuNi0xLjgsMS40LTIuNCwyLjVzLS45LDIuMi0uOSwzLjUuMywyLjQuOSwzLjQsMS40LDEuOSwyLjQsMi41YzEsLjYsMi4xLjksMy40LjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTcwMS40LDU2Mi45Yy0yLjUsMC00LjgtLjQtNi45LTEuM3MtNC0yLjEtNS42LTMuN2MtMS42LTEuNi0yLjktMy40LTMuOC01LjUtLjktMi4xLTEuMy00LjQtMS4zLTYuOHMuNC00LjcsMS4zLTYuOGMuOS0yLjEsMi4yLTMuOSwzLjgtNS41czMuNS0yLjgsNS42LTMuN2MyLjEtLjksNC40LTEuMyw2LjktMS4zczQuNS40LDYuNSwxLjJjMiwuOCwzLjgsMS45LDUuNCwzLjNsLTEuNiw2LjRjLTEtMS43LTIuNC0zLTQuMi00LjEtMS44LTEuMS0zLjgtMS42LTYuMS0xLjZzLTQuMy41LTYuMSwxLjZjLTEuOCwxLjEtMy4yLDIuNS00LjMsNC40LTEuMSwxLjgtMS42LDMuOS0xLjYsNi4ycy41LDQuNCwxLjYsNi4yYzEsMS44LDIuNSwzLjMsNC4zLDQuNCwxLjgsMS4xLDMuOCwxLjYsNi4xLDEuNnMyLjMtLjEsMy40LS40YzEuMS0uMywyLS43LDIuOS0xLjF2LTcuNmgtOHYtNC43aDEzdjE1LjRjLTEuNSwxLjEtMy4yLDItNS4yLDIuNi0xLjkuNi00LC45LTYuMS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE3MTksNTYyLjJ2LTIyLjJoNC43djMuOWMuOC0xLjMsMS44LTIuMywzLTMsMS4yLS43LDIuNy0xLjEsNC40LTEuMWwxLjIsNC44Yy0uNS0uMS0xLS4yLTEuNi0uMi0yLDAtMy42LjYtNC44LDEuOS0xLjIsMS4zLTEuOCwzLjEtMS44LDUuNHYxMC41aC01LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTc0Ni4zLDU2Mi44Yy0yLjIsMC00LjItLjUtNi0xLjZzLTMuMi0yLjUtNC4zLTQuMmMtMS4xLTEuOC0xLjYtMy43LTEuNi01LjlzLjUtNC4xLDEuNi01LjljMS4xLTEuOCwyLjUtMy4yLDQuMy00LjIsMS44LTEsMy44LTEuNiw2LTEuNnM0LjIuNSw2LDEuNmMxLjgsMSwzLjIsMi41LDQuMyw0LjIsMS4xLDEuOCwxLjYsMy43LDEuNiw1LjlzLS41LDQuMS0xLjYsNS45Yy0xLjEsMS44LTIuNSwzLjItNC4zLDQuMi0xLjgsMS0zLjgsMS42LTYsMS42Wk0xNzQ2LjMsNTU4YzEuMywwLDIuNC0uMywzLjQtLjksMS0uNiwxLjktMS41LDIuNS0yLjUuNi0xLC45LTIuMi45LTMuNXMtLjMtMi40LS45LTMuNWMtLjYtMS0xLjQtMS45LTIuNS0yLjUtMS0uNi0yLjItLjktMy40LS45cy0yLjQuMy0zLjQuOWMtMSwuNi0xLjgsMS41LTIuNSwyLjUtLjYsMS0uOSwyLjItLjksMy41cy4zLDIuNC45LDMuNWMuNiwxLDEuNCwxLjksMi40LDIuNSwxLC42LDIuMi45LDMuNS45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE3NzEuMyw1NjIuOGMtMS42LDAtMy0uNC00LjQtMS4xcy0yLjUtMS45LTMuMy0zLjNjLS44LTEuNS0xLjMtMy4yLTEuMy01LjN2LTEzaDUuMnYxMi4zYzAsMS41LjQsMi44LDEuNCw0LC45LDEuMSwyLjIsMS43LDMuOCwxLjdzMi41LS41LDMuNi0xLjRjMS0xLDEuNi0yLjMsMS42LTQuMXYtMTIuNGg1LjJ2MjIuMmgtNC44di0zYy0uOCwxLjItMS44LDItMy4xLDIuNi0xLjIuNi0yLjUuOS0zLjkuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNzg5LjEsNTczLjN2LTMzLjNoNC42djIuNWMuOS0uOSwyLTEuNywzLjMtMi4yLDEuMy0uNSwyLjYtLjgsNC4xLS44czMuOS41LDUuNiwxLjZjMS43LDEsMywyLjQsNCw0LjIsMSwxLjgsMS41LDMuNywxLjUsNS44cy0uNSw0LjEtMS41LDUuOGMtMSwxLjgtMi4zLDMuMS00LDQuMi0xLjcsMS0zLjUsMS42LTUuNiwxLjZzLTIuNS0uMi0zLjctLjYtMi4yLTEtMy4xLTEuOHYxMy4xaC01LjJaTTE4MDAuNCw1NThjMS4yLDAsMi40LS4zLDMuNC0uOSwxLS42LDEuOC0xLjQsMi40LTIuNS42LTEsLjktMi4yLjktMy41cy0uMy0yLjQtLjktMy40Yy0uNi0xLTEuNC0xLjktMi40LTIuNS0xLS42LTIuMS0uOS0zLjQtLjlzLTIuNC4zLTMuNC45Yy0xLC42LTEuOCwxLjQtMi40LDIuNS0uNiwxLS45LDIuMi0uOSwzLjVzLjMsMi40LjksMy40Yy42LDEsMS40LDEuOSwyLjQsMi41LDEsLjYsMi4xLjksMy40LjlaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODgxLjQsMzE5LjV2LTI5aDEyMS42djI5aC00NC4zdjE0OC40aC0zMi45di0xNDguNGgtNDQuM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTE2LjEsNDcxLjRjLTEyLjksMC0yNS0yLjQtMzYuMy03LjItMTEuMy00LjgtMjEuMi0xMS40LTI5LjgtMTkuOC04LjUtOC40LTE1LjItMTguMi0yMC4xLTI5LjQtNC45LTExLjItNy4zLTIzLjEtNy4zLTM1LjlzMi40LTI0LjcsNy4zLTM1LjljNC45LTExLjIsMTEuNi0yMSwyMC4xLTI5LjQsOC41LTguNCwxOC41LTE1LDI5LjgtMTkuOCwxMS4zLTQuOCwyMy40LTcuMiwzNi4zLTcuMnMyNS4xLDIuNCwzNi40LDcuMmMxMS4yLDQuOCwyMS4xLDExLjQsMjkuNywxOS44LDguNSw4LjQsMTUuMiwxOC4yLDIwLjEsMjkuNCw0LjksMTEuMiw3LjMsMjMuMSw3LjMsMzUuOXMtMi40LDI0LjctNy4zLDM1LjljLTQuOSwxMS4yLTExLjYsMjEtMjAuMSwyOS40LTguNSw4LjQtMTguNCwxNS0yOS43LDE5LjgtMTEuMiw0LjgtMjMuMyw3LjItMzYuNCw3LjJaTTExMTYuMSw0NDAuNWMxMS4yLDAsMjEuMy0yLjgsMzAuMy04LjNzMTYuMy0xMi45LDIxLjYtMjIuM2M1LjMtOS4zLDgtMTkuNiw4LTMwLjlzLTIuNy0yMS41LTgtMzAuN2MtNS4zLTkuMi0xMi41LTE2LjYtMjEuNi0yMi4xLTkuMS01LjUtMTkuMi04LjMtMzAuMy04LjNzLTIxLjUsMi44LTMwLjUsOC4zYy05LjEsNS41LTE2LjIsMTIuOS0yMS41LDIyLjItNS4zLDkuMy03LjksMTkuNS03LjksMzAuOHMyLjYsMjEuNiw3LjksMzAuOGM1LjMsOS4zLDEyLjQsMTYuNywyMS41LDIyLjIsOS4xLDUuNSwxOS4yLDguMywzMC41LDguM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMjQxLDQ2Ny45di0xNzcuM2g1MWMxMi4yLDAsMjIuNiwxLjgsMzEsNS40LDguNSwzLjYsMTUuMyw4LjQsMjAuNSwxNC4zLDUuMiw1LjksOSwxMi4zLDExLjMsMTkuMywyLjQsNywzLjUsMTMuOSwzLjUsMjAuN3MtMS4yLDEzLjMtMy40LDIwLjJjLTIuMyw2LjktNi4xLDEzLjMtMTEuMywxOS4zLTUuMyw2LTEyLjEsMTAuOC0yMC41LDE0LjQtOC40LDMuNi0xOC44LDUuNC0zMS4xLDUuNGgtMTkuOXY1OC4zaC0zMS4xWk0xMjcyLjEsMzgxLjZoMTguMWM5LjEsMCwxNi4yLTEuNiwyMS40LTQuNyw1LjItMy4yLDguOS03LjEsMTEuMi0xMS45LDIuMy00LjgsMy40LTkuOCwzLjQtMTQuOXMtMS4xLTkuNy0zLjItMTQuNmMtMi4yLTQuOS01LjktOC45LTExLjEtMTIuMS01LjMtMy4yLTEyLjUtNC44LTIxLjctNC44aC0xOC4xdjYzLjFaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ4OC41LDQ3MS40Yy0xMC42LDAtMjAuNy0yLTMwLTYuMS05LjQtNC4xLTE2LjgtOS0yMi40LTE0LjhsOC45LTM2LjNjNC4zLDcuOSwxMC42LDE0LjUsMTguNywyMCw4LjEsNS41LDE2LjgsOC4yLDI2LDguMnMxMy45LTIuMiwxOC41LTYuNmM0LjYtNC40LDYuOS05LjgsNi45LTE2LjNzLTEuMi05LjMtMy41LTEyLjZjLTIuNC0zLjMtNS4xLTUuOS04LjMtOC0zLjItMi01LjgtMy42LTguMS00LjZsLTIxLjEtMTAuNmMtNS40LTIuOC0xMC44LTYuMS0xNi4yLTkuOS01LjQtMy45LTkuOS04LjktMTMuNS0xNS0zLjYtNi4xLTUuNC0xMy43LTUuNC0yMi44czIuMi0xOC4zLDYuNy0yNS42YzQuNS03LjQsMTAuNy0xMy4xLDE4LjgtMTcuMnMxNy40LTYuMiwyOC4xLTYuMiwxOS40LDEuNywyNy40LDVjOCwzLjQsMTQuNCw2LjksMTkuMywxMC43bC04LjUsMzUuNWMtNC43LTYuNC0xMC42LTExLjgtMTcuNy0xNi4yLTcuMS00LjMtMTQuNC02LjUtMjEuOS02LjVzLTEyLjEsMS44LTE1LjksNS40Yy0zLjcsMy42LTUuNiw4LjEtNS42LDEzLjVzLjgsNi42LDIuNSw5LjNjMS42LDIuNiwzLjgsNC45LDYuNSw2LjgsMi43LDEuOSw1LjYsMy42LDguOCw1LjJsMjEuNSwxMC42YzMuMywxLjYsNywzLjcsMTEuMSw2LjMsNC4xLDIuNiw4LjIsNS45LDEyLjEsMTAsMy45LDQsNy4yLDguOSw5LjgsMTQuNiwyLjYsNS43LDMuOCwxMi41LDMuOCwyMC40cy0yLjQsMTkuNC03LjIsMjcuNWMtNC44LDguMS0xMS40LDE0LjUtMTkuOSwxOS4yLTguNSw0LjctMTguNiw3LjEtMzAuMiw3LjFaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTU3NSw0NjcuOXYtMTc3LjNoNTFjMTIuMiwwLDIyLjYsMS44LDMxLDUuNCw4LjUsMy42LDE1LjMsOC40LDIwLjUsMTQuMyw1LjIsNS45LDksMTIuMywxMS4zLDE5LjMsMi40LDcsMy41LDEzLjksMy41LDIwLjdzLTEuMiwxMy4zLTMuNCwyMC4yYy0yLjMsNi45LTYuMSwxMy4zLTExLjMsMTkuMy01LjMsNi0xMi4xLDEwLjgtMjAuNSwxNC40LTguNCwzLjYtMTguOCw1LjQtMzEuMSw1LjRoLTE5Ljl2NTguM2gtMzEuMVpNMTYwNi4xLDM4MS42aDE4LjFjOS4xLDAsMTYuMi0xLjYsMjEuNC00LjcsNS4yLTMuMiw4LjktNy4xLDExLjItMTEuOSwyLjMtNC44LDMuNC05LjgsMy40LTE0LjlzLTEuMS05LjctMy4yLTE0LjZjLTIuMi00LjktNS45LTguOS0xMS4xLTEyLjEtNS4zLTMuMi0xMi41LTQuOC0yMS43LTQuOGgtMTguMXY2My4xWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE3MjEuMiw0NjcuOXYtMTc3LjNoMzMuMXYxNzcuM2gtMzMuMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xOTM3LjUsNDczLjhsLTExMC45LTExMi45djEwN2gtMzB2LTE4My4ybDExMC43LDExMi43di0xMDYuOGgzMC4xdjE4My4zWiIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="TopSpin" />
-  </div>
-  <div class="header-pill">LGaaS · Guía del Equipo</div>
-</header>
-
-<div class="phase-tabs">
-  <div class="phase-tab active" onclick="switchPhase(1)" id="tab1">
-    <div class="phase-num">1</div>
-    Discovery — Preparar el Template
-  </div>
-  <div class="tab-separator"></div>
-  <div class="phase-tab" onclick="switchPhase(2)" id="tab2">
-    <div class="phase-num">2</div>
-    Pipeline — Generar la Base de Contactos
-  </div>
-  <div class="total-time">Tiempo total estimado: 3–6 horas</div>
+<!-- ═══ HOW ═══ -->
+<div class="how-banner">
+  <div class="how-step"><div class="how-num">1</div><strong>Di:</strong> &ldquo;Activa [Step]&rdquo;</div>
+  <div class="how-arrow">&rarr;</div>
+  <div class="how-step"><div class="how-num">2</div><strong>Claude te gu&iacute;a</strong> paso a paso</div>
+  <div class="how-arrow">&rarr;</div>
+  <div class="how-step"><div class="how-num">3</div><strong>T&uacute; validas</strong> antes de generar</div>
+  <div class="how-arrow">&rarr;</div>
+  <div class="how-step"><div class="how-num">4</div><strong>Recibes</strong> el output listo</div>
 </div>
 
-<div class="layout">
-  <div class="sidebar" id="sidebar">
-    <div id="sidebar-phase1">
-      <div class="sidebar-label">Fase 1 · Discovery</div>
-      <div class="step-item active" onclick="goTo(0)" id="si-0">
-        <div class="step-bubble">1</div>
-        <div class="step-meta">
-          <div class="step-name">Activar el Discovery</div>
-          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 2 min</div>
-        </div>
+<div class="container">
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-label">Pipeline</div>
+  <div class="phase-div">Fase 1 &mdash; Estrategia</div>
+  <ul class="snav">
+    <li class="snav-item"><a class="snav-link active" data-step="0"><span class="snav-num">0</span><span class="snav-label">Client Discovery<small>Intake &rarr; Framework</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="1"><span class="snav-num">1</span><span class="snav-label">Market Segmentation<small>Hipersegmentos + Scoring</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="2"><span class="snav-num">2</span><span class="snav-label">Strategy Report<small>.docx ejecutivo</small></span></a></li>
+  </ul>
+  <div class="phase-div">Fase 2 &mdash; Datos</div>
+  <ul class="snav">
+    <li class="snav-item"><a class="snav-link" data-step="3"><span class="snav-num">3</span><span class="snav-label">Lead Enrichment<small>Waterfall + Verificaci&oacute;n</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="4"><span class="snav-num">4</span><span class="snav-label">Signal Monitor<small>Briefing semanal</small></span></a></li>
+  </ul>
+  <div class="phase-div">Fase 3 &mdash; Ejecuci&oacute;n</div>
+  <ul class="snav">
+    <li class="snav-item"><a class="snav-link" data-step="5"><span class="snav-num">5</span><span class="snav-label">Sequence Designer<small>Cadencia multicanal</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="6"><span class="snav-num">6</span><span class="snav-label">Message Writer<small>Copy personalizado</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="7"><span class="snav-num">7</span><span class="snav-label">Campaign Launcher<small>Push a LemList</small></span></a></li>
+  </ul>
+  <div class="phase-div">Fase 4 &mdash; Ciclo cerrado</div>
+  <ul class="snav">
+    <li class="snav-item"><a class="snav-link" data-step="8"><span class="snav-num">8</span><span class="snav-label">Campaign Analyzer<small>Performance semanal</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="9"><span class="snav-num">9</span><span class="snav-label">Reply Manager<small>Clasificaci&oacute;n + handoff</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="10"><span class="snav-num">10</span><span class="snav-label">Nurture Engine<small>Re-activaci&oacute;n 6 meses</small></span></a></li>
+  </ul>
+  <div class="phase-div">Referencia</div>
+  <ul class="snav">
+    <li class="snav-item"><a class="snav-link" data-step="overview"><span class="snav-num" style="font-size:.75rem">&#8634;</span><span class="snav-label">Vista general<small>Ciclo + conectores + tips</small></span></a></li>
+  </ul>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+<!-- ━━━ STEP 0 ━━━ -->
+<section class="step-section visible" data-step="0">
+  <div class="step-head"><div class="step-head-num">00</div><div><h3>Client Discovery</h3><p>De las notas de la discovery call al Targeting Framework completo.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Client Discovery</div><div class="trigger-alt">Tambi&eacute;n: <span>Step 0</span> <span>Discovery intake</span> <span>Tengo las notas de una discovery</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Qu&eacute; materiales tienes?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Notas de la discovery call</span><span class="opt"><span class="opt-l">B)</span> Documentos del cliente (PDFs, decks...)</span><span class="opt"><span class="opt-l">C)</span> Solo la URL</span><span class="opt"><span class="opt-l">D)</span> Todo: notas + docs + URL <span class="rec">RECOMENDADO</span></span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Sube los materiales</strong><div class="bubble">Pega las notas o sube el fichero. Si tienes docs adicionales, adj&uacute;ntalos. <em>Claude espera tus archivos.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>Confirmaci&oacute;n r&aacute;pida</strong><div class="bubble">Claude confirma: nombre del cliente, URL, consultor asignado. Si todo OK, investiga la web, rellena el framework y te presenta el resumen.</div></div></div>
+        <div class="fstep"><div class="fstep-num">4</div><div class="fstep-body"><strong>T&uacute; validas &rarr; Claude genera el .xlsx</strong><div class="bubble"><em>Resumen por pesta&ntilde;a: &#9989; completados, &#9888;&#65039; inferidos, &#10067; pendientes. Corriges lo que haga falta. Solo entonces genera el Excel.</em></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(1)" id="si-1">
-        <div class="step-bubble">2</div>
-        <div class="step-meta">
-          <div class="step-name">Research Autónomo</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 5–10 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Notas de la discovery</strong> &mdash; texto, .txt, .pdf</li><li><strong>Docs del cliente</strong> &mdash; cat&aacute;logos, decks</li><li><strong>URL del cliente</strong></li><li><strong>Respuestas</strong> a las preguntas de Claude</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Resumen estructurado</strong> para validar</li><li><strong>Targeting Framework .xlsx</strong></li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.xlsx</div><div class="fm">14 pesta&ntilde;as &middot; Branding TopSpin &middot; Tags [INPUT] [RESEARCH] [INFERIDO]</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(2)" id="si-2">
-        <div class="step-bubble">3</div>
-        <div class="step-meta">
-          <div class="step-name">Responder Cuestionario</div>
-          <div class="step-sub"><span class="actor-dot dot-both"></span>Colaboración · 15–20 min</div>
-        </div>
+      <div class="gate"><strong>&#9888; Validation Gate:</strong> Claude SIEMPRE presenta un resumen completo antes de generar. Nada se produce sin tu OK.</div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">15&ndash;30 min</div><div class="meta-time-sub">Depende de cu&aacute;nta info tengas</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">0-client-discovery</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">xlsx</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">WebSearch</span><span class="badge badge-conn">WebFetch</span></div>
+      <div class="meta-card"><div class="meta-card-label model-l">Modelo IA</div><span class="badge badge-model">Opus 4.6</span> <span style="font-size:.7rem;color:var(--text-secondary)">planning</span><br><span class="badge badge-model">Sonnet</span> <span style="font-size:.7rem;color:var(--text-secondary)">ejecuci&oacute;n</span></div>
+      <div class="meta-card"><div class="meta-card-label docs-l">Documentos ref.</div><span class="badge badge-doc">template-field-guide.md</span><span class="badge badge-doc">targeting_template.xlsx</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 1 ━━━ -->
+<section class="step-section" data-step="1">
+  <div class="step-head"><div class="step-head-num">01</div><div><h3>Market Segmentation</h3><p>Del Framework al Excel operativo con hipersegmentos, scoring con accesibilidad del DM y plan de activaci&oacute;n.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Market Segmentation</div><div class="trigger-alt"><span>Step 1</span> <span>Genera los hipersegmentos</span> <span>Targeting strategy</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Tienes el Framework?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Ya lo tenemos en la sesi&oacute;n <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Lo subo ahora</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Target Espa&ntilde;a/Portugal? &rarr; SABI</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, tengo acceso a SABI <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> S&iacute; pero no tengo SABI</span><span class="opt"><span class="opt-l">C)</span> No, mercado internacional</span><br><em>Si A: Claude te da los filtros EXACTOS (CNAEs, empleados, columnas) para que vayas a SABI, exportes y subas el Excel.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>Claude trabaja &rarr; T&uacute; validas &rarr; Excel de 8 pesta&ntilde;as</strong><div class="bubble"><em>Genera hipersegmentos, consulta Apollo, calcula TAM &times; DM Coverage, crea scoring con Accesibilidad DM. Te presenta resumen completo antes de generar.</em></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(3)" id="si-3">
-        <div class="step-bubble">4</div>
-        <div class="step-meta">
-          <div class="step-name">Validación ICP Apollo</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 2–3 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Targeting Framework .xlsx</strong> (Step 0)</li><li><strong>Export SABI</strong> si Espa&ntilde;a (Claude da filtros)</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Instrucciones SABI</strong> con filtros exactos</li><li><strong>Targeting Strategy .xlsx</strong> (8 pesta&ntilde;as)</li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_strategy_{fecha}.xlsx</div><div class="fm">TAM real [APOLLO] [SABI] &middot; DM Accessibility Score</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(4)" id="si-4">
-        <div class="step-bubble">5</div>
-        <div class="step-meta">
-          <div class="step-name">Revisar Draft Excel</div>
-          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 15–30 min</div>
-        </div>
+      <div class="gate sabi"><strong>&#128218; SABI entra aqu&iacute;:</strong> Claude calcula los CNAEs y filtros para cada hipersegmento. Te da instrucciones paso a paso (qu&eacute; buscar, qu&eacute; columnas exportar, nombre del fichero). T&uacute; vas a SABI, exportas, subes el Excel. Claude cruza SABI &times; Apollo para el TAM definitivo.</div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">20&ndash;40 min</div><div class="meta-time-sub">Incluye export SABI + queries Apollo</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">1-market-segmentation</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">xlsx</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">Apollo MCP</span><span class="badge badge-conn">WebSearch</span></div>
+      <div class="meta-card"><div class="meta-card-label model-l">Modelo IA</div><span class="badge badge-model">Opus 4.6</span> <span style="font-size:.7rem;color:var(--text-secondary)">estrategia</span><br><span class="badge badge-model">Sonnet</span> <span style="font-size:.7rem;color:var(--text-secondary)">Apollo queries</span></div>
+      <div class="meta-card"><div class="meta-card-label docs-l">Documentos ref.</div><span class="badge badge-doc">output-spec.md</span><span class="badge badge-doc">sabi-guide.md</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 2 ━━━ -->
+<section class="step-section" data-step="2">
+  <div class="step-head"><div class="step-head-num">02</div><div><h3>Strategy Report</h3><p>Documento ejecutivo brandeado + selecci&oacute;n del hipersegmento a activar.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Strategy Report</div><div class="trigger-alt"><span>Step 2</span> <span>Genera el documento</span> <span>Crea el docx</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Genera el .docx autom&aacute;ticamente</strong><div class="bubble"><em>Claude toma el Excel de estrategia y genera el documento brandeado TopSpin con 7 secciones.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Por qu&eacute; hipersegmento empezamos?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Despachos Medianos (TAM:847, DM:72%) <span class="rec">PRIORIDAD ALTA</span></span><span class="opt"><span class="opt-l">B)</span> Gestor&iacute;as Jur&iacute;dicas (TAM:1.203, DM:45%)</span><span class="opt"><span class="opt-l">C)</span> Consultoras IT LATAM (TAM:2.100, DM:38%)</span><br><em>Claude recomienda el de mayor score &times; cobertura DM.</em></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(5)" id="si-5">
-        <div class="step-bubble">6</div>
-        <div class="step-meta">
-          <div class="step-name">Iterar y Aprobar</div>
-          <div class="step-sub"><span class="actor-dot dot-both"></span>Colaboración · variable</div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Targeting Strategy .xlsx</strong> (Step 1)</li><li><strong>Elecci&oacute;n</strong> del segmento</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Targeting Framework .docx</strong> brandeado</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.docx</div><div class="fm">Cover + 7 secciones &middot; Compartible con el cliente</div></div></div></div>
+      </div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">10&ndash;15 min</div><div class="meta-time-sub">Generaci&oacute;n + selecci&oacute;n de segmento</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">2-strategy-report</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span></div>
+      <div class="meta-card"><div class="meta-card-label docs-l">Documentos ref.</div><span class="badge badge-doc">reference-doc.docx</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 3 ━━━ -->
+<section class="step-section" data-step="3">
+  <div class="step-head"><div class="step-head-num">03</div><div><h3>Lead Enrichment</h3><p>Base de datos operativa: empresas + DMs + emails verificados en cascada + se&ntilde;ales + scoring.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Lead Enrichment</div><div class="trigger-alt"><span>Step 3</span> <span>Genera la base de datos</span> <span>Activa el segmento</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Confirma segmento + SABI</strong><div class="bubble"><em>Claude usa el segmento que elegiste en Step 2 y el export SABI del Step 1.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&#128176; Estimaci&oacute;n de cr&eacute;ditos</strong><div class="bubble"><span class="opt">&bull; Apollo People Match: ~120 cr&eacute;ditos</span><span class="opt">&bull; Clay Contact Enrich: ~60 cr&eacute;ditos</span><span class="opt">&bull; LemList Find Email: ~40 cr&eacute;ditos</span><span class="opt">&bull; <strong>Total: ~220 cr&eacute;ditos</strong></span><br><span class="opt"><span class="opt-l">A)</span> Proceder con todo <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Solo Apollo</span><span class="opt"><span class="opt-l">C)</span> Solo top 20</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>&#128300; Sample de 10-20 empresas &rarr; T&uacute; validas &rarr; Escala</strong><div class="bubble"><em>Claude procesa un sample, te muestra DMs encontrados, emails, se&ntilde;ales, scoring. Si algo no cuadra, ajusta. Solo despu&eacute;s escala al total.</em></div></div></div>
+      </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>OK a cr&eacute;ditos</strong></li><li><strong>OK al sample</strong></li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .docx</strong></li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_base_datos_{segmento}_{fecha}.docx</div><div class="fm">[SABI] [APOLLO] [CLAY] [LEMLIST] &middot; Emails verificados cascada 3 pasos</div></div></div></div>
+      </div>
+      <div class="gate"><strong>&#9888; Sample Validation:</strong> 10-20 registros de prueba antes de escalar.</div>
+      <div class="gate credit"><strong>&#128176; Credit Gate:</strong> Tabla de cr&eacute;ditos antes de cada operaci&oacute;n. T&uacute; decides.</div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">30&ndash;60 min</div><div class="meta-time-sub">Waterfall enrichment completo</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">3-lead-enrichment</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">Apollo MCP</span><span class="badge badge-conn">Clay MCP</span><span class="badge badge-conn">LemList MCP</span><span class="badge badge-conn">WebSearch</span></div>
+      <div class="meta-card"><div class="meta-card-label model-l">Modelo IA</div><span class="badge badge-model">Opus 4.6</span> <span style="font-size:.7rem;color:var(--text-secondary)">scoring</span><br><span class="badge badge-model">Sonnet</span> <span style="font-size:.7rem;color:var(--text-secondary)">API calls</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 4 ━━━ -->
+<section class="step-section" data-step="4">
+  <div class="step-head"><div class="step-head-num">04</div><div><h3>Signal Monitor</h3><p>Escaneo semanal de se&ntilde;ales de compra frescas. Autom&aacute;tico cada domingo noche.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Signal Monitor</div><div class="trigger-alt"><span>Step 4</span> <span>Escanea se&ntilde;ales</span> <span>Programa el scan semanal</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Primera vez o recurrente?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Primera vez &mdash; configurar y ejecutar <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Scan manual ahora</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Programar autom&aacute;tico?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, domingo 23:00 <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> No, lo lanzo manualmente</span></div></div></div>
+      </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Campa&ntilde;a activa</strong> (Step 3 completado)</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Signal Briefing .docx</strong> semanal</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_signal_briefing_semana_{N}.docx</div><div class="fm">&#128293; Activar Ya &middot; &#9889; Priorizar &middot; &#128064; Monitorear &middot; Deltas</div></div></div></div>
+      </div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Frecuencia</div><div class="meta-time">Autom&aacute;tico</div><div class="meta-time-sub">Domingo 23:00 &middot; Listo el lunes</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">4-signal-monitor</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span><span class="badge badge-skill">schedule</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">Clay MCP</span><span class="badge badge-conn">Apollo MCP</span><span class="badge badge-conn">LemList MCP</span><span class="badge badge-conn">WebSearch</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 5 ━━━ -->
+<section class="step-section" data-step="5">
+  <div class="step-head"><div class="step-head-num">05</div><div><h3>Sequence Designer</h3><p>Secuencia multicanal (email + LinkedIn + tel&eacute;fono + WhatsApp) basada en tus recursos reales.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Sequence Designer</div><div class="trigger-alt"><span>Step 5</span> <span>Dise&ntilde;a la secuencia</span> <span>Planifica el outreach</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Recursos disponibles</strong><div class="bubble"><span class="opt">&bull; &iquest;Cu&aacute;ntas cuentas de email?</span><span class="opt">&bull; &iquest;Cu&aacute;ntas de LinkedIn?</span><span class="opt">&bull; &iquest;SDRs para tel&eacute;fono?</span><span class="opt">&bull; &iquest;WhatsApp disponible?</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Pa&iacute;s y agresividad</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Espa&ntilde;a (festivos auto) <span class="rec">DEFAULT</span></span><span class="opt"><span class="opt-l">B)</span> Otro pa&iacute;s</span><br><span class="opt"><span class="opt-l">A)</span> Equilibrado (3-4 d&iacute;as) <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Conservador</span><span class="opt"><span class="opt-l">C)</span> Agresivo</span></div></div></div>
+      </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>N&uacute;mero de cuentas email/LinkedIn/SDRs</li><li>Pa&iacute;s y preferencia de agresividad</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Sequence Plan .docx</strong></li><li><strong>Visualizaci&oacute;n .html</strong></li></ul>
+          <div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_sequence_plan.docx</div><div class="fm">Throughput math &middot; Calendario festivos</div></div></div>
+          <div class="file-row"><div class="file-icon f-html">HTM</div><div><div class="fn">{cliente}_sequence_visual.html</div><div class="fm">Timeline interactivo</div></div></div>
         </div>
       </div>
     </div>
-    <div id="sidebar-phase2" class="hidden">
-      <div class="sidebar-label">Fase 2 · Pipeline</div>
-      <div class="step-item" onclick="goTo(6)" id="si-6">
-        <div class="step-bubble">1</div>
-        <div class="step-meta">
-          <div class="step-name">Arrancar el Pipeline</div>
-          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 2 min</div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">15&ndash;25 min</div><div class="meta-time-sub">Preguntas + dise&ntilde;o + generaci&oacute;n</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">5-sequence-designer</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">LemList MCP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 6 ━━━ -->
+<section class="step-section" data-step="6">
+  <div class="step-head"><div class="step-head-num">06</div><div><h3>Message Writer</h3><p>Copy experto B2B hiperpersonalizado, con Reason Why Now, directo en la base de datos.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Message Writer</div><div class="trigger-alt"><span>Step 6</span> <span>Escribe los mensajes</span> <span>Crea el copy</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Tono</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Tuteo <span class="rec">RECOMENDADO ESPA&Ntilde;A</span></span><span class="opt"><span class="opt-l">B)</span> Ustedeo</span><span class="opt"><span class="opt-l">C)</span> Mixto</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Casos de &eacute;xito?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, los subo</span><span class="opt"><span class="opt-l">B)</span> No tengo <span class="rec">FUNCIONA IGUAL</span></span></div></div></div>
+        <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>Sample 10-20 &rarr; Validas &rarr; Escala</strong><div class="bubble"><em>Subjects en min&uacute;sculas, m&aacute;x 4 palabras, cero emojis. Reason Why Now obligatorio.</em></div></div></div>
+      </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Preferencia de tono</li><li>Casos de &eacute;xito (si tienes)</li><li>Temas a evitar</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .xlsx</strong> con columnas de copy</li><li><strong>Copy Guide .docx</strong></li></ul>
+          <div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_database_{segmento}.xlsx</div><div class="fm">+12 cols: subjects, bodies, linkedin, reason_why_now...</div></div></div>
+          <div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_copy_guide.docx</div><div class="fm">Templates maestros &middot; Variantes A/B</div></div></div>
         </div>
       </div>
-      <div class="step-item" onclick="goTo(7)" id="si-7">
-        <div class="step-bubble">2</div>
-        <div class="step-meta">
-          <div class="step-name">Hipersegmentos + TAM</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 10–15 min</div>
-        </div>
+      <div class="gate"><strong>&#9888; Sample Validation:</strong> 10-20 mensajes de prueba. Valida tono y personalizaci&oacute;n antes de escalar.</div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">25&ndash;45 min</div><div class="meta-time-sub">Depende del volumen de contactos</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">6-message-writer</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span><span class="badge badge-skill">xlsx</span></div>
+      <div class="meta-card"><div class="meta-card-label model-l">Modelo IA</div><span class="badge badge-model">Opus 4.6</span> <span style="font-size:.7rem;color:var(--text-secondary)">siempre (copy creativo)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 7 ━━━ -->
+<section class="step-section" data-step="7">
+  <div class="step-head"><div class="step-head-num">07</div><div><h3>Campaign Launcher</h3><p>Campa&ntilde;a live en LemList: secuencia + leads + warmup + smart send time.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Campaign Launcher</div><div class="trigger-alt"><span>Step 7</span> <span>Monta la campa&ntilde;a</span> <span>Push a LemList</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Cuentas nuevas? &iquest;Warmup?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> &gt;30 d&iacute;as activas <span class="rec">LISTO</span></span><span class="opt"><span class="opt-l">B)</span> Nuevas &mdash; necesitan warmup</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Import de prueba 10 leads &rarr; Verificas en LemList &rarr; Import total</strong><div class="bubble"><em>Smart send time activado. Campa&ntilde;a se crea PAUSADA &mdash; t&uacute; lanzas cuando quieras.</em></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(8)" id="si-8">
-        <div class="step-bubble">3</div>
-        <div class="step-meta">
-          <div class="step-name">Checkpoint Estrategia</div>
-          <div class="step-sub"><span class="actor-dot dot-stop"></span>Parada clave · 30–60 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Base de datos con copy (Step 6)</li><li>Estado de las cuentas</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Campa&ntilde;a LemList</strong> creada y pausada</li></ul><div class="file-row"><div class="file-icon f-lem">LEM</div><div><div class="fn">Campa&ntilde;a: {cliente} &mdash; {segmento}</div><div class="fm">PAUSADA &middot; Smart Send: ON &middot; Rotation: ON</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(9)" id="si-9">
-        <div class="step-bubble">4</div>
-        <div class="step-meta">
-          <div class="step-name">Búsqueda de Empresas</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 10–20 min</div>
-        </div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">20&ndash;35 min</div><div class="meta-time-sub">API calls + validaci&oacute;n</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">7-campaign-launcher</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">LemList MCP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 8 ━━━ -->
+<section class="step-section" data-step="8">
+  <div class="step-head"><div class="step-head-num">08</div><div><h3>Campaign Analyzer</h3><p>Performance report semanal: m&eacute;tricas, A/B winners, hot leads, optimizaciones.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Campaign Analyzer</div><div class="trigger-alt"><span>Step 8</span> <span>&iquest;C&oacute;mo van las campa&ntilde;as?</span> <span>Performance report</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Qu&eacute; campa&ntilde;as?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Todas las activas <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Solo una espec&iacute;fica</span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Programar autom&aacute;tico?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Lunes 9:00 <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Manual</span></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(10)" id="si-10">
-        <div class="step-bubble">5</div>
-        <div class="step-meta">
-          <div class="step-name">Búsqueda de Contactos</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 15–25 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Nada &mdash; Claude lee de LemList</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Campaign Report .docx</strong></li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_campaign_report_semana_{N}.docx</div><div class="fm">M&eacute;tricas &middot; A/B &middot; Hot Leads &middot; Feedback Loops</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(11)" id="si-11">
-        <div class="step-bubble">6</div>
-        <div class="step-meta">
-          <div class="step-name">Checkpoint Créditos</div>
-          <div class="step-sub"><span class="actor-dot dot-stop"></span>Parada clave · 2 min</div>
-        </div>
+      <div class="cycle"><h4>Feedback Loop</h4><div class="cycle-flow"><span class="cycle-node">8 Analyze</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">5 Sequence</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">6 Copy</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">7 Launch</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">8 Analyze</span></div></div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Frecuencia</div><div class="meta-time">Autom&aacute;tico</div><div class="meta-time-sub">Lunes 09:00</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">8-campaign-analyzer</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span><span class="badge badge-skill">schedule</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">LemList MCP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 9 ━━━ -->
+<section class="step-section" data-step="9">
+  <div class="step-head"><div class="step-head-num">09</div><div><h3>Reply Manager</h3><p>Clasifica respuestas, maneja objeciones, prepara handoff de reuniones.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Reply Manager</div><div class="trigger-alt"><span>Step 9</span> <span>Revisa las replies</span> <span>Gestiona respuestas</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Disponibilidad esta semana?</strong><div class="bubble"><em>Para proponer horarios en las respuestas positivas. Si tienes Google Calendar, lo consulta autom&aacute;ticamente.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Clasificaci&oacute;n autom&aacute;tica + borradores</strong><div class="bubble"><span class="opt">&#128994; <strong>Positiva</strong> &rarr; respuesta + horario (&lt;2h)</span><span class="opt">&#128992; <strong>Objeci&oacute;n</strong> &rarr; manejo objeci&oacute;n</span><span class="opt">&#128309; <strong>Redirect</strong> &rarr; nuevo contacto</span><span class="opt">&#128310; <strong>OOO</strong> &rarr; recordatorio</span><span class="opt">&#128308; <strong>Negativa</strong> &rarr; cierre elegante</span><span class="opt">&#9899; <strong>Unsubscribe</strong> &rarr; baja</span></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(12)" id="si-12">
-        <div class="step-bubble">7</div>
-        <div class="step-meta">
-          <div class="step-name">Enriquecimiento Clay</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 20–40 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Disponibilidad para reuniones</li><li>OK a borradores</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Borradores</strong> listos para enviar</li><li><strong>Meeting Handoff .docx</strong></li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_meeting_handoff_{contacto}.docx</div><div class="fm">Contexto &middot; Se&ntilde;ales &middot; Talking points</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(13)" id="si-13">
-        <div class="step-bubble">8</div>
-        <div class="step-meta">
-          <div class="step-name">Scoring + Tiering</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 3–5 min</div>
-        </div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Frecuencia</div><div class="meta-time">Continuo</div><div class="meta-time-sub">Revisi&oacute;n diaria recomendada</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">9-reply-manager</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">LemList MCP</span><span class="badge badge-conn">Apollo MCP</span><span class="badge badge-conn">Google Calendar</span><span class="badge badge-conn">Gmail</span></div>
+      <div class="meta-card"><div class="meta-card-label model-l">Modelo IA</div><span class="badge badge-model">Opus 4.6</span> <span style="font-size:.7rem;color:var(--text-secondary)">siempre (matices)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ STEP 10 ━━━ -->
+<section class="step-section" data-step="10">
+  <div class="step-head"><div class="step-head-num">10</div><div><h3>Nurture Engine</h3><p>1 email/mes de contenido puro durante 6 meses. Re-activaci&oacute;n por se&ntilde;al o engagement.</p></div></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Nurture Engine</div><div class="trigger-alt"><span>Step 10</span> <span>Activa el nurture</span> <span>No-respondedores</span></div></div>
+      <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Contenido del cliente?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute; &mdash; blog, casos, estudios</span><span class="opt"><span class="opt-l">B)</span> No &mdash; Claude genera <span class="rec">FUNCIONA IGUAL</span></span></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Plan de 6 meses &rarr; T&uacute; validas &rarr; Activa</strong><div class="bubble"><span class="opt">Mes 1: Benchmark sector</span><span class="opt">Mes 2: Caso de &eacute;xito</span><span class="opt">Mes 3: Cambio regulatorio</span><span class="opt">Mes 4: Webinar</span><span class="opt">Mes 5: Encuesta</span><span class="opt">Mes 6: Re-engagement</span><br><em>Nunca ventas. Solo contenido. Re-activa si 2+ aperturas o se&ntilde;al.</em></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(14)" id="si-14">
-        <div class="step-bubble">9</div>
-        <div class="step-meta">
-          <div class="step-name">Copywriting</div>
-          <div class="step-sub"><span class="actor-dot dot-auto"></span>Claude · 20–40 min</div>
-        </div>
+      <div class="io-grid">
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Contenido existente (si tienes)</li><li>OK al plan</li></ul></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Campa&ntilde;a nurture en LemList</strong></li></ul><div class="file-row"><div class="file-icon f-lem">LEM</div><div><div class="fn">Nurture: {cliente} &mdash; {segmento}</div><div class="fm">6 emails &middot; 1/mes &middot; Re-activaci&oacute;n autom&aacute;tica</div></div></div></div>
       </div>
-      <div class="step-item" onclick="goTo(15)" id="si-15">
-        <div class="step-bubble">10</div>
-        <div class="step-meta">
-          <div class="step-name">Exportar y Lanzar</div>
-          <div class="step-sub"><span class="actor-dot dot-human"></span>Tu acción · 10 min</div>
-        </div>
-      </div>
+      <div class="cycle"><h4>Re-activaci&oacute;n &rarr; Vuelve al ciclo</h4><div class="cycle-flow"><span class="cycle-node">10 Nurture</span><span class="cycle-arr">&rarr;</span><span style="color:rgba(230,89,38,.7);font-size:.7rem;">se&ntilde;al o 2+ opens</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">5 Sequence</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">6 Copy</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">7 Launch</span></div></div>
+    </div>
+    <div class="step-meta">
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">Setup: 20 min</div><div class="meta-time-sub">Luego autom&aacute;tico 6 meses</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">10-nurture-engine</span><span class="badge badge-skill">topspin-branding</span></div>
+      <div class="meta-card"><div class="meta-card-label conn-l">Conectores</div><span class="badge badge-conn">LemList MCP</span><span class="badge badge-conn">Apollo MCP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ OVERVIEW ━━━ -->
+<section class="step-section" data-step="overview">
+  <div class="step-head"><div class="step-head-num" style="color:var(--accent)">&#8634;</div><div><h3>Vista General</h3><p>Ciclo completo, conectores y tips para consultores.</p></div></div>
+
+  <div class="cycle" style="margin-bottom:1.5rem;">
+    <h4>Ciclo completo LGaaS</h4>
+    <div class="cycle-flow">
+      <span class="cycle-node">0 Discovery</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">1 Segment</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">2 Report</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">3 Enrich</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">4 Signals</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">5 Sequence</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">6 Copy</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">7 Launch</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">8 Analyze</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">9 Replies</span><span class="cycle-arr">&rarr;</span><span class="cycle-node">10 Nurture</span><span class="cycle-arr">&rarr;</span><span style="color:var(--accent);font-size:1.1rem;font-weight:700;">&#8634;</span>
     </div>
   </div>
 
-  <div class="main" id="mainContent"></div>
+  <div class="step-body">
+    <div class="step-content">
+      <div class="io-card" style="margin-bottom:1.25rem;"><div class="io-label" style="color:var(--purple)">&#9881; 6 Conectores necesarios</div>
+        <div class="conn-list">
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">Apollo MCP</span><span class="conn-desc">Empresas, personas, emails, tel&eacute;fonos, job postings</span></div>
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">Clay MCP</span><span class="conn-desc">Enrichment profundo, se&ntilde;ales, tech stack, news</span></div>
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">LemList MCP</span><span class="conn-desc">Campa&ntilde;as, enrichment, verificaci&oacute;n, inbox, warmup</span></div>
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">Google Cal</span><span class="conn-desc">Disponibilidad para reuniones (reply manager)</span></div>
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">Gmail</span><span class="conn-desc">Env&iacute;o de handoff briefs</span></div>
+          <div class="conn-item"><span class="badge badge-conn" style="min-width:90px;text-align:center">WebSearch</span><span class="conn-desc">Investigaci&oacute;n, se&ntilde;ales, noticias</span></div>
+        </div>
+      </div>
+
+      <div class="io-card"><div class="io-label" style="color:var(--accent)">&#9733; Principios del pipeline</div>
+        <div class="principle-item"><strong>Zero Fabrication</strong> &mdash; Todo viene de fuentes reales con tags trazables</div>
+        <div class="principle-item"><strong>Sample First</strong> &mdash; 10-20 registros de prueba antes de escalar</div>
+        <div class="principle-item"><strong>Credit Gates</strong> &mdash; Siempre sabes cu&aacute;nto va a costar</div>
+        <div class="principle-item"><strong>T&uacute; Siempre Validas</strong> &mdash; Nada se ejecuta sin tu OK</div>
+        <div class="principle-item"><strong>Reason Why Now</strong> &mdash; Cada mensaje explica por qu&eacute; ahora</div>
+        <div class="principle-item"><strong>Branding Everywhere</strong> &mdash; Todo sale con identidad TopSpin</div>
+      </div>
+    </div>
+
+    <div class="step-meta">
+      <div class="meta-card" style="background:var(--bg-tertiary);">
+        <div class="meta-card-label" style="color:var(--accent)">&#128161; Tips</div>
+        <div class="tip" style="margin-bottom:.5rem"><div class="tip-title">Empezar r&aacute;pido</div><p>&ldquo;Activa Client Discovery&rdquo; + notas + URL</p></div>
+        <div class="tip" style="margin-bottom:.5rem"><div class="tip-title">Saltar pasos</div><p>Si ya tienes Framework, sube .xlsx y di &ldquo;Activa Market Segmentation&rdquo;</p></div>
+        <div class="tip" style="margin-bottom:.5rem"><div class="tip-title">Reducir costes</div><p>En Credit Gate elige &ldquo;Solo Apollo&rdquo; o &ldquo;Top 20&rdquo;</p></div>
+        <div class="tip" style="margin-bottom:.5rem"><div class="tip-title">Segundo segmento</div><p>Vuelve a Step 2, elige otro hipersegmento</p></div>
+        <div class="tip" style="margin-bottom:.5rem"><div class="tip-title">Emergencias</div><p>&ldquo;Escanea se&ntilde;ales ahora&rdquo; para scan instant&aacute;neo</p></div>
+        <div class="tip"><div class="tip-title">Algo no cuadra</div><p>En cualquier gate, elige &ldquo;Ajustar&rdquo;</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
 </div>
+
+<div class="guide-footer">TopSpin Co &middot; LGaaS Activation Guide &middot; v1.2.0 &middot; Marzo 2026</div>
 
 <script>
-const STEPS = [
-{phase:1,num:1,title:"Activar el Discovery",actor:"human",actorLabel:"Tu acción",time:"~2 min",
-desc:"Arrancas la skill con el nombre del cliente y su URL. Si tienes documentación, la subes en este mismo momento. Con eso es suficiente para empezar.",
-claude:null,
-team:["Abre Claude Cowork y empieza una nueva sesión.","Escribe el mensaje de activación con el nombre del cliente y su URL.","Si tienes documentos (pitch deck, lista de clientes, notas de reunión), adjúntalos al mismo mensaje.","No hace falta que tengas todo — con la URL puedo empezar igualmente."],
-how:{label:"Escribe exactamente esto en el chat:",cmd:`Tengo un nuevo cliente de LGaaS.\nSu empresa es <span class=\"ph\">[Nombre del cliente]</span> y su web es <span class=\"ph\">[URL]</span>.\n<span class=\"ph\">[Adjunta aquí los documentos si los tienes]</span>`,notes:["Puedes escribirlo en español o inglés, como prefieras.","Si el cliente tiene varios productos, puedes mencionarlo brevemente."]},
-outputs:[]},
-
-{phase:1,num:2,title:"Research Autónomo",actor:"auto",actorLabel:"Claude automático",time:"5–10 min",
-desc:"Claude investiga todo lo que puede antes de hacerte ninguna pregunta. El objetivo es pre-rellenar el máximo de campos del template sin que tengas que teclear nada.",
-claude:["<strong>Scrapea la web en profundidad:</strong> homepage, about, productos, pricing, casos de éxito, blog, integraciones, jobs y contacto.","<strong>Parsea todos los documentos</strong> subidos: pitch decks, listas de clientes, notas de reunión, propuestas.","<strong>Búsquedas web complementarias:</strong> competidores, tamaño del equipo en LinkedIn, clientes no publicados en la web.","<strong>Construye un knowledge graph interno</strong> del cliente: empresa, productos, ICP, señales de compra, tono y exclusiones.","Clasifica cada dato con confianza: Alta (fuente directa) · Media (inferido) · Baja (suposición)."],
-team:["Solo tienes que esperar. No hace falta que hagas nada durante este paso.","Si Claude te pide alguna aclaración urgente (por ejemplo, la web no carga), respóndela."],
-how:null,outputs:[]},
-
-{phase:1,num:3,title:"Responder el Cuestionario",actor:"both",actorLabel:"Colaboración",time:"15–20 min",
-desc:"Claude presenta todas las preguntas en un solo mensaje, agrupadas en 5 módulos, con sus respuestas ya pre-rellenadas. Tu trabajo es confirmar, corregir o completar — no escribir de cero.",
-claude:["Presenta el cuestionario completo en un solo bloque: 5 módulos, todas las preguntas de golpe.","Cada pregunta lleva: la fuente de la sugerencia, la respuesta propuesta y espacio para tu corrección.","Las preguntas con opciones cerradas aparecen como checkboxes (CRM, nivel jerárquico, modelo de precio...).","Solo pregunta sobre los gaps reales — no sobre lo que ya tiene confianza alta o media."],
-team:["<strong>Lee módulo a módulo</strong> y responde solo lo que esté mal o incompleto.","Para confirmar una sugerencia: simplemente escribe «correcto» o déjala sin comentar.","Para corregir: «En el módulo B, el rango de empleados debería ser 100–500, no 50–200».","Si no sabes algo: escribe «no sé» — lo marco como pendiente para que lo complete el cliente."],
-how:{label:"Formato de respuesta recomendado:",cmd:`Módulo A: correcto todo.\nMódulo B: los sectores son Retail y Ecommerce. El rango de empleados es 50–300.\nMódulo C: el DM es el CFO, no el CEO. Champion es el Finance Manager.\nMódulo D: no tenemos métricas concretas todavía.\nMódulo E: añade también a <span class=\"ph\">[empresa X]</span> como cliente actual.`,notes:["Puedes responder de forma conversacional, no tienes que respetar el formato exacto.","Si el cliente ya te ha dado contexto en una reunión previa, es el momento de volcarlo todo aquí."]},
-outputs:[]},
-
-{phase:1,num:4,title:"Validación ICP en Apollo",actor:"auto",actorLabel:"Claude automático",time:"2–3 min",
-desc:"Antes de generar el Excel, Claude comprueba con datos reales que el ICP propuesto tiene empresas suficientes en Apollo. Esta búsqueda es completamente gratuita.",
-claude:["Lanza una búsqueda gratuita en Apollo para cada segmento de empresa definido.","Lee el campo <code>total</code> de la primera respuesta — sin paginar, sin coste.","Evalúa: &gt;1.000 = ICP demasiado amplio · 100–1.000 = saludable · 20–100 = estrecho · &lt;20 = revisar.","Si algún segmento da menos de 20 empresas, para y presenta alternativas concretas con volúmenes antes de continuar."],
-team:["Si algún segmento tiene poco volumen, decides si ampliar los filtros o mantenerlo como nicho intencional.","Si todo está en rango, no tienes que hacer nada — Claude continúa automáticamente."],
-how:{label:"Si Claude te pide decisión sobre un ICP estrecho, responde así:",cmd:`Opción A: "Amplía el rango de empleados a 20–500"\nOpción B: "Añade también el sector <span class=\"ph\">[sector]</span>"\nOpción C: "Mantén los filtros, es intencional — es un mercado nicho"`,notes:["No hay respuesta incorrecta. Un ICP estrecho puede ser perfecto si el cliente quiere ir muy focalizado."]},
-outputs:[]},
-
-{phase:1,num:5,title:"Revisar el Draft Excel",actor:"human",actorLabel:"Tu acción",time:"15–30 min",
-desc:"Claude genera el Targeting Framework completo con todos los datos investigados. Cada celda lleva un comentario de confianza para que sepas exactamente dónde enfocar tu revisión.",
-claude:["Abre el template base <code>LGaaS_Targeting_Framework_Template.xlsx</code> y lo rellena con todos los datos del research.","Añade comentarios de confianza en cada celda: Alta (fuente directa) · Media (inferido) · Baja (suposición).","Genera una pestaña extra <strong>«Revisar»</strong> con la tabla completa de campos que necesitan atención, ordenada por importancia.","Nombra el archivo: <code>[NombreCliente]_Targeting_Framework_Draft_[fecha].xlsx</code>"],
-team:["<strong>Descarga el Excel</strong> y ábrelo.","<strong>Ve directamente a la pestaña «Revisar»</strong> — ahí están todos los campos que necesitan tu atención, ordenados por importancia.","Para los campos de baja confianza en las otras pestañas, corrígelos directamente en el Excel o dile a Claude los cambios en el chat.","No tienes que revisar los campos de alta confianza — son datos directos de fuentes fiables."],
-how:{label:"Para dar feedback, puedes elegir:",cmd:`Opción A (en el chat):\n"En Sheet 03, el rango de empleados del segmento H1 debería ser 50–500. Y añade Portugal a los países."\n\nOpción B:\nEdita directamente el Excel y súbemelo de vuelta con tus cambios marcados.`,notes:["La pestaña «Revisar» es tu hoja de ruta — empieza por ahí.","Los campos vacíos son los que el cliente tendrá que rellenar — márcalos como pendientes."]},
-outputs:["[Cliente]_Targeting_Framework_Draft_[fecha].xlsx"]},
-
-{phase:1,num:6,title:"Iterar y Aprobar",actor:"both",actorLabel:"Colaboración",time:"variable",
-desc:"Claude aplica el feedback sección por sección — sin regenerar el Excel completo — hasta que el template esté listo para el pipeline. Cada ronda suele ser 5–10 minutos.",
-claude:["Aplica cambios módulo a módulo: solo modifica las celdas afectadas, no regenera todo.","Si cambian los filtros del ICP de empresas, re-valida automáticamente en Apollo.","Actualiza la pestaña «Revisar» con el estado actual después de cada ronda.","Guarda la nueva versión con sufijo _v2, _v3, etc."],
-team:["Da feedback específico por sección, no «está todo mal».","Cuando estés satisfecho con el resultado, confirma con «aprobado» o «está listo».","Puedes iterar tantas veces como necesites — no hay límite de rondas."],
-how:{label:"Para cerrar la iteración y pasar a Fase 2:",cmd:`"El template está aprobado. Arrancamos el pipeline."`,notes:["Con esto, Claude genera la versión final limpia y prepara el handoff.","Puedes pedirle «genera la versión final sin los comentarios en las celdas» si quieres el Excel limpio para compartir con el cliente."]},
-outputs:["[Cliente]_Targeting_Framework_[fecha].xlsx (versión final aprobada)"]},
-
-{phase:2,num:1,title:"Arrancar el Pipeline",actor:"human",actorLabel:"Tu acción",time:"~2 min",
-desc:"Activas la skill lgaas-database-generator con el Excel aprobado. Claude parsea el template completo, crea la carpeta del proyecto y genera los documentos de contexto que usará durante todo el pipeline.",
-claude:["Parsea todas las hojas del Excel: empresa, productos, segmentos, personas, señales, exclusiones.","Crea la carpeta de proyecto: <code>/Downloads/[NombreCliente]_LGaaS_[fecha]/</code> con subcarpetas contexto/, checkpoint/, campañas/ y outputs/.","Genera 6 documentos de contexto: perfil cliente, ICP empresas, ICP personas, señales de compra, por qué compran, y tono y exclusiones.","Muestra un resumen: N productos · N segmentos · N perfiles de persona · N señales · N clientes actuales excluidos."],
-team:["Sube el Excel aprobado de Fase 1 y escribe el mensaje de activación.","Confirma que el resumen de datos es correcto antes de continuar."],
-how:{label:"Escribe exactamente esto (adjuntando el Excel aprobado):",cmd:`"Arranca el pipeline para <span class=\"ph\">[NombreCliente]</span>."\n\n<span class=\"ph\">[Adjunta: NombreCliente_Targeting_Framework_[fecha].xlsx]</span>`,notes:["Si ya estás en la misma sesión que Fase 1, Claude ya tiene el Excel — puedes simplemente escribir «arranca el pipeline».","Si es una sesión nueva, necesitas subir el Excel."]},
-outputs:["Carpeta de proyecto creada","6 documentos de contexto generados"]},
-
-{phase:2,num:2,title:"Hipersegmentos + TAM",actor:"auto",actorLabel:"Claude automático",time:"10–15 min",
-desc:"Claude divide el ICP en mini-campañas ordenadas de mejor a peor potencial real de lead, calcula cuántas empresas hay en cada una, y extrae 10 ejemplos reales de Apollo.",
-claude:["Genera entre 3 y 8 hipersegmentos combinando: producto, sector, señal de compra, tamaño de empresa y perfil de persona.","Calcula el TAM de cada segmento con una búsqueda gratuita en Apollo (campo <code>total</code> — sin coste).","Extrae las 10 primeras empresas de muestra por segmento — las guarda en memoria para el checkpoint.","Ordena los segmentos por potencial de lead calificado: señal de compra (30 pts) + claridad del ICP (25 pts) + accesibilidad de la persona (25 pts) + volumen TAM (20 pts)."],
-team:["Solo tienes que esperar. No hay acción requerida en este paso."],
-how:null,outputs:[]},
-
-{phase:2,num:3,title:"Checkpoint: Validar Estrategia",actor:"stop",actorLabel:"Parada obligatoria",time:"30–60 min",
-desc:"El único punto de parada obligatoria antes del pipeline completo. El consultor y el cliente aprueban los segmentos antes de que Claude empiece la búsqueda masiva.",
-claude:["<strong>Excel visual de hipersegmentos</strong> con 4 pestañas: Resumen de estrategia, Top 10 empresas de muestra reales, TAM y métricas con gráfico, e Input del consultor con dropdown de decisión.","<strong>Documento ejecutivo</strong> sin tecnicismos: escrito para que el cliente lo entienda en 5 minutos, con los grupos de empresas explicados en lenguaje natural."],
-team:["<strong>Descarga ambos archivos</strong> (Excel + Word).","Comparte el <strong>documento Word</strong> con el cliente para que entienda la estrategia.","Rellena la pestaña <strong>«Input del consultor»</strong> del Excel: marca cada segmento como Aprobado, Modificar o Rechazado.","Si marcas Modificar, escribe en la columna de comentarios qué cambiar exactamente.","Devuelve el Excel a Claude o dile los cambios en el chat."],
-how:{label:"Para transmitir las decisiones, sube el Excel relleno o escribe:",cmd:`"H1 Aprobado. H2 Modificar: ampliar empleados a 100–500. H3 Rechazado — no es nuestro mercado. H4 Aprobado."`,notes:["Los segmentos Rechazados no se eliminan — aparecerán en los outputs finales marcados como «no incluido».","Puedes aprobar parcialmente: por ejemplo, aprobar 3 de 5 segmentos e ignorar los demás por ahora."]},
-outputs:["[Cliente]_Estrategia_Hipersegmentos_[fecha].xlsx","[Cliente]_Estrategia_Hipersegmentos_[fecha].docx"]},
-
-{phase:2,num:4,title:"Búsqueda de Empresas",actor:"auto",actorLabel:"Claude automático",time:"10–20 min",
-desc:"Claude busca todas las empresas de los segmentos aprobados en Apollo, aplicando exclusiones y deduplicación. La paginación se detiene automáticamente cuando la calidad empieza a bajar.",
-claude:["Reutiliza los datos del Checkpoint — no relanza las búsquedas que ya tiene en memoria.","Pagina desde la página 2, aplicando un stop inteligente: si el ratio de empresas que pasan el pre-score baja del 40% en dos páginas consecutivas, para.","Aplica exclusiones obligatorias: clientes actuales, prohibidas, competidores y sectores excluidos.","Deduplica entre segmentos: cada empresa aparece solo en el segmento donde mejor encaja."],
-team:["Solo tienes que esperar. No hay acción requerida en este paso."],
-how:null,outputs:[]},
-
-{phase:2,num:5,title:"Búsqueda de Contactos",actor:"auto",actorLabel:"Claude automático",time:"15–25 min",
-desc:"Claude encuentra el decisor correcto en cada empresa, buscando en lotes de 10 para maximizar la eficiencia. Solo gasta créditos en los contactos que merecen enriquecimiento.",
-claude:["<strong>Fase gratuita:</strong> búsqueda en lotes de 10 empresas simultáneas con <code>apollo_mixed_people_api_search</code>. Extrae: nombre, cargo, seniority, departamento y LinkedIn URL.","<strong>Pre-score combinado</strong> empresa + persona con los datos gratuitos. Los contactos con pre-score menor de 40 se descartan sin gastar un crédito.","<strong>Fase de créditos:</strong> solo para los contactos que superan el umbral — bulk_match en lotes de 10 para obtener email y teléfono.","Lógica DM-First: busca primero decisores, luego champions si quedan slots libres."],
-team:["Solo tienes que esperar. No hay acción requerida en este paso."],
-how:null,outputs:[]},
-
-{phase:2,num:6,title:"Checkpoint: Créditos",actor:"stop",actorLabel:"Parada obligatoria",time:"~2 min",
-desc:"Antes del enriquecimiento masivo, Claude te muestra exactamente cuántos contactos va a enriquecer por tier y el coste estimado. Tú decides si continuar o ajustar.",
-claude:["Calcula: Tier 1 (N contactos · waterfall completo: Apollo → Hunter → Dropcontact → Lusha) + Tier 2 (N contactos · solo Apollo + Hunter) + Tier 3 (N contactos · sin enriquecimiento).","Muestra la estimación de créditos y espera confirmación antes de continuar.","Si el volumen supera los 500 contactos Tier 1+2, la confirmación es obligatoria."],
-team:["Revisa los números y confirma si el volumen te parece razonable.","Si es demasiado alto, puedes pedirle que limite el enriquecimiento a Tier 1 únicamente."],
-how:{label:"Para confirmar y continuar:",cmd:`Opción A: "Adelante con el enriquecimiento."\nOpción B: "Enriquece solo Tier 1, sáltate Tier 2."\nOpción C: "Empieza solo con el segmento H1 y el resto lo hacemos después."`,notes:["Puedes hacer el enriquecimiento por fases: primero Tier 1, revisar resultados, y luego decidir si continuar con Tier 2."]},
-outputs:[]},
-
-{phase:2,num:7,title:"Enriquecimiento Clay",actor:"auto",actorLabel:"Claude automático",time:"20–40 min",
-desc:"Claude obtiene el email verificado para cada contacto según su tier, usando un waterfall de proveedores con stop-on-first-result para no gastar más de lo necesario.",
-claude:["<strong>Wishlist y Tier 1:</strong> waterfall completo — Apollo → Hunter.io → Dropcontact → Lusha/Kaspr. Para en cuanto hay email verificado.","<strong>Tier 2:</strong> waterfall reducido — Apollo + Hunter.io únicamente.","<strong>Tier 3:</strong> sin enriquecimiento activo, a menos que el email ya llegó gratis en la búsqueda.","<strong>Registro de deduplicación global:</strong> si el mismo contacto aparece en varios segmentos, copia los datos y no lo enriquece dos veces.","Señal extra: si el contacto lleva menos de 6 meses en su cargo, marca la señal «Nuevo ejecutivo»."],
-team:["Solo tienes que esperar. Es el paso más largo del pipeline."],
-how:null,outputs:[]},
-
-{phase:2,num:8,title:"Scoring + Tiering",actor:"auto",actorLabel:"Claude automático",time:"3–5 min",
-desc:"Cada contacto recibe dos puntuaciones y se clasifica en Tier 1 (prioridad máxima), Tier 2 (alta prioridad) o Tier 3 (segunda oleada).",
-claude:["<strong>ICP Score (0–100):</strong> ajuste entre el contacto/empresa y el perfil ideal. Componente empresa (60 pts): sector + empleados + país + señales. Componente persona (40 pts): cargo + nivel + departamento.","<strong>Accesibilidad Score (0–100):</strong> facilidad práctica de llegar. Tamaño empresa + email verificado + LinkedIn + accesibilidad del cargo.","<strong>Tier 1:</strong> wishlist con ICP &ge; 60 · o ICP &ge; 75 + Accesibilidad &ge; 50 · o Señal activa + ICP &ge; 65.","<strong>Tier 2:</strong> ICP &ge; 55 + Accesibilidad &ge; 35. <strong>Tier 3:</strong> ICP &ge; 35. Por debajo de 35, descartado."],
-team:["Solo tienes que esperar — este paso es rápido."],
-how:null,outputs:[]},
-
-{phase:2,num:9,title:"Copywriting",actor:"auto",actorLabel:"Claude automático",time:"20–40 min",
-desc:"Claude genera 5 assets de outreach personalizados por cada contacto, usando las señales de compra detectadas, los datos de la empresa y el tono definido en el template.",
-claude:["<strong>Icebreaker:</strong> 1 frase (máx. 25 palabras) hiper-personal — referencia algo específico del contacto o su empresa.","<strong>Email Paso 1:</strong> subject (máx. 8 palabras) + body. Estructura: icebreaker → problema → solución → resultado de cliente similar → CTA. Con variables LemList.","<strong>Email Follow-up:</strong> ángulo nuevo, más corto, asume silencio tras el primer email.","<strong>LinkedIn Connection Request:</strong> máx. 300 caracteres. Sin genéricos. No vende — solo conecta.","<strong>LinkedIn Mensaje:</strong> post-conexión, más directo y conversacional que el email."],
-team:["Cuando Claude termine, <strong>revisa una muestra</strong> de copies (3–5 contactos de diferentes segmentos) para validar que el tono es el correcto.","Si algo no encaja, díselo y Claude ajusta el segmento completo — no tienes que corregir contacto por contacto."],
-how:{label:"Para pedir ajustes de tono en un segmento:",cmd:`"En el segmento H1, los emails son demasiado formales — hazlos más directos y usa tuteo."\n\n"El icebreaker de los contactos de fintech es demasiado genérico — necesita referenciar algo concreto de la empresa."`,notes:["Si el tono del template estaba bien definido en Fase 1, los copies suelen salir bien a la primera."]},
-outputs:[]},
-
-{phase:2,num:10,title:"Exportar y Lanzar",actor:"human",actorLabel:"Tu acción",time:"~10 min",
-desc:"Claude genera los archivos finales listos para importar directamente en LemList. Tu trabajo es descargarlos, importarlos y compartir el informe con el cliente.",
-claude:["<strong>Excel LemList</strong> con 8 pestañas: Dashboard de métricas · Tier 1 · Tier 2 · Tier 3 · Wishlist · Base Completa · Descartadas · Sin Contacto.","<strong>Documento ejecutivo</strong> para el cliente: resumen de campaña, métricas del pipeline, distribución por segmento, top 10 empresas y análisis de señales.","Presenta un resumen: N empresas · N contactos · distribución Tier 1/2/3 · % email verificado · % LinkedIn · N señales activas."],
-team:["<strong>Descarga el Excel LemList</strong> y el documento ejecutivo.","En LemList: <strong>Leads → Import → sube el Excel</strong>. Usa la pestaña Tier 1 para la primera oleada.","<strong>Comparte el documento ejecutivo</strong> con el cliente como resumen de lo que va a recibir.","Guarda el Excel completo — lo necesitarás como referencia durante la campaña."],
-how:{label:"Proceso de importación en LemList:",cmd:`1. LemList → Leads → Import from CSV/Excel\n2. Sube la pestaña "Tier 1" del Excel\n3. Mapea campos: firstName, lastName, email, companyName, linkedinUrl\n4. Variables de copy: icebreaker, emailSubject, emailBody, liRequest, liMessage\n5. Asigna a la campaña correspondiente`,notes:["Las variables LemList ya están nombradas con los nombres exactos que LemList espera.","Empieza solo con Tier 1. Una vez validados los resultados en las primeras 2 semanas, lanza Tier 2."]},
-outputs:["[Cliente]_LemList_[fecha].xlsx (8 pestañas, listo para importar)","[Cliente]_Informe_Ejecutivo_[fecha].docx"]}
-];
-
-const P1 = STEPS.filter(s => s.phase === 1);
-let current = 0;
-let currentPhase = 1;
-
-function actorClass(a) {
-  return a==='auto'?'badge-auto':a==='both'?'badge-both':a==='stop'?'badge-stop':'badge-human';
-}
-
-function render(idx) {
-  const s = STEPS[idx];
-  const total = STEPS.length;
-  document.getElementById('progressBar').style.width = Math.round(((idx+1)/total)*100)+'%';
-
-  for (let i=0; i<total; i++) {
-    const el = document.getElementById('si-'+i);
-    if (!el) continue;
-    el.classList.remove('active','done');
-    if (i===idx) el.classList.add('active');
-    else if (i<idx) el.classList.add('done');
-    const b = el.querySelector('.step-bubble');
-    if (i<idx) b.textContent='✓';
-    else b.textContent = STEPS[i].phase===2 ? i-P1.length+1 : i+1;
-  }
-
-  const claudeHtml = s.claude ? `
-    <div class="card card-claude">
-      <div class="card-header"><div class="card-icon"><span class="card-icon-label">IA</span></div>Claude hace esto automáticamente</div>
-      <div class="card-body"><ul>${s.claude.map(c=>`<li>${c}</li>`).join('')}</ul></div>
-    </div>` : '';
-
-  const teamHtml = s.team && s.team.length ? `
-    <div class="card card-team">
-      <div class="card-header"><div class="card-icon"><span class="card-icon-label">TÚ</span></div>Tu acción</div>
-      <div class="card-body"><ul>${s.team.map(t=>`<li>${t}</li>`).join('')}</ul></div>
-    </div>` : '';
-
-  const howHtml = s.how ? `
-    <div class="card card-how">
-      <div class="card-header"><div class="card-icon"><span class="card-icon-label">→</span></div>Cómo hacerlo exactamente</div>
-      <div class="card-body">
-        <div class="cmd-label">${s.how.label}</div>
-        <div class="cmd-box">${s.how.cmd}</div>
-        ${s.how.notes ? `<ul class="how-notes">${s.how.notes.map(n=>`<li>${n}</li>`).join('')}</ul>` : ''}
-      </div>
-    </div>` : '';
-
-  const outputsHtml = s.outputs && s.outputs.length ? `
-    <div class="outputs-section">
-      <div class="outputs-label">Output de este paso</div>
-      ${s.outputs.map(o=>`<span class="output-tag">&#8250; ${o}</span>`).join('')}
-    </div>` : '';
-
-  const phaseName = s.phase===1 ? '1 · Discovery' : '2 · Pipeline';
-  const phaseBadge = `<span class="badge badge-phase">Fase ${phaseName} — Paso ${s.num}</span>`;
-  const actBadge = `<span class="badge ${actorClass(s.actor)}">${s.actorLabel}</span>`;
-  const timeBadge = `<span class="badge time-badge">${s.time}</span>`;
-
-  document.getElementById('mainContent').innerHTML = `
-    <div class="fade-in">
-      <div class="step-header">
-        <div class="step-big-num">${s.num}</div>
-        <div class="step-header-meta">
-          <h1>${s.title}</h1>
-          <div class="badges-row">${phaseBadge}${actBadge}${timeBadge}</div>
-        </div>
-      </div>
-      <p class="step-description">${s.desc}</p>
-      <div class="cards-grid">${claudeHtml}${teamHtml}${howHtml}</div>
-      ${outputsHtml}
-      <div class="nav-bar">
-        <button class="nav-btn ${idx===0?'disabled':''}" onclick="goTo(${idx-1})">&#8592; Anterior</button>
-        <span class="nav-counter">${idx+1} de ${total}</span>
-        <button class="nav-btn primary ${idx===total-1?'disabled':''}" onclick="goTo(${idx+1})">Siguiente &#8594;</button>
-      </div>
-    </div>`;
-  document.getElementById('mainContent').scrollTop = 0;
-}
-
-function goTo(idx) {
-  if (idx<0||idx>=STEPS.length) return;
-  current=idx;
-  const tp=STEPS[idx].phase;
-  if (tp!==currentPhase) switchPhase(tp);
-  render(current);
-}
-
-function switchPhase(phase) {
-  currentPhase=phase;
-  document.getElementById('tab1').classList.toggle('active', phase===1);
-  document.getElementById('tab2').classList.toggle('active', phase===2);
-  document.getElementById('sidebar-phase1').classList.toggle('hidden', phase===2);
-  document.getElementById('sidebar-phase2').classList.toggle('hidden', phase===1);
-  if (phase===1 && STEPS[current].phase!==1) current=0;
-  else if (phase===2 && STEPS[current].phase!==2) current=P1.length;
-  render(current);
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
-  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   goTo(current-1);
-});
-
-render(0);
+document.querySelectorAll('.snav-link').forEach(l=>{l.addEventListener('click',e=>{e.preventDefault();const s=l.dataset.step;document.querySelectorAll('.snav-link').forEach(x=>x.classList.remove('active'));l.classList.add('active');document.querySelectorAll('.step-section').forEach(x=>x.classList.remove('visible'));const t=document.querySelector(`.step-section[data-step="${s}"]`);if(t){t.classList.add('visible');document.querySelector('.main').scrollTo({top:0,behavior:'smooth'});}});});
 </script>
 </body>
 </html>
