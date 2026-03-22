@@ -171,6 +171,10 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
 .principle-item { padding:.4rem 0; font-size:.82rem; }
 .principle-item strong { color: var(--accent); }
 
+/* ── DOCS ── */
+code { background: var(--bg-tertiary); padding:2px 6px; border-radius:4px; font-size:.82em; font-family:'SF Mono','Fira Code',monospace; color: var(--accent); }
+pre code { background:none; padding:0; color:inherit; }
+
 /* ── FOOTER ── */
 .guide-footer { text-align:center; padding:2.5rem 2rem; color: var(--text-secondary); font-size:.78rem; border-top:1px solid var(--border); }
 
@@ -250,6 +254,7 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
   <div class="phase-div">Referencia</div>
   <ul class="snav">
     <li class="snav-item"><a class="snav-link" data-step="overview"><span class="snav-num" style="font-size:.75rem">&#8634;</span><span class="snav-label">Vista general<small>Ciclo + conectores + tips</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="docs"><span class="snav-num" style="font-size:.7rem">&#128196;</span><span class="snav-label">Documentaci&oacute;n<small>Arquitectura t&eacute;cnica</small></span></a></li>
   </ul>
 </nav>
 
@@ -578,6 +583,414 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
         <div class="tip"><div class="tip-title">Algo no cuadra</div><p>En cualquier gate, elige &ldquo;Ajustar&rdquo;</p></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ━━━ DOCS ━━━ -->
+<section class="step-section" data-step="docs">
+  <div class="step-head"><div class="step-head-num" style="color:var(--accent)">&#128196;</div><div><h3>Documentaci&oacute;n T&eacute;cnica</h3><p>Arquitectura del plugin, estructura de archivos, modelo de datos, conectores y configuraci&oacute;n.</p></div></div>
+
+  <div class="step-body" style="grid-template-columns:1fr;">
+
+    <!-- ARCHITECTURE -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Arquitectura del plugin</div>
+      <div style="font-size:.84rem;line-height:1.75;">
+        <p style="margin-bottom:.75rem;"><strong>lgaas-activation</strong> es un plugin de Claude Cowork empaquetado como archivo <code>.plugin</code> (formato zip). Contiene 11 skills independientes que se invocan secuencialmente para ejecutar el pipeline completo de Lead Generation as a Service.</p>
+        <p style="margin-bottom:.75rem;">Cada skill es aut&oacute;noma: tiene su propio <code>SKILL.md</code> con instrucciones, un <strong>Activation Protocol</strong> (flujo guiado con preguntas de m&uacute;ltiple elecci&oacute;n), y archivos de referencia opcionales en su carpeta <code>references/</code> y <code>assets/</code>.</p>
+        <p>El plugin no requiere MCP servers propios &mdash; se conecta a los MCPs ya disponibles en el entorno Cowork del usuario (Apollo, Clay, LemList, Google Calendar, Gmail).</p>
+      </div>
+    </div>
+
+    <!-- FILE STRUCTURE -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Estructura de archivos</div>
+      <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.78rem;line-height:1.7;overflow-x:auto;margin-top:.5rem;">lgaas-activation/
+├── .claude-plugin/
+│   └── plugin.json                    <span style="color:rgba(230,89,38,.8)"># Manifiesto (name, version, description)</span>
+│
+├── skills/
+│   ├── 0-client-discovery/
+│   │   ├── SKILL.md                   <span style="color:rgba(230,89,38,.8)"># Instrucciones + Activation Protocol</span>
+│   │   ├── references/
+│   │   │   └── template-field-guide.md <span style="color:rgba(230,89,38,.8)"># Gu&iacute;a de cada campo del template</span>
+│   │   └── assets/
+│   │       └── targeting_framework_template.xlsx
+│   │
+│   ├── 1-market-segmentation/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   │   ├── output-spec.md         <span style="color:rgba(230,89,38,.8)"># Spec de las 8 pesta&ntilde;as output</span>
+│   │   │   └── sabi-guide.md          <span style="color:rgba(230,89,38,.8)"># Gu&iacute;a de exportaci&oacute;n SABI</span>
+│   │   └── assets/
+│   │
+│   ├── 2-strategy-report/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   │   └── reference-doc.docx     <span style="color:rgba(230,89,38,.8)"># Template del .docx ejecutivo</span>
+│   │   └── assets/
+│   │
+│   ├── 3-lead-enrichment/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── reference-db-doc.docx  <span style="color:rgba(230,89,38,.8)"># Template de base de datos</span>
+│   │
+│   ├── 4-signal-monitor/
+│   │   └── SKILL.md
+│   │
+│   ├── 5-sequence-designer/
+│   │   └── SKILL.md
+│   │
+│   ├── 6-message-writer/
+│   │   └── SKILL.md
+│   │
+│   ├── 7-campaign-launcher/
+│   │   └── SKILL.md
+│   │
+│   ├── 8-campaign-analyzer/
+│   │   └── SKILL.md
+│   │
+│   ├── 9-reply-manager/
+│   │   └── SKILL.md
+│   │
+│   └── 10-nurture-engine/
+│       └── SKILL.md</pre>
+    </div>
+
+    <!-- PLUGIN.JSON -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">plugin.json &mdash; Manifiesto</div>
+      <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.78rem;line-height:1.7;overflow-x:auto;margin-top:.5rem;">{
+  "name": "lgaas-activation",
+  "version": "1.2.0",
+  "description": "Pipeline LGaaS end-to-end para TopSpin...",
+  "author": { "name": "TopSpin" },
+  "keywords": ["lgaas", "prospecting", "b2b", "targeting",
+               "topspin", "sabi", "spain", "apollo", "clay",
+               "lemlist", "docx", "outbound", "nurture", "analytics"]
+}</pre>
+      <div style="font-size:.82rem;margin-top:.85rem;line-height:1.65;">
+        <p><strong>Reglas de validaci&oacute;n</strong> al subir el plugin a una organizaci&oacute;n:</p>
+        <div style="margin-top:.5rem;">
+          <div style="padding:.3rem 0;"><span style="color:var(--accent);font-weight:600;">name</span> &mdash; kebab-case, min&uacute;sculas con guiones. Debe coincidir con la carpeta ra&iacute;z.</div>
+          <div style="padding:.3rem 0;"><span style="color:var(--accent);font-weight:600;">version</span> &mdash; Formato semver: MAJOR.MINOR.PATCH (ej: 1.2.0)</div>
+          <div style="padding:.3rem 0;"><span style="color:var(--accent);font-weight:600;">description</span> &mdash; M&aacute;ximo <strong>500 caracteres</strong></div>
+          <div style="padding:.3rem 0;"><span style="color:var(--accent);font-weight:600;">keywords</span> &mdash; Array de strings para b&uacute;squeda. Sin l&iacute;mite.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILL.MD ANATOMY -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Anatom&iacute;a de un SKILL.md</div>
+      <div style="font-size:.82rem;line-height:1.65;margin-bottom:.75rem;">Cada skill tiene un archivo <code>SKILL.md</code> con dos partes: el <strong>YAML frontmatter</strong> (metadatos) y el <strong>cuerpo Markdown</strong> (instrucciones para Claude).</div>
+      <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.78rem;line-height:1.7;overflow-x:auto;margin-top:.5rem;"><span style="color:rgba(230,89,38,.8)">--- # YAML Frontmatter (obligatorio)</span>
+name: 3-lead-enrichment            <span style="color:rgba(230,89,38,.8)"># Debe coincidir con carpeta</span>
+description: >                     <span style="color:rgba(230,89,38,.8)"># M&aacute;x 1024 caracteres</span>
+  Step 3 of the LGaaS Activation pipeline. Takes the
+  consultant's selected hipersegment and generates a
+  branded base de datos .docx...
+  Trigger with: "Activa Lead Enrichment", ...
+version: 1.0.0                     <span style="color:rgba(230,89,38,.8)"># Semver</span>
+<span style="color:rgba(230,89,38,.8)">---</span>
+
+<span style="color:rgba(230,89,38,.8)"># Cuerpo Markdown (instrucciones para Claude)</span>
+
+## Model Routing                   <span style="color:rgba(230,89,38,.8)"># Qu&eacute; modelo usar y cu&aacute;ndo</span>
+## Activation Protocol             <span style="color:rgba(230,89,38,.8)"># Flujo guiado con AskUserQuestion</span>
+## Phase 1 &mdash; [Nombre]              <span style="color:rgba(230,89,38,.8)"># Pasos de ejecuci&oacute;n</span>
+## Phase 2 &mdash; [Nombre]
+...
+## Relationship with other skills  <span style="color:rgba(230,89,38,.8)"># Dependencias y handoffs</span></pre>
+      <div style="margin-top:.85rem;">
+        <div class="gate" style="border-left-color:var(--blue);"><strong style="color:var(--blue);">&#9432; Reglas YAML:</strong> Solo se permiten <code>name</code>, <code>description</code> y <code>version</code> en el frontmatter. Campos como <code>model</code>, <code>capabilities</code>, <code>dependencies</code> o <code>tags</code> causar&aacute;n error de validaci&oacute;n al subir.</div>
+        <div class="gate" style="border-left-color:var(--blue);"><strong style="color:var(--blue);">&#9432; Descripci&oacute;n:</strong> Debe incluir <strong>qu&eacute; hace</strong> la skill + <strong>triggers</strong> de activaci&oacute;n (frases que la disparan). M&aacute;x 1024 caracteres. El sistema usa este texto para decidir cu&aacute;ndo activar la skill &mdash; s&eacute; expl&iacute;cito con los triggers.</div>
+      </div>
+    </div>
+
+    <!-- ACTIVATION PROTOCOL -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Patr&oacute;n de Activation Protocol</div>
+      <div style="font-size:.82rem;line-height:1.65;margin-bottom:.75rem;">Cada skill tiene una secci&oacute;n <code>## Activation Protocol</code> que define c&oacute;mo Claude debe guiar al consultor cuando la skill se activa. Este es el patr&oacute;n est&aacute;ndar:</div>
+      <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.78rem;line-height:1.7;overflow-x:auto;margin-top:.5rem;">## Activation Protocol
+
+**Trigger:** "Activa Lead Enrichment", "Step 3", ...
+
+### Step 1 &mdash; Confirmar preparaci&oacute;n
+Usar AskUserQuestion:
+> "Perfecto, vamos a generar la base de datos."
+> Opciones:
+> - A) &iquest;Datos listos? (RECOMENDADO)
+> - B) Necesito revisar algo
+
+### Step 2 &mdash; Estimaci&oacute;n de cr&eacute;ditos
+Usar AskUserQuestion:
+> "Estimaci&oacute;n de cr&eacute;ditos: Apollo ~120, Clay ~60..."
+> Opciones:
+> - A) Proceder con todo (RECOMENDADO)
+> - B) Solo Apollo
+> - C) Solo top 20
+
+### Step 3 &mdash; &iquest;Arrancamos?
+> Confirmar y lanzar ejecuci&oacute;n</pre>
+      <div style="font-size:.82rem;margin-top:.85rem;line-height:1.65;">
+        <strong>Convenciones:</strong>
+        <div style="padding:.3rem 0;">&#8226; Opciones con letras: A), B), C)...</div>
+        <div style="padding:.3rem 0;">&#8226; Marcar la opci&oacute;n sugerida con <strong>(RECOMENDADO)</strong></div>
+        <div style="padding:.3rem 0;">&#8226; Idioma: espa&ntilde;ol siempre (el consultor opera en espa&ntilde;ol)</div>
+        <div style="padding:.3rem 0;">&#8226; Usar <code>AskUserQuestion</code> de Cowork para cada paso interactivo</div>
+        <div style="padding:.3rem 0;">&#8226; El &uacute;ltimo paso siempre es confirmaci&oacute;n antes de ejecutar</div>
+      </div>
+    </div>
+
+    <!-- MODEL ROUTING -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Model routing</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">Cada skill especifica qu&eacute; modelo de IA usar en cada fase. La regla general:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem;">
+          <div style="background:var(--bg-tertiary);padding:1rem;border-radius:8px;border-left:3px solid var(--blue);">
+            <span class="badge badge-model" style="margin-bottom:.5rem;display:inline-block;">Opus 4.6</span>
+            <div style="font-size:.78rem;margin-top:.25rem;color:var(--text-secondary);">Tareas estrat&eacute;gicas, creativas y de an&aacute;lisis: planificaci&oacute;n de hipersegmentos, dise&ntilde;o de secuencias, redacci&oacute;n de copy, manejo de objeciones, scoring.</div>
+          </div>
+          <div style="background:var(--bg-tertiary);padding:1rem;border-radius:8px;border-left:3px solid var(--green);">
+            <span class="badge badge-model" style="margin-bottom:.5rem;display:inline-block;">Sonnet</span>
+            <div style="font-size:.78rem;margin-top:.25rem;color:var(--text-secondary);">Tareas de ejecuci&oacute;n y API: llamadas a Apollo/Clay/LemList, procesamiento de datos, generaci&oacute;n de Excel, lectura de documentos, web scraping.</div>
+          </div>
+        </div>
+        <p style="margin-top:.75rem;">Esto se especifica en cada <code>SKILL.md</code> con la directiva <code>model: "opus"</code> o <code>model: "sonnet"</code> dentro de las instrucciones (no en el YAML frontmatter).</p>
+      </div>
+    </div>
+
+    <!-- CONNECTORS -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Conectores MCP requeridos</div>
+      <div style="font-size:.82rem;line-height:1.65;margin-bottom:.75rem;">El plugin no incluye MCPs propios. Usa los conectores que el usuario tenga configurados en su entorno Cowork. Estos son los necesarios:</div>
+      <table style="width:100%;font-size:.8rem;border-collapse:collapse;margin-top:.5rem;">
+        <thead><tr style="text-align:left;border-bottom:2px solid var(--border);">
+          <th style="padding:.5rem .75rem;font-weight:600;">Conector</th>
+          <th style="padding:.5rem .75rem;font-weight:600;">Usado en Skills</th>
+          <th style="padding:.5rem .75rem;font-weight:600;">Operaciones</th>
+          <th style="padding:.5rem .75rem;font-weight:600;">Cr&eacute;ditos</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">Apollo MCP</span></td>
+            <td style="padding:.5rem .75rem;">1, 3, 4, 9</td>
+            <td style="padding:.5rem .75rem;">People Search, Org Enrich, Job Postings, People Match</td>
+            <td style="padding:.5rem .75rem;">S&iacute; (por query)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">Clay MCP</span></td>
+            <td style="padding:.5rem .75rem;">3, 4</td>
+            <td style="padding:.5rem .75rem;">Contact Enrich, Company Enrich, Signal Detection</td>
+            <td style="padding:.5rem .75rem;">S&iacute; (por registro)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">LemList MCP</span></td>
+            <td style="padding:.5rem .75rem;">3, 5, 7, 8, 9, 10</td>
+            <td style="padding:.5rem .75rem;">Campaigns, Leads, Email Verify, Inbox, Warmup, Stats</td>
+            <td style="padding:.5rem .75rem;">S&iacute; (find email)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">Google Calendar</span></td>
+            <td style="padding:.5rem .75rem;">9</td>
+            <td style="padding:.5rem .75rem;">Find Free Time, Create Event</td>
+            <td style="padding:.5rem .75rem;">No</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">Gmail</span></td>
+            <td style="padding:.5rem .75rem;">9</td>
+            <td style="padding:.5rem .75rem;">Create Draft (meeting handoff)</td>
+            <td style="padding:.5rem .75rem;">No</td>
+          </tr>
+          <tr>
+            <td style="padding:.5rem .75rem;"><span class="badge badge-conn">WebSearch</span></td>
+            <td style="padding:.5rem .75rem;">0, 1, 4</td>
+            <td style="padding:.5rem .75rem;">Web Research, News, Signal Detection</td>
+            <td style="padding:.5rem .75rem;">No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DATA FLOW -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Flujo de datos entre skills</div>
+      <div style="font-size:.82rem;line-height:1.65;margin-bottom:.75rem;">Los archivos generados por cada skill sirven de input para la siguiente. Este es el flujo completo:</div>
+      <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.75rem;line-height:1.9;overflow-x:auto;margin-top:.5rem;">
+<span style="color:rgba(230,89,38,.8)">Notas + Docs + URL</span>
+        │
+        ▼
+┌──────────────────┐     ┌──────────────────┐
+│ 0-client-discovery│────▶│ targeting_framework│  <span style="color:rgba(230,89,38,.8)">.xlsx (14 tabs)</span>
+└──────────────────┘     └────────┬─────────┘
+                                  │
+                                  ▼
+┌──────────────────────┐   ┌─────────────────────┐
+│ 1-market-segmentation │──▶│ targeting_strategy    │  <span style="color:rgba(230,89,38,.8)">.xlsx (8 tabs)</span>
+└──────────────────────┘   └────────┬────────────┘
+                                    │
+                    ┌───────────────┴───────────────┐
+                    ▼                               ▼
+        ┌────────────────┐              ┌────────────────┐
+        │ 2-strategy-report│              │ <span style="color:rgba(230,89,38,.8)">Consultor elige</span>  │
+        │ (docx ejecutivo)│              │ <span style="color:rgba(230,89,38,.8)">hipersegmento</span>   │
+        └────────────────┘              └───────┬────────┘
+                                                │
+                                                ▼
+                                    ┌────────────────────┐
+                                    │ 3-lead-enrichment    │
+                                    │ (base datos .docx)   │  <span style="color:rgba(230,89,38,.8)">Apollo + Clay + LemList</span>
+                                    └────────┬───────────┘
+                                             │
+              ┌──────────────────────────────┤
+              ▼                              ▼
+    ┌──────────────────┐          ┌──────────────────┐
+    │ 4-signal-monitor   │          │ 5-sequence-designer│
+    │ (briefing .docx)   │          │ (plan .docx)       │
+    └──────────────────┘          └────────┬─────────┘
+                                           │
+                                           ▼
+                                ┌──────────────────┐
+                                │ 6-message-writer   │
+                                │ (copy &rarr; .xlsx cols) │
+                                └────────┬─────────┘
+                                         │
+                                         ▼
+                                ┌──────────────────┐
+                                │ 7-campaign-launcher│ ──▶ <span style="color:rgba(230,89,38,.8)">LemList LIVE</span>
+                                └────────┬─────────┘
+                                         │
+                    ┌────────────────────┤────────────────────┐
+                    ▼                    ▼                    ▼
+          ┌────────────────┐  ┌──────────────────┐  ┌────────────────┐
+          │ 8-campaign-     │  │ 9-reply-manager   │  │ 10-nurture-    │
+          │   analyzer      │  │ (handoff .docx)   │  │   engine       │
+          └───────┬────────┘  └──────────────────┘  └───────┬────────┘
+                  │                                         │
+                  └────────────▶ <span style="color:rgba(230,89,38,.8)">FEEDBACK LOOP</span> ◀────────────┘
+                         (vuelve a 5 &rarr; 6 &rarr; 7)</pre>
+    </div>
+
+    <!-- SABI -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Integraci&oacute;n con SABI</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">SABI no tiene API &mdash; la exportaci&oacute;n es manual por parte del consultor. El plugin lo gestiona as&iacute;:</p>
+        <div style="padding:.3rem 0;"><strong>1.</strong> En el <strong>Step 1</strong> (Market Segmentation), Claude genera los filtros exactos: c&oacute;digos CNAE, rango de empleados, rango de facturaci&oacute;n, columnas a exportar.</div>
+        <div style="padding:.3rem 0;"><strong>2.</strong> El consultor va a SABI, aplica los filtros, exporta como .xlsx.</div>
+        <div style="padding:.3rem 0;"><strong>3.</strong> Sube el .xlsx a la sesi&oacute;n de Cowork.</div>
+        <div style="padding:.3rem 0;"><strong>4.</strong> Claude cruza los datos de SABI con Apollo para generar el TAM definitivo con cobertura de Decision Makers.</div>
+        <p style="margin-top:.75rem;">Si el mercado objetivo <strong>no es Espa&ntilde;a/Portugal</strong>, SABI se omite y se usa solo Apollo.</p>
+      </div>
+    </div>
+
+    <!-- VERIFICATION CASCADE -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Cascada de verificaci&oacute;n de email</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">En el Step 3 (Lead Enrichment), los emails de cada Decision Maker se verifican en 3 niveles:</p>
+        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.5rem 0;">
+          <div style="background:var(--bg-tertiary);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--border);text-align:center;"><span class="badge badge-conn">Apollo</span><div style="font-size:.7rem;color:var(--text-secondary);margin-top:.25rem;">People Match</div></div>
+          <span style="color:var(--accent);font-weight:700;">→</span>
+          <div style="background:var(--bg-tertiary);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--border);text-align:center;"><span class="badge badge-conn">Clay</span><div style="font-size:.7rem;color:var(--text-secondary);margin-top:.25rem;">Contact Enrich</div></div>
+          <span style="color:var(--accent);font-weight:700;">→</span>
+          <div style="background:var(--bg-tertiary);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--border);text-align:center;"><span class="badge badge-conn">LemList</span><div style="font-size:.7rem;color:var(--text-secondary);margin-top:.25rem;">Find &amp; Verify</div></div>
+        </div>
+        <p style="margin-top:.5rem;">Si un email pasa las 3 verificaciones, se marca como <strong>verified</strong>. Si solo pasa 1-2, se marca como <strong>risky</strong>. Si no pasa ninguna, se excluye del env&iacute;o.</p>
+      </div>
+    </div>
+
+    <!-- CREDIT SYSTEM -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Sistema de cr&eacute;ditos (Credit Gates)</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">Antes de cada operaci&oacute;n con coste, Claude presenta una tabla de estimaci&oacute;n y pide autorizaci&oacute;n expl&iacute;cita:</p>
+        <table style="width:100%;font-size:.78rem;border-collapse:collapse;margin-top:.5rem;">
+          <thead><tr style="text-align:left;border-bottom:2px solid var(--border);">
+            <th style="padding:.4rem .6rem;">Proveedor</th>
+            <th style="padding:.4rem .6rem;">Operaci&oacute;n</th>
+            <th style="padding:.4rem .6rem;">Unidades</th>
+            <th style="padding:.4rem .6rem;">Cr&eacute;ditos est.</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:.4rem .6rem;">Apollo</td><td style="padding:.4rem .6rem;">People Match</td><td style="padding:.4rem .6rem;">~120 DMs</td><td style="padding:.4rem .6rem;">120</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:.4rem .6rem;">Clay</td><td style="padding:.4rem .6rem;">Contact Enrich</td><td style="padding:.4rem .6rem;">~60 DMs</td><td style="padding:.4rem .6rem;">60</td></tr>
+            <tr><td style="padding:.4rem .6rem;">LemList</td><td style="padding:.4rem .6rem;">Find Email</td><td style="padding:.4rem .6rem;">~40 DMs</td><td style="padding:.4rem .6rem;">40</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:.75rem;">El consultor siempre puede elegir ejecutar parcialmente (solo Apollo, solo top N registros) o cancelar. Nada se ejecuta sin confirmaci&oacute;n.</p>
+      </div>
+    </div>
+
+    <!-- SCHEDULING -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Tareas programadas</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">Dos skills tienen ejecuci&oacute;n recurrente autom&aacute;tica v&iacute;a la skill <code>schedule</code> de Cowork:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem;">
+          <div style="background:var(--bg-tertiary);padding:1rem;border-radius:8px;">
+            <span class="badge badge-skill">4-signal-monitor</span>
+            <div style="font-size:.78rem;margin-top:.35rem;"><strong>Domingo 23:00</strong> &mdash; Escanea se&ntilde;ales y genera briefing para el lunes.</div>
+          </div>
+          <div style="background:var(--bg-tertiary);padding:1rem;border-radius:8px;">
+            <span class="badge badge-skill">8-campaign-analyzer</span>
+            <div style="font-size:.78rem;margin-top:.35rem;"><strong>Lunes 09:00</strong> &mdash; Genera performance report de la semana anterior.</div>
+          </div>
+        </div>
+        <p style="margin-top:.75rem;">Se configuran en el <strong>Activation Protocol</strong> de cada skill. El consultor puede elegir ejecuci&oacute;n manual en vez de programada.</p>
+      </div>
+    </div>
+
+    <!-- UPDATING THE PLUGIN -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Actualizar o modificar el plugin</div>
+      <div style="font-size:.82rem;line-height:1.65;">
+        <p style="margin-bottom:.75rem;">Para modificar una skill o a&ntilde;adir funcionalidad:</p>
+        <div style="padding:.3rem 0;"><strong>1.</strong> Descomprime el <code>.plugin</code> (es un zip est&aacute;ndar)</div>
+        <div style="padding:.3rem 0;"><strong>2.</strong> Edita el <code>SKILL.md</code> correspondiente</div>
+        <div style="padding:.3rem 0;"><strong>3.</strong> Incrementa la <code>version</code> en <code>plugin.json</code></div>
+        <div style="padding:.3rem 0;"><strong>4.</strong> Re-empaqueta: <code>zip -r lgaas-activation.plugin .claude-plugin/ skills/</code></div>
+        <div style="padding:.3rem 0;"><strong>5.</strong> Sube de nuevo a la organizaci&oacute;n</div>
+        <p style="margin-top:.75rem;">Tambi&eacute;n puedes pedir a Claude en Cowork: <em>&ldquo;Modifica la skill 6-message-writer para a&ntilde;adir WhatsApp&rdquo;</em> y usar la skill <code>skill-creator</code> para regenerar y reempaquetar.</p>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="flow" style="margin-bottom:1.5rem;">
+      <div class="flow-title">Errores comunes al subir el plugin</div>
+      <table style="width:100%;font-size:.8rem;border-collapse:collapse;margin-top:.5rem;">
+        <thead><tr style="text-align:left;border-bottom:2px solid var(--border);">
+          <th style="padding:.5rem .75rem;font-weight:600;">Error</th>
+          <th style="padding:.5rem .75rem;font-weight:600;">Causa</th>
+          <th style="padding:.5rem .75rem;font-weight:600;">Soluci&oacute;n</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;color:var(--accent);font-weight:500;">description must be at most 500 characters</td>
+            <td style="padding:.5rem .75rem;">plugin.json description demasiado largo</td>
+            <td style="padding:.5rem .75rem;">Recortar a &lt;500 chars</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;color:var(--accent);font-weight:500;">field 'description' must be at most 1024</td>
+            <td style="padding:.5rem .75rem;">SKILL.md description demasiado larga</td>
+            <td style="padding:.5rem .75rem;">Recortar description en YAML frontmatter</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.5rem .75rem;color:var(--accent);font-weight:500;">malformed YAML frontmatter</td>
+            <td style="padding:.5rem .75rem;">Campos no v&aacute;lidos en YAML (model, capabilities, etc.)</td>
+            <td style="padding:.5rem .75rem;">Solo usar: name, description, version</td>
+          </tr>
+          <tr>
+            <td style="padding:.5rem .75rem;color:var(--accent);font-weight:500;">No se pudieron descargar los archivos</td>
+            <td style="padding:.5rem .75rem;">Plugin empaquetado como tar.gz en vez de zip</td>
+            <td style="padding:.5rem .75rem;">Usar <code>zip -r</code>, no <code>tar -czf</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </section>
 
