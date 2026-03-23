@@ -232,7 +232,7 @@ pre code { background:none; padding:0; color:inherit; }
   <ul class="snav">
     <li class="snav-item"><a class="snav-link active" data-step="0"><span class="snav-num">0</span><span class="snav-label">Client Discovery<small>Intake &rarr; Framework</small></span></a></li>
     <li class="snav-item"><a class="snav-link" data-step="1"><span class="snav-num">1</span><span class="snav-label">Market Segmentation<small>Hipersegmentos + Scoring</small></span></a></li>
-    <li class="snav-item"><a class="snav-link" data-step="2"><span class="snav-num">2</span><span class="snav-label">Strategy Report<small>.docx ejecutivo</small></span></a></li>
+    <li class="snav-item"><a class="snav-link" data-step="2"><span class="snav-num">2</span><span class="snav-label">Strategy Report<small>.docx + .xlsx operativos</small></span></a></li>
   </ul>
   <div class="phase-div">Fase 2 &mdash; Datos</div>
   <ul class="snav">
@@ -318,22 +318,23 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 2 ━━━ -->
 <section class="step-section" data-step="2">
-  <div class="step-head"><div class="step-head-num">02</div><div><h3>Strategy Report</h3><p>Documento ejecutivo brandeado + selecci&oacute;n del hipersegmento a activar.</p></div></div>
+  <div class="step-head"><div class="step-head-num">02</div><div><h3>Strategy Report</h3><p>Documento ejecutivo (.docx) + Excels operativos por hipersegmento (.xlsx) + selecci&oacute;n para activar.</p></div></div>
   <div class="step-body">
     <div class="step-content">
-      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Strategy Report</div><div class="trigger-alt"><span>Step 2</span> <span>Genera el documento</span> <span>Crea el docx</span></div></div>
+      <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Strategy Report</div><div class="trigger-alt"><span>Step 2</span> <span>Genera el documento</span> <span>Genera los excels</span></div></div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
-        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Genera el .docx autom&aacute;ticamente</strong><div class="bubble"><em>Claude toma el Excel de estrategia y genera el documento brandeado TopSpin con 7 secciones.</em></div></div></div>
-        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Por qu&eacute; hipersegmento empezamos?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Despachos Medianos (TAM:847, DM:72%) <span class="rec">PRIORIDAD ALTA</span></span><span class="opt"><span class="opt-l">B)</span> Gestor&iacute;as Jur&iacute;dicas (TAM:1.203, DM:45%)</span><span class="opt"><span class="opt-l">C)</span> Consultoras IT LATAM (TAM:2.100, DM:38%)</span><br><em>Claude recomienda el de mayor score &times; cobertura DM.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Genera el .docx ejecutivo</strong><div class="bubble"><em>Claude toma el Excel de estrategia y genera el documento brandeado TopSpin con 7 secciones. Este es el entregable para el cliente.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Genera 1 Excel por hipersegmento</strong><div class="bubble"><em>Cada Excel tiene 6 hojas: Resumen, Empresas, Decision Makers, Scoring, Se&ntilde;ales, ICP&amp;BANT. Datos filtrables y editables &mdash; tu herramienta de trabajo.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>&iquest;Por qu&eacute; hipersegmento empezamos?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Despachos Medianos (TAM:847, DM:72%) <span class="rec">PRIORIDAD ALTA</span></span><span class="opt"><span class="opt-l">B)</span> Gestor&iacute;as Jur&iacute;dicas (TAM:1.203, DM:45%)</span><span class="opt"><span class="opt-l">C)</span> Consultoras IT LATAM (TAM:2.100, DM:38%)</span><br><em>Claude recomienda el de mayor score &times; cobertura DM.</em></div></div></div>
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Targeting Strategy .xlsx</strong> (Step 1)</li><li><strong>Elecci&oacute;n</strong> del segmento</li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Targeting Framework .docx</strong> brandeado</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.docx</div><div class="fm">Cover + 7 secciones &middot; Compartible con el cliente</div></div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Targeting Framework .docx</strong> brandeado (para el cliente)</li><li><strong>1 Excel .xlsx por hipersegmento</strong> (para ti)</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.docx</div><div class="fm">Cover + 7 secciones &middot; Compartible con el cliente</div></div></div><div class="file-row"><div class="file-icon f-xlsx" style="background:#217346;color:#fff;font-weight:700;font-size:.65rem;border-radius:4px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;">XLS</div><div><div class="fn">{cliente}_{hipersegmento}_{fecha}.xlsx</div><div class="fm">6 hojas &middot; Filtrable &middot; 1 por segmento</div></div></div></div>
       </div>
     </div>
     <div class="step-meta">
-      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">10&ndash;15 min</div><div class="meta-time-sub">Generaci&oacute;n + selecci&oacute;n de segmento</div></div>
-      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">02-strategy-report</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span></div>
+      <div class="meta-card"><div class="meta-card-label time-l">Tiempo estimado</div><div class="meta-time">10&ndash;15 min</div><div class="meta-time-sub">Docx + Excels + selecci&oacute;n de segmento</div></div>
+      <div class="meta-card"><div class="meta-card-label skill-l">Skills</div><span class="badge badge-skill">02-strategy-report</span><span class="badge badge-skill">topspin-branding</span><span class="badge badge-skill">docx</span><span class="badge badge-skill">xlsx</span></div>
       <div class="meta-card"><div class="meta-card-label docs-l">Documentos ref.</div><span class="badge badge-doc">reference-doc.docx</span></div>
     </div>
   </div>
