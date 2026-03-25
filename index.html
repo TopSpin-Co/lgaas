@@ -175,6 +175,11 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
 code { background: var(--bg-tertiary); padding:2px 6px; border-radius:4px; font-size:.82em; font-family:'SF Mono','Fira Code',monospace; color: var(--accent); }
 pre code { background:none; padding:0; color:inherit; }
 
+/* ── SAMPLE DOWNLOAD BUTTON ── */
+.sample-btn { display:inline-flex; align-items:center; gap:.5rem; margin-top:.65rem; padding:.55rem 1.1rem; background:linear-gradient(135deg,#217346,#1a5c38); color:#fff; border:none; border-radius:6px; font-size:.75rem; font-weight:600; text-decoration:none; cursor:pointer; transition:all .15s; box-shadow:0 2px 8px rgba(33,115,70,.2); }
+.sample-btn:hover { background:linear-gradient(135deg,#1a5c38,#145a2e); transform:translateY(-1px); box-shadow:0 4px 12px rgba(33,115,70,.3); }
+.sample-btn svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
+
 /* ── FOOTER ── */
 .guide-footer { text-align:center; padding:2.5rem 2rem; color: var(--text-secondary); font-size:.78rem; border-top:1px solid var(--border); }
 
@@ -203,10 +208,11 @@ pre code { background:none; padding:0; color:inherit; }
   <div class="cover-logo">TopSpin</div>
   <h1>LGaaS Activation</h1>
   <div class="sub">Step By Step Claude Cowork Guide</div>
-  <div class="meta">Plugin v1.2.0 &middot; Marzo 2026</div>
+  <div class="meta">Plugin v1.4.0 &middot; Marzo 2026</div>
   <div class="cover-stats">
     <div class="cover-stat"><div class="cover-stat-num">11</div><div class="cover-stat-label">Skills</div></div>
     <div class="cover-stat"><div class="cover-stat-num">4</div><div class="cover-stat-label">Conectores</div></div>
+    <div class="cover-stat"><div class="cover-stat-num">1</div><div class="cover-stat-label">Comando</div></div>
     <div class="cover-stat"><div class="cover-stat-num">4</div><div class="cover-stat-label">Fases</div></div>
     <div class="cover-stat"><div class="cover-stat-num">&infin;</div><div class="cover-stat-label">Ciclo cerrado</div></div>
   </div>
@@ -263,10 +269,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 0 ━━━ -->
 <section class="step-section visible" data-step="0">
-  <div class="step-head"><div class="step-head-num">00</div><div><h3>Client Discovery</h3><p>De las notas de la discovery call al Targeting Framework completo.</p></div></div>
+  <div class="step-head"><div class="step-head-num">00</div><div><h3>Client Discovery</h3><p>El punto de partida de todo proyecto LGaaS. Aqu&iacute; transformamos las notas de la discovery call, documentos del cliente y su web en el Targeting Framework completo &mdash; el Excel maestro de 14 pesta&ntilde;as que alimenta todo el pipeline.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Client Discovery</div><div class="trigger-alt">Tambi&eacute;n: <span>Step 0</span> <span>Discovery intake</span> <span>Tengo las notas de una discovery</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> El consultor acaba de terminar una discovery call y tiene notas, PDFs y URLs sueltas. Claude las procesa todas, investiga la web del cliente para rellenar gaps, y produce un Excel estructurado listo para validar. Incluye un <strong>ICP Challenge</strong>: si el cliente dice que quiere contactar al CEO pero apunta a empresas de +200 empleados, Claude avisa y propone roles alternativos m&aacute;s realistas (Tier 1: entry points accesibles, Tier 2: C-suite solo con se&ntilde;al fuerte). El consultor decide, pero siempre con datos.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Qu&eacute; materiales tienes?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Notas de la discovery call</span><span class="opt"><span class="opt-l">B)</span> Documentos del cliente (PDFs, decks...)</span><span class="opt"><span class="opt-l">C)</span> Solo la URL</span><span class="opt"><span class="opt-l">D)</span> Todo: notas + docs + URL <span class="rec">RECOMENDADO</span></span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Sube los materiales</strong><div class="bubble">Pega las notas o sube el fichero. Si tienes docs adicionales, adj&uacute;ntalos. <em>Claude espera tus archivos.</em></div></div></div>
@@ -275,7 +284,7 @@ pre code { background:none; padding:0; color:inherit; }
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Notas de la discovery</strong> &mdash; texto, .txt, .pdf</li><li><strong>Docs del cliente</strong> &mdash; cat&aacute;logos, decks</li><li><strong>URL del cliente</strong></li><li><strong>Respuestas</strong> a las preguntas de Claude</li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Resumen estructurado</strong> para validar</li><li><strong>Targeting Framework .xlsx</strong></li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.xlsx</div><div class="fm">14 pesta&ntilde;as &middot; Branding TopSpin &middot; Tags [INPUT] [RESEARCH] [INFERIDO]</div></div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Resumen estructurado</strong> para validar</li><li><strong>Targeting Framework .xlsx</strong></li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.xlsx</div><div class="fm">14 pesta&ntilde;as &middot; Branding TopSpin &middot; Tags [INPUT] [RESEARCH] [INFERIDO]</div></div></div><a class="sample-btn" href="samples/sample_00_targeting_framework.xlsx" download><svg viewBox="0 0 16 16"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>Descargar muestra .xlsx</a></div>
       </div>
       <div class="gate"><strong>&#9888; Validation Gate:</strong> Claude SIEMPRE presenta un resumen completo antes de generar. Nada se produce sin tu OK.</div>
     </div>
@@ -291,10 +300,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 1 ━━━ -->
 <section class="step-section" data-step="1">
-  <div class="step-head"><div class="step-head-num">01</div><div><h3>Market Segmentation</h3><p>Del Framework al Excel operativo con hipersegmentos, scoring con accesibilidad del DM y plan de activaci&oacute;n.</p></div></div>
+  <div class="step-head"><div class="step-head-num">01</div><div><h3>Market Segmentation</h3><p>Convierte el Targeting Framework en una estrategia de mercado accionable. Claude cruza datos de Apollo y SABI para calcular el TAM real de cada hipersegmento, define el scoring de leads y crea el plan de activaci&oacute;n mes a mes.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Market Segmentation</div><div class="trigger-alt"><span>Step 1</span> <span>Genera los hipersegmentos</span> <span>Targeting strategy</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Sin segmentaci&oacute;n, lanzar&iacute;amos al mismo mensaje a 5.000 empresas distintas. Aqu&iacute; dividimos el mercado en hipersegmentos homog&eacute;neos (por sector, tama&ntilde;o, geograf&iacute;a) para que cada uno reciba un outreach personalizado. Claude calcula cu&aacute;ntas empresas y DMs hay realmente en cada segmento usando Apollo y SABI, y te dice d&oacute;nde merece la pena invertir primero. Para Espa&ntilde;a/Portugal, Claude te da los filtros EXACTOS para que vayas a SABI, exportes y subas el fichero &mdash; &eacute;l cruza los datos autom&aacute;ticamente.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Tienes el Framework?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Ya lo tenemos en la sesi&oacute;n <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Lo subo ahora</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Target Espa&ntilde;a/Portugal? &rarr; SABI</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, tengo acceso a SABI <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> S&iacute; pero no tengo SABI</span><span class="opt"><span class="opt-l">C)</span> No, mercado internacional</span><br><em>Si A: Claude te da los filtros EXACTOS (CNAEs, empleados, columnas) para que vayas a SABI, exportes y subas el Excel.</em></div></div></div>
@@ -302,7 +314,7 @@ pre code { background:none; padding:0; color:inherit; }
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Targeting Framework .xlsx</strong> (Step 0)</li><li><strong>Export SABI</strong> si Espa&ntilde;a (Claude da filtros)</li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Instrucciones SABI</strong> con filtros exactos</li><li><strong>Targeting Strategy .xlsx</strong> (8 pesta&ntilde;as)</li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_strategy_{fecha}.xlsx</div><div class="fm">TAM real [APOLLO] [SABI] &middot; DM Accessibility Score</div></div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Instrucciones SABI</strong> con filtros exactos</li><li><strong>Targeting Strategy .xlsx</strong> (8 pesta&ntilde;as)</li></ul><div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_targeting_strategy_{fecha}.xlsx</div><div class="fm">TAM real [APOLLO] [SABI] &middot; DM Accessibility Score</div></div></div><a class="sample-btn" href="samples/sample_01_targeting_strategy.xlsx" download><svg viewBox="0 0 16 16"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>Descargar muestra .xlsx</a></div>
       </div>
       <div class="gate sabi"><strong>&#128218; SABI entra aqu&iacute;:</strong> Claude calcula los CNAEs y filtros para cada hipersegmento. Te da instrucciones paso a paso (qu&eacute; buscar, qu&eacute; columnas exportar, nombre del fichero). T&uacute; vas a SABI, exportas, subes el Excel. Claude cruza SABI &times; Apollo para el TAM definitivo.</div>
     </div>
@@ -318,18 +330,21 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 2 ━━━ -->
 <section class="step-section" data-step="2">
-  <div class="step-head"><div class="step-head-num">02</div><div><h3>Strategy Report</h3><p>Documento ejecutivo (.docx) + Excels operativos por hipersegmento (.xlsx) + selecci&oacute;n para activar.</p></div></div>
+  <div class="step-head"><div class="step-head-num">02</div><div><h3>Strategy Report</h3><p>Genera los entregables del targeting: un documento ejecutivo brandeado para compartir con el cliente (.docx) y un Excel operativo por cada hipersegmento (.xlsx) que ser&aacute; tu herramienta de trabajo real durante todo el proyecto.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Strategy Report</div><div class="trigger-alt"><span>Step 2</span> <span>Genera el documento</span> <span>Genera los excels</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Necesitamos dos cosas: un documento profesional que el cliente pueda leer y aprobar (el .docx con 7 secciones brandeadas TopSpin), y Excels de trabajo para el consultor (uno por hipersegmento con 5 hojas: &#128202; Dashboard, &#128214; Gu&iacute;a de Scoring, &#127970; Empresas, &#128101; Contactos, &#128203; Leads). El formato replica exactamente la base de datos TopSpin de referencia, con scoring de 5 dimensiones (A-E, m&aacute;x 100 pts) y f&oacute;rmulas Excel que auto-calculan TIER y SCORE. Al final, Claude presenta los hipersegmentos ordenados por prioridad y pide al consultor: &ldquo;&iquest;Por cu&aacute;l empezamos?&rdquo;
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Genera el .docx ejecutivo</strong><div class="bubble"><em>Claude toma el Excel de estrategia y genera el documento brandeado TopSpin con 7 secciones. Este es el entregable para el cliente.</em></div></div></div>
-        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Genera 1 Excel por hipersegmento</strong><div class="bubble"><em>Cada Excel tiene 6 hojas: Resumen, Empresas, Decision Makers, Scoring, Se&ntilde;ales, ICP&amp;BANT. Datos filtrables y editables &mdash; tu herramienta de trabajo.</em></div></div></div>
+        <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Genera 1 Excel por hipersegmento</strong><div class="bubble"><em>Cada Excel tiene 5 hojas: &#128202; Dashboard (funnel), &#128214; Gu&iacute;a de Scoring (5 categor&iacute;as, m&aacute;x 100 pts), &#127970; Empresas, &#128101; Contactos, &#128203; Leads (master con todo en una fila). Formato id&eacute;ntico al de la base de datos TopSpin de referencia.</em></div></div></div>
         <div class="fstep"><div class="fstep-num">3</div><div class="fstep-body"><strong>&iquest;Por qu&eacute; hipersegmento empezamos?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Despachos Medianos (TAM:847, DM:72%) <span class="rec">PRIORIDAD ALTA</span></span><span class="opt"><span class="opt-l">B)</span> Gestor&iacute;as Jur&iacute;dicas (TAM:1.203, DM:45%)</span><span class="opt"><span class="opt-l">C)</span> Consultoras IT LATAM (TAM:2.100, DM:38%)</span><br><em>Claude recomienda el de mayor score &times; cobertura DM.</em></div></div></div>
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>Targeting Strategy .xlsx</strong> (Step 1)</li><li><strong>Elecci&oacute;n</strong> del segmento</li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Targeting Framework .docx</strong> brandeado (para el cliente)</li><li><strong>1 Excel .xlsx por hipersegmento</strong> (para ti)</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.docx</div><div class="fm">Cover + 7 secciones &middot; Compartible con el cliente</div></div></div><div class="file-row"><div class="file-icon f-xlsx" style="background:#217346;color:#fff;font-weight:700;font-size:.65rem;border-radius:4px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;">XLS</div><div><div class="fn">{cliente}_{hipersegmento}_{fecha}.xlsx</div><div class="fm">6 hojas &middot; Filtrable &middot; 1 por segmento</div></div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Targeting Framework .docx</strong> brandeado (para el cliente)</li><li><strong>1 Excel .xlsx por hipersegmento</strong> (para ti)</li></ul><div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_targeting_framework_{fecha}.docx</div><div class="fm">Cover + 7 secciones &middot; Compartible con el cliente</div></div></div><div class="file-row"><div class="file-icon f-xlsx" style="background:#217346;color:#fff;font-weight:700;font-size:.65rem;border-radius:4px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;">XLS</div><div><div class="fn">{cliente}_{hipersegmento}_{fecha}.xlsx</div><div class="fm">5 hojas &middot; Scoring 5D con f&oacute;rmulas &middot; 1 por segmento</div></div></div><a class="sample-btn" href="samples/sample_02_03_lead_database_5sheets.xlsx" download><svg viewBox="0 0 16 16"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>Descargar muestra 5 hojas .xlsx</a></div>
       </div>
     </div>
     <div class="step-meta">
@@ -342,10 +357,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 3 ━━━ -->
 <section class="step-section" data-step="3">
-  <div class="step-head"><div class="step-head-num">03</div><div><h3>Lead Enrichment</h3><p>Base de datos operativa: empresas + DMs + emails verificados en cascada + se&ntilde;ales + scoring.</p></div></div>
+  <div class="step-head"><div class="step-head-num">03</div><div><h3>Lead Enrichment</h3><p>El paso m&aacute;s intensivo del pipeline. Toma el hipersegmento elegido y lo convierte en una base de datos real con empresas de SABI, decision makers de Apollo, emails verificados en cascada (Apollo &rarr; Clay &rarr; LemList), se&ntilde;ales de compra y scoring &mdash; todo en un Excel operativo listo para lanzar.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Lead Enrichment</div><div class="trigger-alt"><span>Step 3</span> <span>Genera la base de datos</span> <span>Activa el segmento</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Hasta ahora ten&iacute;amos n&uacute;meros de TAM y estrategia. Ahora necesitamos nombres y apellidos reales: empresas concretas, personas reales con emails verificados que podamos contactar. Claude ejecuta un waterfall de enriquecimiento en 4 capas (Apollo &rarr; Clay &rarr; Apollo Match &rarr; LemList) y verifica cada email en cascada de 3 pasos para proteger tu dominio. Antes de gastar cr&eacute;ditos, hace un <strong>ICP Challenge en vivo</strong>: busca 10 empresas con los t&iacute;tulos del cliente vs. t&iacute;tulos alternativos y te muestra los datos reales de accesibilidad. Tambi&eacute;n filtra autom&aacute;ticamente contactos cuya ubicaci&oacute;n no coincida con el mercado (ej: descarta DMs en USA si el segmento es Espa&ntilde;a). Solo procede al volumen completo despu&eacute;s de que valides un sample de 10-20 registros.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Confirma segmento + SABI</strong><div class="bubble"><em>Claude usa el segmento que elegiste en Step 2 y el export SABI del Step 1.</em></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&#128176; Estimaci&oacute;n de cr&eacute;ditos</strong><div class="bubble"><span class="opt">&bull; Apollo People Match: ~120 cr&eacute;ditos</span><span class="opt">&bull; Clay Contact Enrich: ~60 cr&eacute;ditos</span><span class="opt">&bull; LemList Find Email: ~40 cr&eacute;ditos</span><span class="opt">&bull; <strong>Total: ~220 cr&eacute;ditos</strong></span><br><span class="opt"><span class="opt-l">A)</span> Proceder con todo <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Solo Apollo</span><span class="opt"><span class="opt-l">C)</span> Solo top 20</span></div></div></div>
@@ -353,7 +371,7 @@ pre code { background:none; padding:0; color:inherit; }
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li><strong>OK a cr&eacute;ditos</strong></li><li><strong>OK al sample</strong></li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .xlsx</strong> (mismo formato que Step 2)</li></ul><div class="file-row"><div class="file-icon f-xlsx" style="background:#217346;color:#fff;font-weight:700;font-size:.65rem;border-radius:4px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;">XLS</div><div><div class="fn">{cliente}_base_datos_{segmento}_{fecha}.xlsx</div><div class="fm">6 hojas &middot; [SABI] [APOLLO] [CLAY] [LEMLIST] &middot; Emails verificados cascada 3 pasos</div></div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .xlsx</strong> (mismo formato que Step 2)</li></ul><div class="file-row"><div class="file-icon f-xlsx" style="background:#217346;color:#fff;font-weight:700;font-size:.65rem;border-radius:4px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;">XLS</div><div><div class="fn">{cliente}_base_datos_{segmento}_{fecha}.xlsx</div><div class="fm">5 hojas (Dashboard, Scoring, Empresas, Contactos, Leads master) &middot; Scoring 5D con f&oacute;rmulas &middot; Emails verificados cascada 3 pasos</div></div></div><a class="sample-btn" href="samples/sample_02_03_lead_database_5sheets.xlsx" download><svg viewBox="0 0 16 16"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>Descargar muestra 5 hojas .xlsx</a></div>
       </div>
       <div class="gate"><strong>&#9888; Sample Validation:</strong> 10-20 registros de prueba antes de escalar.</div>
       <div class="gate credit"><strong>&#128176; Credit Gate:</strong> Tabla de cr&eacute;ditos antes de cada operaci&oacute;n. T&uacute; decides.</div>
@@ -369,10 +387,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 4 ━━━ -->
 <section class="step-section" data-step="4">
-  <div class="step-head"><div class="step-head-num">04</div><div><h3>Signal Monitor</h3><p>Escaneo semanal de se&ntilde;ales de compra frescas. Autom&aacute;tico cada domingo noche.</p></div></div>
+  <div class="step-head"><div class="step-head-num">04</div><div><h3>Signal Monitor</h3><p>La base de datos es est&aacute;tica, pero el mercado no. Este paso programa un escaneo semanal autom&aacute;tico que detecta se&ntilde;ales frescas de compra (contrataciones, funding, cambios de liderazgo, adopci&oacute;n tech) en tu TAM. Cada lunes tienes un briefing con las empresas que esta semana muestran intenci&oacute;n de compra.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Signal Monitor</div><div class="trigger-alt"><span>Step 4</span> <span>Escanea se&ntilde;ales</span> <span>Programa el scan semanal</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Un email fr&iacute;o al CEO tiene ~3% de respuesta. Un email al Director de Ops una semana despu&eacute;s de que su empresa publique una vacante para el rol que tu producto soluciona tiene ~25%. Las se&ntilde;ales de compra son el multiplicador m&aacute;s potente del outbound. Claude escanea Apollo (job postings), Clay (noticias, funding, headcount growth, tech stack) y web search para cada empresa de tu TAM. Las clasifica en &ldquo;Activar Ya&rdquo;, &ldquo;Priorizar&rdquo; y &ldquo;Monitorear&rdquo;. Se programa autom&aacute;tico los domingos a las 23:00 para que el lunes tengas el briefing listo.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Primera vez o recurrente?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Primera vez &mdash; configurar y ejecutar <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Scan manual ahora</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Programar autom&aacute;tico?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, domingo 23:00 <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> No, lo lanzo manualmente</span></div></div></div>
@@ -392,10 +413,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 5 ━━━ -->
 <section class="step-section" data-step="5">
-  <div class="step-head"><div class="step-head-num">05</div><div><h3>Sequence Designer</h3><p>Secuencia multicanal (email + LinkedIn + tel&eacute;fono + WhatsApp) basada en tus recursos reales.</p></div></div>
+  <div class="step-head"><div class="step-head-num">05</div><div><h3>Sequence Designer</h3><p>Dise&ntilde;a la secuencia de outreach multicanal &oacute;ptima (email + LinkedIn + tel&eacute;fono + WhatsApp) adaptada a los recursos REALES del consultor: cu&aacute;ntas cuentas de email, cu&aacute;ntos perfiles de LinkedIn, si hay SDRs para llamadas. Calcula el throughput diario/semanal y evita cuellos de botella.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Sequence Designer</div><div class="trigger-alt"><span>Step 5</span> <span>Dise&ntilde;a la secuencia</span> <span>Planifica el outreach</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> No tiene sentido dise&ntilde;ar una secuencia de 12 pasos con 5 canales si solo tienes 2 cuentas de email y 1 LinkedIn. Claude pregunta tus recursos reales, calcula cu&aacute;ntos leads puedes meter por semana sin quemar dominios ni superar l&iacute;mites de LinkedIn, y dise&ntilde;a la secuencia &oacute;ptima: cu&aacute;ntos pasos, en qu&eacute; canales, con qu&eacute; timing. Incluye festivos del pa&iacute;s, smart send time, y rotaci&oacute;n de senders. El output es un .docx con la arquitectura completa y un .html con la visualizaci&oacute;n interactiva del timeline por lead.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Recursos disponibles</strong><div class="bubble"><span class="opt">&bull; &iquest;Cu&aacute;ntas cuentas de email?</span><span class="opt">&bull; &iquest;Cu&aacute;ntas de LinkedIn?</span><span class="opt">&bull; &iquest;SDRs para tel&eacute;fono?</span><span class="opt">&bull; &iquest;WhatsApp disponible?</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Pa&iacute;s y agresividad</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Espa&ntilde;a (festivos auto) <span class="rec">DEFAULT</span></span><span class="opt"><span class="opt-l">B)</span> Otro pa&iacute;s</span><br><span class="opt"><span class="opt-l">A)</span> Equilibrado (3-4 d&iacute;as) <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Conservador</span><span class="opt"><span class="opt-l">C)</span> Agresivo</span></div></div></div>
@@ -418,10 +442,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 6 ━━━ -->
 <section class="step-section" data-step="6">
-  <div class="step-head"><div class="step-head-num">06</div><div><h3>Message Writer</h3><p>Copy experto B2B hiperpersonalizado, con Reason Why Now, directo en la base de datos.</p></div></div>
+  <div class="step-head"><div class="step-head-num">06</div><div><h3>Message Writer</h3><p>Copywriter B2B experto que escribe TODOS los mensajes de la secuencia: cold emails, invitaciones LinkedIn, mensajes de follow-up, scripts de llamada y voice notes. Cada mensaje est&aacute; hiperpersonalizado con el ICP, las se&ntilde;ales frescas y un &ldquo;Reason Why Now&rdquo; &uacute;nico por contacto. El copy se a&ntilde;ade como una <strong>6&ordf; hoja &ldquo;&#9993;&#65039; Outreach&rdquo;</strong> en el Excel de la base de datos, manteniendo las 5 hojas originales intactas.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Message Writer</div><div class="trigger-alt"><span>Step 6</span> <span>Escribe los mensajes</span> <span>Crea el copy</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> El mejor ICP y la mejor base de datos no sirven de nada con un email gen&eacute;rico. Claude escribe como un SDR senior que entiende el sector del prospect: subjects en min&uacute;sculas de m&aacute;ximo 4 palabras, sin emojis, sin &ldquo;Estimado/a&rdquo;. Cada contacto recibe un &ldquo;Reason Why Now&rdquo; basado en sus se&ntilde;ales reales (&ldquo;vi que est&aacute;is contratando un Director de Legal Ops&rdquo;). El copy se a&ntilde;ade como una <strong>hoja &#9993;&#65039; Outreach</strong> (la 6&ordf; hoja) al Excel, manteniendo las 5 hojas originales intactas. Un &uacute;nico fichero listo para importar a LemList. Primero validas un sample de 10-20 mensajes antes de escalar.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>Tono</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Tuteo <span class="rec">RECOMENDADO ESPA&Ntilde;A</span></span><span class="opt"><span class="opt-l">B)</span> Ustedeo</span><span class="opt"><span class="opt-l">C)</span> Mixto</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Casos de &eacute;xito?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute;, los subo</span><span class="opt"><span class="opt-l">B)</span> No tengo <span class="rec">FUNCIONA IGUAL</span></span></div></div></div>
@@ -429,8 +456,8 @@ pre code { background:none; padding:0; color:inherit; }
       </div>
       <div class="io-grid">
         <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Preferencia de tono</li><li>Casos de &eacute;xito (si tienes)</li><li>Temas a evitar</li></ul></div>
-        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .xlsx</strong> con columnas de copy</li><li><strong>Copy Guide .docx</strong></li></ul>
-          <div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_database_{segmento}.xlsx</div><div class="fm">+12 cols: subjects, bodies, linkedin, reason_why_now...</div></div></div>
+        <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Base de datos .xlsx (6 hojas)</strong> con hoja &#9993;&#65039; Outreach</li><li><strong>Copy Guide .docx</strong></li></ul>
+          <div class="file-row"><div class="file-icon f-xlsx">XLS</div><div><div class="fn">{cliente}_database_{segmento}.xlsx</div><div class="fm">5 hojas originales + &#9993;&#65039; Outreach (subjects, bodies, linkedin, SDR call, reason_why_now)</div></div></div><a class="sample-btn" href="samples/sample_06_database_with_outreach_6sheets.xlsx" download><svg viewBox="0 0 16 16"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>Descargar muestra 6 hojas + Outreach .xlsx</a>
           <div class="file-row"><div class="file-icon f-docx">DOC</div><div><div class="fn">{cliente}_copy_guide.docx</div><div class="fm">Templates maestros &middot; Variantes A/B</div></div></div>
         </div>
       </div>
@@ -446,16 +473,19 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 7 ━━━ -->
 <section class="step-section" data-step="7">
-  <div class="step-head"><div class="step-head-num">07</div><div><h3>Campaign Launcher</h3><p>Campa&ntilde;a live en LemList: secuencia + leads + warmup + smart send time.</p></div></div>
+  <div class="step-head"><div class="step-head-num">07</div><div><h3>Campaign Launcher</h3><p>El momento de la verdad. Claude toma la base de datos con copy aprobado y crea la campa&ntilde;a real en LemList: sube los leads con todas las variables, configura los pasos de la secuencia, activa rotaci&oacute;n de senders y smart send time. La campa&ntilde;a se crea PAUSADA &mdash; t&uacute; lanzas cuando est&eacute;s listo.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Campaign Launcher</div><div class="trigger-alt"><span>Step 7</span> <span>Monta la campa&ntilde;a</span> <span>Push a LemList</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Montar una campa&ntilde;a manualmente en LemList (crear secuencia, importar leads con 15+ variables custom, configurar rotaci&oacute;n, verificar warmup) toma 1-2 horas. Claude lo hace en 20 minutos v&iacute;a API. Primero verifica el estado de las cuentas de email (warmup, deliverability), luego importa un batch de prueba de 10 leads para que revises en LemList, y solo despu&eacute;s importa el total. La campa&ntilde;a se crea siempre en modo PAUSADO para que t&uacute; tengas el control del lanzamiento.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Cuentas nuevas? &iquest;Warmup?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> &gt;30 d&iacute;as activas <span class="rec">LISTO</span></span><span class="opt"><span class="opt-l">B)</span> Nuevas &mdash; necesitan warmup</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Import de prueba 10 leads &rarr; Verificas en LemList &rarr; Import total</strong><div class="bubble"><em>Smart send time activado. Campa&ntilde;a se crea PAUSADA &mdash; t&uacute; lanzas cuando quieras.</em></div></div></div>
       </div>
       <div class="io-grid">
-        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Base de datos con copy (Step 6)</li><li>Estado de las cuentas</li></ul></div>
+        <div class="io-card in-c"><div class="io-label in-l">&#8594; T&uacute; aportas</div><ul><li>Base de datos 6 hojas con &#9993;&#65039; Outreach (Step 6)</li><li>Estado de las cuentas</li></ul></div>
         <div class="io-card out-c"><div class="io-label out-l">&#10003; T&uacute; recibes</div><ul><li><strong>Campa&ntilde;a LemList</strong> creada y pausada</li></ul><div class="file-row"><div class="file-icon f-lem">LEM</div><div><div class="fn">Campa&ntilde;a: {cliente} &mdash; {segmento}</div><div class="fm">PAUSADA &middot; Smart Send: ON &middot; Rotation: ON</div></div></div></div>
       </div>
     </div>
@@ -469,10 +499,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 8 ━━━ -->
 <section class="step-section" data-step="8">
-  <div class="step-head"><div class="step-head-num">08</div><div><h3>Campaign Analyzer</h3><p>Performance report semanal: m&eacute;tricas, A/B winners, hot leads, optimizaciones.</p></div></div>
+  <div class="step-head"><div class="step-head-num">08</div><div><h3>Campaign Analyzer</h3><p>An&aacute;lisis semanal automatizado de todas las campa&ntilde;as activas. Claude lee las m&eacute;tricas de LemList, identifica qu&eacute; subjects y mensajes funcionan mejor (A/B testing), detecta hot leads por engagement, y propone optimizaciones concretas. Se ejecuta cada lunes a las 9:00 para que arranques la semana con datos.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Campaign Analyzer</div><div class="trigger-alt"><span>Step 8</span> <span>&iquest;C&oacute;mo van las campa&ntilde;as?</span> <span>Performance report</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> Sin an&aacute;lisis continuo, las campa&ntilde;as decaen. Claude genera un report brandeado cada lunes con: open rate, reply rate, bounce rate por secuencia y por sender; resultados de A/B (qu&eacute; subject gana, qu&eacute; CTA convierte m&aacute;s); leads &ldquo;calientes&rdquo; por engagement (3+ aperturas, clicks en links); y recomendaciones concretas (&ldquo;el step 3 tiene 0.5% reply &rarr; reescribir copy&rdquo;). Este report alimenta un feedback loop: si algo no funciona, volvemos a Step 5 (secuencia) o Step 6 (copy) para iterar.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Qu&eacute; campa&ntilde;as?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Todas las activas <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Solo una espec&iacute;fica</span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>&iquest;Programar autom&aacute;tico?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> Lunes 9:00 <span class="rec">RECOMENDADO</span></span><span class="opt"><span class="opt-l">B)</span> Manual</span></div></div></div>
@@ -493,10 +526,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 9 ━━━ -->
 <section class="step-section" data-step="9">
-  <div class="step-head"><div class="step-head-num">09</div><div><h3>Reply Manager</h3><p>Clasifica respuestas, maneja objeciones, prepara handoff de reuniones.</p></div></div>
+  <div class="step-head"><div class="step-head-num">09</div><div><h3>Reply Manager</h3><p>Gesti&oacute;n inteligente de todas las respuestas que llegan a tus campa&ntilde;as. Claude lee cada reply del inbox de LemList, la clasifica autom&aacute;ticamente en 6 categor&iacute;as (positiva, objeci&oacute;n, redirect, OOO, negativa, unsubscribe), y genera un borrador de respuesta contextual para cada una. Para las positivas, prepara un Meeting Handoff .docx con todo el contexto que necesitas antes de la reuni&oacute;n: qui&eacute;n es el contacto, qu&eacute; se&ntilde;ales mostr&oacute;, qu&eacute; mensajes abri&oacute;, y talking points personalizados.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Reply Manager</div><div class="trigger-alt"><span>Step 9</span> <span>Revisa las replies</span> <span>Gestiona respuestas</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> La velocidad de respuesta es el factor #1 en conversi&oacute;n de outbound. Un lead que responde positivamente y recibe tu propuesta de reuni&oacute;n en menos de 2 horas tiene 5x m&aacute;s probabilidades de asistir que uno que espera 24h. Pero no es solo velocidad &mdash; es calidad. Claude usa Opus 4.6 (siempre, por los matices del lenguaje) para entender el tono de cada reply y generar respuestas que suenan 100% humanas. Para objeciones, aplica frameworks probados de manejo (reconocer &rarr; reencuadrar &rarr; proponer). Para redirects (&ldquo;habla con mi colega X&rdquo;), crea autom&aacute;ticamente el nuevo contacto en Apollo. Y para cada reuni&oacute;n conseguida, el Meeting Handoff te da la preparaci&oacute;n que normalmente te llevar&iacute;a 30 minutos de research &mdash; en 0.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Disponibilidad esta semana?</strong><div class="bubble"><em>Claude te pide horarios disponibles para proponer en las respuestas positivas. T&uacute; los indicas o compartes tu link de Calendly.</em></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Clasificaci&oacute;n autom&aacute;tica + borradores</strong><div class="bubble"><span class="opt">&#128994; <strong>Positiva</strong> &rarr; respuesta + horario (&lt;2h)</span><span class="opt">&#128992; <strong>Objeci&oacute;n</strong> &rarr; manejo objeci&oacute;n</span><span class="opt">&#128309; <strong>Redirect</strong> &rarr; nuevo contacto</span><span class="opt">&#128310; <strong>OOO</strong> &rarr; recordatorio</span><span class="opt">&#128308; <strong>Negativa</strong> &rarr; cierre elegante</span><span class="opt">&#9899; <strong>Unsubscribe</strong> &rarr; baja</span></div></div></div>
@@ -517,10 +553,13 @@ pre code { background:none; padding:0; color:inherit; }
 
 <!-- ━━━ STEP 10 ━━━ -->
 <section class="step-section" data-step="10">
-  <div class="step-head"><div class="step-head-num">10</div><div><h3>Nurture Engine</h3><p>1 email/mes de contenido puro durante 6 meses. Re-activaci&oacute;n por se&ntilde;al o engagement.</p></div></div>
+  <div class="step-head"><div class="step-head-num">10</div><div><h3>Nurture Engine</h3><p>Sistema de nurturing a largo plazo para los leads que no respondieron a la secuencia principal. Claude dise&ntilde;a un plan de 6 meses con un email mensual de contenido puro &mdash; nunca ventas &mdash; que mantiene tu marca en el radar del prospecto. Usa el contenido del cliente (blog, casos de &eacute;xito, webinars) si existe, o genera contenido de valor sectorial desde cero. El motor monitoriza se&ntilde;ales de re-activaci&oacute;n: si un lead abre 2+ emails o Apollo detecta una se&ntilde;al de compra (contrataci&oacute;n, funding, cambio de liderazgo), el lead vuelve autom&aacute;ticamente al ciclo activo en Step 05.</p></div></div>
   <div class="step-body">
     <div class="step-content">
       <div class="trigger"><div class="trigger-label">Dile a Claude</div><div class="trigger-cmd">Activa Nurture Engine</div><div class="trigger-alt"><span>Step 10</span> <span>Activa el nurture</span> <span>No-respondedores</span></div></div>
+      <div style="background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.65;color:var(--text-secondary);">
+        <strong style="color:var(--text-primary);">&iquest;Por qu&eacute; este paso?</strong> El 70-80% de tu TAM no va a responder a la primera secuencia &mdash; pero eso no significa que no sean buenos leads. Simplemente no es su momento. El error m&aacute;s com&uacute;n en outbound es tratar un &ldquo;no responde&rdquo; como un &ldquo;no&rdquo; definitivo y quemar esos contactos. El Nurture Engine hace lo contrario: mantiene una presencia de valor puro (benchmarks del sector, cambios regulatorios, casos an&oacute;nimos) sin pedir nada a cambio. Esto construye familiaridad y confianza. Cuando el lead finalmente tenga la necesidad &mdash; o cuando Apollo detecte una se&ntilde;al de compra &mdash; ya conoce tu marca y la barrera de respuesta baja dr&aacute;sticamente. El ciclo es cerrado: despu&eacute;s de 6 meses sin engagement se archiva; si hay se&ntilde;al, vuelve al pipeline activo. Ning&uacute;n lead se pierde.
+      </div>
       <div class="flow"><div class="flow-title">Claude te guiar&aacute; as&iacute;</div>
         <div class="fstep"><div class="fstep-num">1</div><div class="fstep-body"><strong>&iquest;Contenido del cliente?</strong><div class="bubble"><span class="opt"><span class="opt-l">A)</span> S&iacute; &mdash; blog, casos, estudios</span><span class="opt"><span class="opt-l">B)</span> No &mdash; Claude genera <span class="rec">FUNCIONA IGUAL</span></span></div></div></div>
         <div class="fstep"><div class="fstep-num">2</div><div class="fstep-body"><strong>Plan de 6 meses &rarr; T&uacute; validas &rarr; Activa</strong><div class="bubble"><span class="opt">Mes 1: Benchmark sector</span><span class="opt">Mes 2: Caso de &eacute;xito</span><span class="opt">Mes 3: Cambio regulatorio</span><span class="opt">Mes 4: Webinar</span><span class="opt">Mes 5: Encuesta</span><span class="opt">Mes 6: Re-engagement</span><br><em>Nunca ventas. Solo contenido. Re-activa si 2+ aperturas o se&ntilde;al.</em></div></div></div>
@@ -595,9 +634,9 @@ pre code { background:none; padding:0; color:inherit; }
     <div class="flow" style="margin-bottom:1.5rem;">
       <div class="flow-title">Arquitectura del plugin</div>
       <div style="font-size:.84rem;line-height:1.75;">
-        <p style="margin-bottom:.75rem;"><strong>lgaas-activation</strong> es un plugin de Claude Cowork empaquetado como archivo <code>.plugin</code> (formato zip). Contiene 11 skills independientes que se invocan secuencialmente para ejecutar el pipeline completo de Lead Generation as a Service.</p>
-        <p style="margin-bottom:.75rem;">Cada skill es aut&oacute;noma: tiene su propio <code>SKILL.md</code> con instrucciones, un <strong>Activation Protocol</strong> (flujo guiado con preguntas de m&uacute;ltiple elecci&oacute;n), y archivos de referencia opcionales en su carpeta <code>references/</code> y <code>assets/</code>.</p>
-        <p>El plugin no requiere MCP servers propios &mdash; se conecta a los MCPs ya disponibles en el entorno Cowork del usuario (Apollo, Clay, LemList, WebSearch).</p>
+        <p style="margin-bottom:.75rem;"><strong>lgaas-activation v1.4.0</strong> es un plugin de Claude Cowork empaquetado como archivo <code>.plugin</code> (formato zip). Contiene 11 skills independientes, un comando <code>/run-lgaas</code> que orquesta el pipeline completo, y <strong>paralelizaci&oacute;n agentic</strong> dentro de cada skill mediante sub-agents.</p>
+        <p style="margin-bottom:.75rem;">Cada skill es aut&oacute;noma: tiene su propio <code>SKILL.md</code> con instrucciones, un <code>agent.md</code> con instrucciones de paralelizaci&oacute;n para sub-agents (batches de 5-15 items), un <strong>Activation Protocol</strong> (flujo guiado con preguntas de m&uacute;ltiple elecci&oacute;n), y archivos de referencia opcionales en su carpeta <code>references/</code> y <code>assets/</code>.</p>
+        <p>El plugin no requiere MCP servers propios &mdash; se conecta a los MCPs ya disponibles en el entorno Cowork del usuario (Apollo, Clay, LemList, WebSearch). La paralelizaci&oacute;n es <strong>intra-skill</strong>: los sub-agents procesan batches en paralelo DENTRO de cada skill, pero las skills se ejecutan secuencialmente.</p>
       </div>
     </div>
 
@@ -608,52 +647,66 @@ pre code { background:none; padding:0; color:inherit; }
 ├── .claude-plugin/
 │   └── plugin.json                    <span style="color:rgba(230,89,38,.8)"># Manifiesto (name, version, description)</span>
 │
+├── commands/
+│   └── run-lgaas.md                   <span style="color:rgba(230,89,38,.8)"># /run-lgaas — pipeline completo Steps 00-07</span>
+│
 ├── skills/
 │   ├── 00-client-discovery/
 │   │   ├── SKILL.md                   <span style="color:rgba(230,89,38,.8)"># Instrucciones + Activation Protocol</span>
+│   │   ├── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │   ├── references/
-│   │   │   └── template-field-guide.md <span style="color:rgba(230,89,38,.8)"># Gu&iacute;a de cada campo del template</span>
+│   │   │   └── template-field-guide.md
 │   │   └── assets/
 │   │       └── targeting_framework_template.xlsx
 │   │
 │   ├── 01-market-segmentation/
 │   │   ├── SKILL.md
+│   │   ├── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │   ├── references/
-│   │   │   ├── output-spec.md         <span style="color:rgba(230,89,38,.8)"># Spec de las 8 pesta&ntilde;as output</span>
-│   │   │   └── sabi-guide.md          <span style="color:rgba(230,89,38,.8)"># Gu&iacute;a de exportaci&oacute;n SABI</span>
+│   │   │   ├── output-spec.md
+│   │   │   └── sabi-guide.md
 │   │   └── assets/
 │   │
 │   ├── 02-strategy-report/
 │   │   ├── SKILL.md
+│   │   ├── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │   ├── references/
-│   │   │   └── reference-doc.docx     <span style="color:rgba(230,89,38,.8)"># Template del .docx ejecutivo</span>
+│   │   │   └── reference-doc.docx
 │   │   └── assets/
 │   │
 │   ├── 03-lead-enrichment/
 │   │   ├── SKILL.md
+│   │   ├── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent: 3-phase enrichment pipeline</span>
 │   │   └── references/
-│   │       └── reference-db-doc.docx  <span style="color:rgba(230,89,38,.8)"># Template de base de datos</span>
+│   │       └── reference-db-doc.docx
 │   │
 │   ├── 04-signal-monitor/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │
 │   ├── 05-sequence-designer/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │
 │   ├── 06-message-writer/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent: sample-first copy pipeline</span>
 │   │
 │   ├── 07-campaign-launcher/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │
 │   ├── 08-campaign-analyzer/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent parallelization instructions</span>
 │   │
 │   ├── 09-reply-manager/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent: classify → respond → brief</span>
 │   │
 │   └── 10-nurture-engine/
-│       └── SKILL.md</pre>
+│       ├── SKILL.md
+│       └── agent.md                   <span style="color:rgba(230,89,38,.8)"># Sub-agent: segment → content → signals</span></pre>
     </div>
 
     <!-- PLUGIN.JSON -->
@@ -661,8 +714,8 @@ pre code { background:none; padding:0; color:inherit; }
       <div class="flow-title">plugin.json &mdash; Manifiesto</div>
       <pre style="background:var(--text-primary);color:var(--bg-tertiary);padding:1.25rem 1.5rem;border-radius:8px;font-size:.78rem;line-height:1.7;overflow-x:auto;margin-top:.5rem;">{
   "name": "lgaas-activation",
-  "version": "1.2.0",
-  "description": "Pipeline LGaaS end-to-end para TopSpin...",
+  "version": "1.4.0",
+  "description": "Pipeline LGaaS end-to-end para TopSpin con paralelización agentic...",
   "author": { "name": "TopSpin" },
   "keywords": ["lgaas", "prospecting", "b2b", "targeting",
                "topspin", "sabi", "spain", "apollo", "clay",
@@ -841,7 +894,7 @@ Usar AskUserQuestion:
                                            ▼
                                 ┌──────────────────┐
                                 │ 06-message-writer   │
-                                │ (copy &rarr; .xlsx cols) │
+                                │ (+✉️ Outreach sheet) │
                                 └────────┬─────────┘
                                          │
                                          ▼
